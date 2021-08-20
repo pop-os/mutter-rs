@@ -1,0 +1,16 @@
+[options]
+library = "Clutter"
+version = "8"
+external_libraries = [
+	"Atk",
+	"cairo",
+	"Cogl",
+	"Gio",
+	"GLib",
+	"GObject",
+	"Graphene",
+	"Json",
+	"Pango",
+]
+target_path = "clutter-sys"
+work_mode = "sys"

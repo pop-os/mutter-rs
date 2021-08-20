@@ -1,0 +1,795 @@
+--- /usr/lib/x86_64-linux-gnu/mutter-8/Cogl-8.gir	2021-08-09 09:59:52.000000000 -0600
++++ mutter-gir-files/Cogl-8.gir	2021-08-20 15:31:42.297666452 -0600
+@@ -10,6 +10,7 @@
+   <include name="GObject" version="2.0"/>
+   <include name="Graphene" version="1.0"/>
+   <include name="cairo" version="1.0"/>
++  <package name="mutter-cogl-8"/>
+   <c:include name="cogl/cogl.h"/>
+   <namespace name="Cogl"
+              version="8"
+@@ -175,63 +176,6 @@
+           </parameter>
+         </parameters>
+       </constructor>
+-      <constructor name="new_from_buffer"
+-                   c:identifier="cogl_bitmap_new_from_buffer"
+-                   version="1.8"
+-                   introspectable="0"
+-                   stability="Unstable">
+-        <doc xml:space="preserve"
+-             filename="../cogl/cogl/cogl-bitmap.h"
+-             line="88">Wraps some image data that has been uploaded into a #CoglBuffer as
+-a #CoglBitmap. The data is not copied in this process.</doc>
+-        <source-position filename="../cogl/cogl/cogl-bitmap.h" line="108"/>
+-        <return-value transfer-ownership="full">
+-          <doc xml:space="preserve"
+-               filename="../cogl/cogl/cogl-bitmap.h"
+-               line="102">a #CoglBitmap encapsulating the given @buffer.</doc>
+-          <type name="Bitmap" c:type="CoglBitmap*"/>
+-        </return-value>
+-        <parameters>
+-          <parameter name="buffer" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-bitmap.h"
+-                 line="90">A #CoglBuffer containing image data</doc>
+-            <type c:type="CoglBuffer*"/>
+-          </parameter>
+-          <parameter name="format" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-bitmap.h"
+-                 line="91">The #CoglPixelFormat defining the format of the image data
+-         in the given @buffer.</doc>
+-            <type name="PixelFormat" c:type="CoglPixelFormat"/>
+-          </parameter>
+-          <parameter name="width" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-bitmap.h"
+-                 line="93">The width of the image data in the given @buffer.</doc>
+-            <type name="gint" c:type="int"/>
+-          </parameter>
+-          <parameter name="height" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-bitmap.h"
+-                 line="94">The height of the image data in the given @buffer.</doc>
+-            <type name="gint" c:type="int"/>
+-          </parameter>
+-          <parameter name="rowstride" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-bitmap.h"
+-                 line="95">The rowstride in bytes of the image data in the given @buffer.</doc>
+-            <type name="gint" c:type="int"/>
+-          </parameter>
+-          <parameter name="offset" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-bitmap.h"
+-                 line="96">The offset into the given @buffer to the first pixel that
+-         should be considered part of the #CoglBitmap.</doc>
+-            <type name="gint" c:type="int"/>
+-          </parameter>
+-        </parameters>
+-      </constructor>
+       <constructor name="new_from_file"
+                    c:identifier="cogl_bitmap_new_from_file"
+                    version="1.0"
+@@ -361,30 +305,6 @@
+           </parameter>
+         </parameters>
+       </function>
+-      <method name="get_buffer"
+-              c:identifier="cogl_bitmap_get_buffer"
+-              version="1.10"
+-              introspectable="0"
+-              stability="Unstable">
+-        <source-position filename="../cogl/cogl/cogl-bitmap.h" line="236"/>
+-        <return-value transfer-ownership="none">
+-          <doc xml:space="preserve"
+-               filename="../cogl/cogl/cogl-bitmap.h"
+-               line="228">the #CoglPixelBuffer that this
+-  buffer uses for storage. Note that if the bitmap was created with
+-  cogl_bitmap_new_from_file() then it will not actually be using a
+-  pixel buffer and this function will return %NULL.</doc>
+-          <type c:type="CoglPixelBuffer*"/>
+-        </return-value>
+-        <parameters>
+-          <instance-parameter name="bitmap" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-bitmap.h"
+-                 line="226">A #CoglBitmap</doc>
+-            <type name="Bitmap" c:type="CoglBitmap*"/>
+-          </instance-parameter>
+-        </parameters>
+-      </method>
+       <method name="get_format"
+               c:identifier="cogl_bitmap_get_format"
+               version="1.10"
+@@ -1519,64 +1439,6 @@
+            glib:type-name="CoglContext"
+            glib:get-type="cogl_context_get_gtype"
+            glib:fundamental="1">
+-      <constructor name="new"
+-                   c:identifier="cogl_context_new"
+-                   version="1.8"
+-                   introspectable="0"
+-                   stability="Unstable"
+-                   throws="1">
+-        <doc xml:space="preserve"
+-             filename="../cogl/cogl/cogl-context.h"
+-             line="106">Creates a new #CoglContext which acts as an application sandbox
+-for any state objects that are allocated.</doc>
+-        <source-position filename="../cogl/cogl/cogl-context.h" line="119"/>
+-        <return-value transfer-ownership="full">
+-          <doc xml:space="preserve"
+-               filename="../cogl/cogl/cogl-context.h"
+-               line="114">A newly allocated #CoglContext</doc>
+-          <type name="Context" c:type="CoglContext*"/>
+-        </return-value>
+-        <parameters>
+-          <parameter name="display"
+-                     transfer-ownership="none"
+-                     nullable="1"
+-                     allow-none="1">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-context.h"
+-                 line="108">A #CoglDisplay pointer</doc>
+-            <type c:type="CoglDisplay*"/>
+-          </parameter>
+-        </parameters>
+-      </constructor>
+-      <method name="get_display"
+-              c:identifier="cogl_context_get_display"
+-              version="1.8"
+-              introspectable="0"
+-              stability="Unstable">
+-        <doc xml:space="preserve"
+-             filename="../cogl/cogl/cogl-context.h"
+-             line="122">Retrieves the #CoglDisplay that is internally associated with the
+-given @context. This will return the same #CoglDisplay that was
+-passed to cogl_context_new() or if %NULL was passed to
+-cogl_context_new() then this function returns a pointer to the
+-display that was automatically setup internally.</doc>
+-        <source-position filename="../cogl/cogl/cogl-context.h" line="138"/>
+-        <return-value transfer-ownership="none">
+-          <doc xml:space="preserve"
+-               filename="../cogl/cogl/cogl-context.h"
+-               line="132">The #CoglDisplay associated with the
+-              given @context.</doc>
+-          <type c:type="CoglDisplay*"/>
+-        </return-value>
+-        <parameters>
+-          <instance-parameter name="context" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-context.h"
+-                 line="124">A #CoglContext pointer</doc>
+-            <type name="Context" c:type="CoglContext*"/>
+-          </instance-parameter>
+-        </parameters>
+-      </method>
+       <method name="get_named_pipeline"
+               c:identifier="cogl_context_get_named_pipeline">
+         <source-position filename="../cogl/cogl/cogl-context.h" line="370"/>
+@@ -1603,36 +1465,6 @@
+           </parameter>
+         </parameters>
+       </method>
+-      <method name="get_renderer"
+-              c:identifier="cogl_context_get_renderer"
+-              version="1.16"
+-              introspectable="0"
+-              stability="Unstable">
+-        <doc xml:space="preserve"
+-             filename="../cogl/cogl/cogl-context.h"
+-             line="140">Retrieves the #CoglRenderer that is internally associated with the
+-given @context. This will return the same #CoglRenderer that was
+-passed to cogl_display_new() or if %NULL was passed to
+-cogl_display_new() or cogl_context_new() then this function returns
+-a pointer to the renderer that was automatically connected
+-internally.</doc>
+-        <source-position filename="../cogl/cogl/cogl-context.h" line="157"/>
+-        <return-value transfer-ownership="none">
+-          <doc xml:space="preserve"
+-               filename="../cogl/cogl/cogl-context.h"
+-               line="151">The #CoglRenderer associated with the
+-              given @context.</doc>
+-          <type c:type="CoglRenderer*"/>
+-        </return-value>
+-        <parameters>
+-          <instance-parameter name="context" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-context.h"
+-                 line="142">A #CoglContext pointer</doc>
+-            <type name="Context" c:type="CoglContext*"/>
+-          </instance-parameter>
+-        </parameters>
+-      </method>
+       <method name="is_hardware_accelerated"
+               c:identifier="cogl_context_is_hardware_accelerated">
+         <source-position filename="../cogl/cogl/cogl-context.h" line="339"/>
+@@ -2575,55 +2407,6 @@
+           </parameter>
+         </parameters>
+       </method>
+-      <method name="draw_primitive"
+-              c:identifier="cogl_framebuffer_draw_primitive"
+-              version="1.10"
+-              introspectable="0"
+-              deprecated="1"
+-              deprecated-version="1.16"
+-              stability="Unstable">
+-        <doc xml:space="preserve"
+-             filename="../cogl/cogl/cogl-framebuffer.h"
+-             line="1049">Draws the given @primitive geometry to the specified destination
+-@framebuffer using the graphics processing state described by @pipeline.
+-
+-This drawing api doesn't support high-level meta texture types such
+-as #CoglTexture2DSliced so it is the user's responsibility to
+-ensure that only low-level textures that can be directly sampled by
+-a GPU such as #CoglTexture2D are associated with layers of the given
+-@pipeline.
+-
+-&lt;note&gt;This api doesn't support any of the legacy global state options such
+-as cogl_set_depth_test_enabled() or
+-cogl_set_backface_culling_enabled().&lt;/note&gt;</doc>
+-        <doc-deprecated xml:space="preserve">Use #CoglPrimitive&lt;!-- --&gt;s and
+-                  cogl_primitive_draw() instead</doc-deprecated>
+-        <source-position filename="../cogl/cogl/cogl-framebuffer.h"
+-                         line="1075"/>
+-        <return-value transfer-ownership="none">
+-          <type name="none" c:type="void"/>
+-        </return-value>
+-        <parameters>
+-          <instance-parameter name="framebuffer" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-framebuffer.h"
+-                 line="1051">A destination #CoglFramebuffer</doc>
+-            <type name="Framebuffer" c:type="CoglFramebuffer*"/>
+-          </instance-parameter>
+-          <parameter name="pipeline" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-framebuffer.h"
+-                 line="1052">A #CoglPipeline state object</doc>
+-            <type name="Pipeline" c:type="CoglPipeline*"/>
+-          </parameter>
+-          <parameter name="primitive" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-framebuffer.h"
+-                 line="1053">A #CoglPrimitive geometry object</doc>
+-            <type c:type="CoglPrimitive*"/>
+-          </parameter>
+-        </parameters>
+-      </method>
+       <method name="draw_rectangle"
+               c:identifier="cogl_framebuffer_draw_rectangle"
+               version="1.10"
+@@ -3758,73 +3541,6 @@
+           </instance-parameter>
+         </parameters>
+       </method>
+-      <method name="push_primitive_clip"
+-              c:identifier="cogl_framebuffer_push_primitive_clip"
+-              version="1.10"
+-              introspectable="0"
+-              stability="Unstable">
+-        <doc xml:space="preserve"
+-             filename="../cogl/cogl/cogl-framebuffer.h"
+-             line="588">Sets a new clipping area using a 2D shaped described with a
+-#CoglPrimitive. The shape must not contain self overlapping
+-geometry and must lie on a single 2D plane. A bounding box of the
+-2D shape in local coordinates (the same coordinates used to
+-describe the shape) must be given. It is acceptable for the bounds
+-to be larger than the true bounds but behaviour is undefined if the
+-bounds are smaller than the true bounds.
+-
+-The primitive is transformed by the current model-view matrix and
+-the silhouette is intersected with the previous clipping area.  To
+-restore the previous clipping area, call
+-cogl_framebuffer_pop_clip().</doc>
+-        <source-position filename="../cogl/cogl/cogl-framebuffer.h"
+-                         line="618"/>
+-        <return-value transfer-ownership="none">
+-          <type name="none" c:type="void"/>
+-        </return-value>
+-        <parameters>
+-          <instance-parameter name="framebuffer" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-framebuffer.h"
+-                 line="590">A #CoglFramebuffer pointer</doc>
+-            <type name="Framebuffer" c:type="CoglFramebuffer*"/>
+-          </instance-parameter>
+-          <parameter name="primitive" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-framebuffer.h"
+-                 line="591">A #CoglPrimitive describing a flat 2D shape</doc>
+-            <type c:type="CoglPrimitive*"/>
+-          </parameter>
+-          <parameter name="bounds_x1" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-framebuffer.h"
+-                 line="592">x coordinate for the top-left corner of the primitives
+-            bounds</doc>
+-            <type name="gfloat" c:type="float"/>
+-          </parameter>
+-          <parameter name="bounds_y1" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-framebuffer.h"
+-                 line="594">y coordinate for the top-left corner of the primitives
+-            bounds</doc>
+-            <type name="gfloat" c:type="float"/>
+-          </parameter>
+-          <parameter name="bounds_x2" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-framebuffer.h"
+-                 line="596">x coordinate for the bottom-right corner of the
+-            primitives bounds.</doc>
+-            <type name="gfloat" c:type="float"/>
+-          </parameter>
+-          <parameter name="bounds_y2" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-framebuffer.h"
+-                 line="598">y coordinate for the bottom-right corner of the
+-            primitives bounds.</doc>
+-            <type name="gfloat" c:type="float"/>
+-          </parameter>
+-        </parameters>
+-      </method>
+       <method name="push_rectangle_clip"
+               c:identifier="cogl_framebuffer_push_rectangle_clip"
+               version="1.10"
+@@ -7074,75 +6790,6 @@
+           </parameter>
+         </parameters>
+       </constructor>
+-      <method name="add_layer_snippet"
+-              c:identifier="cogl_pipeline_add_layer_snippet"
+-              version="1.10"
+-              introspectable="0"
+-              stability="Unstable">
+-        <doc xml:space="preserve"
+-             filename="../cogl/cogl/cogl-pipeline-layer-state.h"
+-             line="550">Adds a shader snippet that will hook on to the given layer of the
+-pipeline. The exact part of the pipeline that the snippet wraps
+-around depends on the hook that is given to
+-cogl_snippet_new(). Note that some hooks can't be used with a layer
+-and need to be added with cogl_pipeline_add_snippet() instead.</doc>
+-        <source-position filename="../cogl/cogl/cogl-pipeline-layer-state.h"
+-                         line="566"/>
+-        <return-value transfer-ownership="none">
+-          <type name="none" c:type="void"/>
+-        </return-value>
+-        <parameters>
+-          <instance-parameter name="pipeline" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-pipeline-layer-state.h"
+-                 line="552">A #CoglPipeline</doc>
+-            <type name="Pipeline" c:type="CoglPipeline*"/>
+-          </instance-parameter>
+-          <parameter name="layer" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-pipeline-layer-state.h"
+-                 line="553">The layer to hook the snippet to</doc>
+-            <type name="gint" c:type="int"/>
+-          </parameter>
+-          <parameter name="snippet" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-pipeline-layer-state.h"
+-                 line="554">A #CoglSnippet</doc>
+-            <type c:type="CoglSnippet*"/>
+-          </parameter>
+-        </parameters>
+-      </method>
+-      <method name="add_snippet"
+-              c:identifier="cogl_pipeline_add_snippet"
+-              version="1.10"
+-              introspectable="0"
+-              stability="Unstable">
+-        <doc xml:space="preserve"
+-             filename="../cogl/cogl/cogl-pipeline-state.h"
+-             line="733">Adds a shader snippet to @pipeline. The snippet will wrap around or
+-replace some part of the pipeline as defined by the hook point in
+-@snippet. Note that some hook points are specific to a layer and
+-must be added with cogl_pipeline_add_layer_snippet() instead.</doc>
+-        <source-position filename="../cogl/cogl/cogl-pipeline-state.h"
+-                         line="747"/>
+-        <return-value transfer-ownership="none">
+-          <type name="none" c:type="void"/>
+-        </return-value>
+-        <parameters>
+-          <instance-parameter name="pipeline" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-pipeline-state.h"
+-                 line="735">A #CoglPipeline</doc>
+-            <type name="Pipeline" c:type="CoglPipeline*"/>
+-          </instance-parameter>
+-          <parameter name="snippet" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-pipeline-state.h"
+-                 line="736">The #CoglSnippet to add to the vertex processing hook</doc>
+-            <type c:type="CoglSnippet*"/>
+-          </parameter>
+-        </parameters>
+-      </method>
+       <method name="copy"
+               c:identifier="cogl_pipeline_copy"
+               version="2.0"
+@@ -7306,38 +6953,6 @@
+           </instance-parameter>
+         </parameters>
+       </method>
+-      <method name="get_depth_state"
+-              c:identifier="cogl_pipeline_get_depth_state"
+-              version="2.0"
+-              introspectable="0"
+-              stability="Unstable">
+-        <doc xml:space="preserve"
+-             filename="../cogl/cogl/cogl-pipeline-state.h"
+-             line="472">Retrieves the current depth state configuration for the given
+-@pipeline as previously set using cogl_pipeline_set_depth_state().</doc>
+-        <source-position filename="../cogl/cogl/cogl-pipeline-state.h"
+-                         line="484"/>
+-        <return-value transfer-ownership="none">
+-          <type name="none" c:type="void"/>
+-        </return-value>
+-        <parameters>
+-          <instance-parameter name="pipeline" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-pipeline-state.h"
+-                 line="474">A #CoglPipeline object</doc>
+-            <type name="Pipeline" c:type="CoglPipeline*"/>
+-          </instance-parameter>
+-          <parameter name="state_out"
+-                     direction="out"
+-                     caller-allocates="0"
+-                     transfer-ownership="full">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-pipeline-state.h"
+-                 line="475">A destination #CoglDepthState struct</doc>
+-            <type c:type="CoglDepthState*"/>
+-          </parameter>
+-        </parameters>
+-      </method>
+       <method name="get_front_face_winding"
+               c:identifier="cogl_pipeline_get_front_face_winding"
+               version="2.0">
+@@ -8057,45 +7672,6 @@
+           </parameter>
+         </parameters>
+       </method>
+-      <method name="set_depth_state"
+-              c:identifier="cogl_pipeline_set_depth_state"
+-              version="2.0"
+-              introspectable="0"
+-              stability="Unstable"
+-              throws="1">
+-        <doc xml:space="preserve"
+-             filename="../cogl/cogl/cogl-pipeline-state.h"
+-             line="447">This commits all the depth state configured in @state struct to the
+-given @pipeline. The configuration values are copied into the
+-pipeline so there is no requirement to keep the #CoglDepthState
+-struct around if you don't need it any more.
+-
+-Note: Since some platforms do not support the depth range feature
+-it is possible for this function to fail and report an @error.</doc>
+-        <source-position filename="../cogl/cogl/cogl-pipeline-state.h"
+-                         line="468"/>
+-        <return-value transfer-ownership="none">
+-          <doc xml:space="preserve"
+-               filename="../cogl/cogl/cogl-pipeline-state.h"
+-               line="461">TRUE if the GPU supports all the given @state else %FALSE
+-         and returns an @error.</doc>
+-          <type name="gboolean" c:type="gboolean"/>
+-        </return-value>
+-        <parameters>
+-          <instance-parameter name="pipeline" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-pipeline-state.h"
+-                 line="449">A #CoglPipeline object</doc>
+-            <type name="Pipeline" c:type="CoglPipeline*"/>
+-          </instance-parameter>
+-          <parameter name="state" transfer-ownership="none">
+-            <doc xml:space="preserve"
+-                 filename="../cogl/cogl/cogl-pipeline-state.h"
+-                 line="450">A #CoglDepthState struct</doc>
+-            <type c:type="const CoglDepthState*"/>
+-          </parameter>
+-        </parameters>
+-      </method>
+       <method name="set_front_face_winding"
+               c:identifier="cogl_pipeline_set_front_face_winding"
+               version="2.0">
+@@ -11534,25 +11110,6 @@
+               c:identifier="COGL_WINSYS_FEATURE_N_FEATURES">
+       </member>
+     </enumeration>
+-    <callback name="XlibFilterFunc"
+-              c:type="CoglXlibFilterFunc"
+-              introspectable="0">
+-      <source-position filename="../cogl/cogl/cogl-xlib-renderer.h" line="89"/>
+-      <return-value transfer-ownership="none">
+-        <type name="FilterReturn" c:type="CoglFilterReturn"/>
+-      </return-value>
+-      <parameters>
+-        <parameter name="event" transfer-ownership="none">
+-          <type c:type="XEvent*"/>
+-        </parameter>
+-        <parameter name="data"
+-                   transfer-ownership="none"
+-                   nullable="1"
+-                   allow-none="1">
+-          <type name="gpointer" c:type="void*"/>
+-        </parameter>
+-      </parameters>
+-    </callback>
+     <record name="_ColorSizeCheck" c:type="_CoglColorSizeCheck">
+       <source-position filename="../cogl/cogl/cogl-types.h" line="164"/>
+       <field name="compile_time_assert_CoglColor_size" writable="1">
+@@ -12242,35 +11799,6 @@
+         <type name="none" c:type="void"/>
+       </return-value>
+     </function>
+-    <function name="egl_texture_2d_new_from_image"
+-              c:identifier="cogl_egl_texture_2d_new_from_image"
+-              introspectable="0"
+-              throws="1">
+-      <source-position filename="../cogl/cogl/cogl-texture-2d.h" line="224"/>
+-      <return-value>
+-        <type name="Texture2D" c:type="CoglTexture2D*"/>
+-      </return-value>
+-      <parameters>
+-        <parameter name="ctx" transfer-ownership="none">
+-          <type name="Context" c:type="CoglContext*"/>
+-        </parameter>
+-        <parameter name="width" transfer-ownership="none">
+-          <type name="gint" c:type="int"/>
+-        </parameter>
+-        <parameter name="height" transfer-ownership="none">
+-          <type name="gint" c:type="int"/>
+-        </parameter>
+-        <parameter name="format" transfer-ownership="none">
+-          <type name="PixelFormat" c:type="CoglPixelFormat"/>
+-        </parameter>
+-        <parameter name="image" transfer-ownership="none">
+-          <type c:type="EGLImageKHR"/>
+-        </parameter>
+-        <parameter name="flags" transfer-ownership="none">
+-          <type name="EglImageFlags" c:type="CoglEglImageFlags"/>
+-        </parameter>
+-      </parameters>
+-    </function>
+     <function name="flush" c:identifier="cogl_flush" version="1.0">
+       <doc xml:space="preserve"
+            filename="../cogl/cogl/cogl1-context.h"
+@@ -13580,234 +13108,5 @@
+         </parameter>
+       </parameters>
+     </function>
+-    <function name="xlib_renderer_add_filter"
+-              c:identifier="cogl_xlib_renderer_add_filter"
+-              introspectable="0">
+-      <doc xml:space="preserve"
+-           filename="../cogl/cogl/cogl-xlib-renderer.h"
+-           line="92">Adds a callback function that will receive all native events. The
+-function can stop further processing of the event by return
+-%COGL_FILTER_REMOVE.</doc>
+-      <source-position filename="../cogl/cogl/cogl-xlib-renderer.h"
+-                       line="103"/>
+-      <return-value transfer-ownership="none">
+-        <type name="none" c:type="void"/>
+-      </return-value>
+-      <parameters>
+-        <parameter name="renderer" transfer-ownership="none">
+-          <doc xml:space="preserve"
+-               filename="../cogl/cogl/cogl-xlib-renderer.h"
+-               line="94">a #CoglRenderer</doc>
+-          <type c:type="CoglRenderer*"/>
+-        </parameter>
+-        <parameter name="func" transfer-ownership="none" closure="2">
+-          <doc xml:space="preserve"
+-               filename="../cogl/cogl/cogl-xlib-renderer.h"
+-               line="95">the callback function</doc>
+-          <type name="XlibFilterFunc" c:type="CoglXlibFilterFunc"/>
+-        </parameter>
+-        <parameter name="data"
+-                   transfer-ownership="none"
+-                   nullable="1"
+-                   allow-none="1">
+-          <doc xml:space="preserve"
+-               filename="../cogl/cogl/cogl-xlib-renderer.h"
+-               line="96">user data passed to @func when called</doc>
+-          <type name="gpointer" c:type="void*"/>
+-        </parameter>
+-      </parameters>
+-    </function>
+-    <function name="xlib_renderer_get_display"
+-              c:identifier="cogl_xlib_renderer_get_display"
+-              introspectable="0">
+-      <source-position filename="../cogl/cogl/cogl-xlib-renderer.h"
+-                       line="152"/>
+-      <return-value>
+-        <type c:type="Display*"/>
+-      </return-value>
+-      <parameters>
+-        <parameter name="renderer" transfer-ownership="none">
+-          <type c:type="CoglRenderer*"/>
+-        </parameter>
+-      </parameters>
+-    </function>
+-    <function name="xlib_renderer_get_foreign_display"
+-              c:identifier="cogl_xlib_renderer_get_foreign_display"
+-              introspectable="0">
+-      <source-position filename="../cogl/cogl/cogl-xlib-renderer.h"
+-                       line="130"/>
+-      <return-value>
+-        <doc xml:space="preserve"
+-             filename="../cogl/cogl/cogl-xlib-renderer.h"
+-             line="125">the foreign Xlib display that will be used by any Xlib based
+-winsys backend. The display needs to be set with
+-cogl_xlib_renderer_set_foreign_display() before this function is called.</doc>
+-        <type c:type="Display*"/>
+-      </return-value>
+-      <parameters>
+-        <parameter name="renderer" transfer-ownership="none">
+-          <doc xml:space="preserve"
+-               filename="../cogl/cogl/cogl-xlib-renderer.h"
+-               line="123">a #CoglRenderer</doc>
+-          <type c:type="CoglRenderer*"/>
+-        </parameter>
+-      </parameters>
+-    </function>
+-    <function name="xlib_renderer_handle_event"
+-              c:identifier="cogl_xlib_renderer_handle_event"
+-              introspectable="0">
+-      <doc xml:space="preserve"
+-           filename="../cogl/cogl/cogl-xlib-renderer.h"
+-           line="60">This function processes a single event; it can be used to hook into
+-external event retrieval (for example that done by Clutter or
+-GDK).</doc>
+-      <source-position filename="../cogl/cogl/cogl-xlib-renderer.h" line="76"/>
+-      <return-value transfer-ownership="none">
+-        <doc xml:space="preserve"
+-             filename="../cogl/cogl/cogl-xlib-renderer.h"
+-             line="69">#CoglFilterReturn. %COGL_FILTER_REMOVE indicates that
+-Cogl has internally handled the event and the caller should do no
+-further processing. %COGL_FILTER_CONTINUE indicates that Cogl is
+-either not interested in the event, or has used the event to update
+-internal state without taking any exclusive action.</doc>
+-        <type name="FilterReturn" c:type="CoglFilterReturn"/>
+-      </return-value>
+-      <parameters>
+-        <parameter name="renderer" transfer-ownership="none">
+-          <doc xml:space="preserve"
+-               filename="../cogl/cogl/cogl-xlib-renderer.h"
+-               line="62">a #CoglRenderer</doc>
+-          <type c:type="CoglRenderer*"/>
+-        </parameter>
+-        <parameter name="event" transfer-ownership="none">
+-          <doc xml:space="preserve"
+-               filename="../cogl/cogl/cogl-xlib-renderer.h"
+-               line="63">pointer to an XEvent structure</doc>
+-          <type c:type="XEvent*"/>
+-        </parameter>
+-      </parameters>
+-    </function>
+-    <function name="xlib_renderer_remove_filter"
+-              c:identifier="cogl_xlib_renderer_remove_filter"
+-              introspectable="0">
+-      <doc xml:space="preserve"
+-           filename="../cogl/cogl/cogl-xlib-renderer.h"
+-           line="107">Removes a callback that was previously added with
+-cogl_xlib_renderer_add_filter().</doc>
+-      <source-position filename="../cogl/cogl/cogl-xlib-renderer.h"
+-                       line="117"/>
+-      <return-value transfer-ownership="none">
+-        <type name="none" c:type="void"/>
+-      </return-value>
+-      <parameters>
+-        <parameter name="renderer" transfer-ownership="none">
+-          <doc xml:space="preserve"
+-               filename="../cogl/cogl/cogl-xlib-renderer.h"
+-               line="109">a #CoglRenderer</doc>
+-          <type c:type="CoglRenderer*"/>
+-        </parameter>
+-        <parameter name="func" transfer-ownership="none" closure="2">
+-          <doc xml:space="preserve"
+-               filename="../cogl/cogl/cogl-xlib-renderer.h"
+-               line="110">the callback function</doc>
+-          <type name="XlibFilterFunc" c:type="CoglXlibFilterFunc"/>
+-        </parameter>
+-        <parameter name="data"
+-                   transfer-ownership="none"
+-                   nullable="1"
+-                   allow-none="1">
+-          <doc xml:space="preserve"
+-               filename="../cogl/cogl/cogl-xlib-renderer.h"
+-               line="111">user data given when the callback was installed</doc>
+-          <type name="gpointer" c:type="void*"/>
+-        </parameter>
+-      </parameters>
+-    </function>
+-    <function name="xlib_renderer_request_reset_on_video_memory_purge"
+-              c:identifier="cogl_xlib_renderer_request_reset_on_video_memory_purge"
+-              introspectable="0">
+-      <doc xml:space="preserve"
+-           filename="../cogl/cogl/cogl-xlib-renderer.h"
+-           line="154">Sets whether Cogl should make use of the
+-NV_robustness_video_memory_purge extension, if exposed by the
+-driver, by initializing the GLX context appropriately.
+-
+-The extension is only useful when running on certain versions of
+-the NVIDIA driver. Quoting from the spec:
+-
+-"The NVIDIA OpenGL driver architecture on Linux has a limitation:
+- resources located in video memory are not persistent across certain
+- events. VT switches, suspend/resume events, and mode switching
+- events may erase the contents of video memory. Any resource that
+- is located exclusively in video memory, such as framebuffer objects
+- (FBOs), will be lost."
+-
+-"This extension provides a way for applications to discover when video
+- memory content has been lost, so that the application can re-populate
+- the video memory content as necessary."
+-
+-"Any driver that exposes this extension is a driver that considers
+- video memory to be volatile. Once the driver stack has been
+- improved, the extension will no longer be exposed."
+-
+-cogl_get_graphics_reset_status() needs to be called at least once
+-every frame to find out if video memory was purged.
+-
+-Note that this doesn't cause Cogl to enable robust buffer access
+-but other context reset errors may still happen and be reported via
+-cogl_get_graphics_reset_status() if external factors cause the
+-driver to trigger them.
+-
+-This defaults to %FALSE and is effective only if called before
+-cogl_display_setup() .</doc>
+-      <source-position filename="../cogl/cogl/cogl-xlib-renderer.h"
+-                       line="193"/>
+-      <return-value transfer-ownership="none">
+-        <type name="none" c:type="void"/>
+-      </return-value>
+-      <parameters>
+-        <parameter name="renderer" transfer-ownership="none">
+-          <doc xml:space="preserve"
+-               filename="../cogl/cogl/cogl-xlib-renderer.h"
+-               line="156">a #CoglRenderer</doc>
+-          <type c:type="CoglRenderer*"/>
+-        </parameter>
+-        <parameter name="enable" transfer-ownership="none">
+-          <doc xml:space="preserve"
+-               filename="../cogl/cogl/cogl-xlib-renderer.h"
+-               line="157">The new value</doc>
+-          <type name="gboolean" c:type="gboolean"/>
+-        </parameter>
+-      </parameters>
+-    </function>
+-    <function name="xlib_renderer_set_foreign_display"
+-              c:identifier="cogl_xlib_renderer_set_foreign_display"
+-              introspectable="0">
+-      <doc xml:space="preserve"
+-           filename="../cogl/cogl/cogl-xlib-renderer.h"
+-           line="132">Sets a foreign Xlib display that Cogl will use for and Xlib based winsys
+-backend.
+-
+-Note that calling this function will automatically disable Cogl's
+-event retrieval. Cogl still needs to see all of the X events so the
+-application should also use cogl_xlib_renderer_handle_event() if it
+-uses this function.</doc>
+-      <source-position filename="../cogl/cogl/cogl-xlib-renderer.h"
+-                       line="145"/>
+-      <return-value transfer-ownership="none">
+-        <type name="none" c:type="void"/>
+-      </return-value>
+-      <parameters>
+-        <parameter name="renderer" transfer-ownership="none">
+-          <doc xml:space="preserve"
+-               filename="../cogl/cogl/cogl-xlib-renderer.h"
+-               line="134">a #CoglRenderer</doc>
+-          <type c:type="CoglRenderer*"/>
+-        </parameter>
+-        <parameter name="display" transfer-ownership="none">
+-          <type c:type="Display*"/>
+-        </parameter>
+-      </parameters>
+-    </function>
+   </namespace>
+ </repository>

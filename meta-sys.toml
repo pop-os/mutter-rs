@@ -1,0 +1,18 @@
+[options]
+library = "Meta"
+version = "8"
+external_libraries = [
+	"cairo",
+	"Clutter",
+	"Cogl",
+	"GDesktopEnums",
+	"GLib",
+	"Gio",
+	"GObject",
+	"Graphene",
+	"Gtk",
+	"Pango",
+	"xlib",
+]
+target_path = "meta-sys"
+work_mode = "sys"

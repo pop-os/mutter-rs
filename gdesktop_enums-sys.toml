@@ -1,0 +1,8 @@
+[options]
+library = "GDesktopEnums"
+version = "3.0"
+external_libraries = [
+	"GLib",
+]
+target_path = "gdesktop_enums-sys"
+work_mode = "sys"

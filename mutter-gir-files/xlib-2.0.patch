@@ -1,0 +1,13 @@
+--- /usr/share/gir-1.0/xlib-2.0.gir	2021-03-19 08:22:12.000000000 -0600
++++ mutter-gir-files/xlib-2.0.gir	2021-08-20 15:56:52.526363401 -0600
+@@ -2,7 +2,10 @@
+ <repository version="1.2"
+             xmlns="http://www.gtk.org/introspection/core/1.0"
+             xmlns:c="http://www.gtk.org/introspection/c/1.0">
++  <include name="GLib" version="2.0"/>
++  <package name="x11"/>
+   <namespace name="xlib" version="2.0"
++	     shared-library="libX11.so"
+ 	     c:identifier-prefixes=""
+ 	     c:symbol-prefixes="X">
+     <alias name="Atom" c:type="Atom">

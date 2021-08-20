@@ -1,0 +1,11 @@
+--- /usr/share/gir-1.0/GDesktopEnums-3.0.gir	2021-06-10 16:18:47.000000000 -0600
++++ mutter-gir-files/GDesktopEnums-3.0.gir	2021-08-20 11:26:40.727012789 -0600
+@@ -6,6 +6,8 @@
+             xmlns="http://www.gtk.org/introspection/core/1.0"
+             xmlns:c="http://www.gtk.org/introspection/c/1.0"
+             xmlns:glib="http://www.gtk.org/introspection/glib/1.0">
++  <include name="GLib" version="2.0"/>
++  <package name="gsettings-desktop-schemas"/>
+   <namespace name="GDesktopEnums"
+              version="3.0"
+              shared-library=""

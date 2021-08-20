@@ -1,0 +1,27 @@
+--- clutter-sys/Cargo.toml.orig	2021-08-20 11:11:26.873860272 -0600
++++ clutter-sys/Cargo.toml	2021-08-20 11:11:33.981862505 -0600
+@@ -74,13 +74,13 @@
+ libc = "0.2"
+ 
+ [dependencies.atk-sys]
+-git = "https://github.com/gtk-rs/gtk-rs-core"
++path = "../atk-sys"
+ 
+ [dependencies.cairo-sys-rs]
+ git = "https://github.com/gtk-rs/gtk-rs-core"
+ 
+ [dependencies.cogl-sys]
+-git = "https://github.com/gtk-rs/gtk-rs-core"
++path = "../cogl-sys"
+ 
+ [dependencies.glib-sys]
+ git = "https://github.com/gtk-rs/gtk-rs-core"
+@@ -92,7 +92,7 @@
+ git = "https://github.com/gtk-rs/gtk-rs-core"
+ 
+ [dependencies.json-sys]
+-git = "https://github.com/gtk-rs/gtk-rs-core"
++path = "../json-sys"
+ 
+ [dependencies.pango-sys]
+ git = "https://github.com/gtk-rs/gtk-rs-core"

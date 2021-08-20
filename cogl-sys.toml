@@ -1,0 +1,11 @@
+[options]
+library = "Cogl"
+version = "8"
+external_libraries = [
+	"cairo",
+	"GLib",
+	"GObject",
+	"Graphene",
+]
+target_path = "cogl-sys"
+work_mode = "sys"

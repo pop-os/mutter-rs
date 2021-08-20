@@ -1,0 +1,59 @@
+--- /usr/lib/x86_64-linux-gnu/mutter-8/Meta-8.gir	2021-08-09 09:59:52.000000000 -0600
++++ mutter-gir-files/Meta-8.gir	2021-08-20 12:21:58.176148060 -0600
+@@ -15,6 +15,7 @@
+   <include name="Gtk" version="3.0"/>
+   <include name="xfixes" version="4.0"/>
+   <include name="xlib" version="2.0"/>
++  <package name="libmutter-8"/>
+   <namespace name="Meta"
+              version="8"
+              shared-library="libmutter-8.so.0"
+@@ -209,7 +210,7 @@
+             <doc xml:space="preserve"
+                  filename="../src/backends/meta-backend.c"
+                  line="893">the #MetaGpu</doc>
+-            <type/>
++            <type name="gpointer" c:type="MetaGpu*"/>
+           </parameter>
+         </parameters>
+       </glib:signal>
+@@ -4745,7 +4746,7 @@
+             <doc xml:space="preserve"
+                  filename="../src/x11/group.c"
+                  line="310">a X event</doc>
+-            <type c:type="XEvent*"/>
++            <type name="xlib.XEvent" c:type="XEvent*"/>
+           </parameter>
+         </parameters>
+       </method>
+@@ -6177,7 +6178,7 @@
+           <doc xml:space="preserve"
+                filename="../src/meta/prefs.h"
+                line="459">a #ClutterKeyEvent</doc>
+-          <type name="gpointer" c:type="ClutterKeyEvent*"/>
++          <type name="Clutter.KeyEvent" c:type="ClutterKeyEvent*"/>
+         </parameter>
+         <parameter name="binding" transfer-ownership="none">
+           <doc xml:space="preserve"
+@@ -14104,21 +14105,6 @@
+           </instance-parameter>
+         </parameters>
+       </method>
+-      <method name="set_stage_input_region"
+-              c:identifier="meta_x11_display_set_stage_input_region">
+-        <source-position filename="../src/meta/meta-x11-display.h" line="67"/>
+-        <return-value transfer-ownership="none">
+-          <type name="none" c:type="void"/>
+-        </return-value>
+-        <parameters>
+-          <instance-parameter name="x11_display" transfer-ownership="none">
+-            <type name="X11Display" c:type="MetaX11Display*"/>
+-          </instance-parameter>
+-          <parameter name="region" transfer-ownership="none">
+-            <type name="xfixes.XserverRegion" c:type="XserverRegion"/>
+-          </parameter>
+-        </parameters>
+-      </method>
+       <method name="xwindow_is_a_no_focus_window"
+               c:identifier="meta_x11_display_xwindow_is_a_no_focus_window">
+         <source-position filename="../src/meta/meta-x11-display.h" line="63"/>

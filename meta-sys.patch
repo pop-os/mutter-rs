@@ -1,0 +1,35 @@
+--- meta-sys/Cargo.toml.orig	2021-08-20 12:19:24.115805806 -0600
++++ meta-sys/Cargo.toml	2021-08-20 12:19:41.439844322 -0600
+@@ -20,13 +20,13 @@
+ git = "https://github.com/gtk-rs/gtk-rs-core"
+ 
+ [dependencies.clutter-sys]
+-git = "https://github.com/gtk-rs/gtk-rs-core"
++path = "../clutter-sys"
+ 
+ [dependencies.cogl-sys]
+-git = "https://github.com/gtk-rs/gtk-rs-core"
++path = "../cogl-sys"
+ 
+ [dependencies.gdesktop_enums-sys]
+-git = "https://github.com/gtk-rs/gtk-rs-core"
++path = "../gdesktop_enums-sys"
+ 
+ [dependencies.glib-sys]
+ git = "https://github.com/gtk-rs/gtk-rs-core"
+@@ -41,13 +41,13 @@
+ git = "https://github.com/gtk-rs/gtk-rs-core"
+ 
+ [dependencies.gtk-sys]
+-git = "https://github.com/gtk-rs/gtk-rs-core"
++git = "https://github.com/gtk-rs/gtk3-rs"
+ 
+ [dependencies.pango-sys]
+ git = "https://github.com/gtk-rs/gtk-rs-core"
+ 
+ [dependencies.xlib-sys]
+-git = "https://github.com/gtk-rs/gtk-rs-core"
++path = "../xlib-sys"
+ 
+ [build-dependencies]
+ system-deps = "3"

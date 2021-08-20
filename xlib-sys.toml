@@ -1,0 +1,8 @@
+[options]
+library = "xlib"
+version = "2.0"
+external_libraries = [
+	"GLib"
+]
+target_path = "xlib-sys"
+work_mode = "sys"

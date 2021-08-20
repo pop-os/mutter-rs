@@ -1,0 +1,10 @@
+[options]
+library = "Json"
+version = "1.0"
+external_libraries = [
+	"Gio",
+	"GLib",
+	"GObject",
+]
+target_path = "json-sys"
+work_mode = "sys"

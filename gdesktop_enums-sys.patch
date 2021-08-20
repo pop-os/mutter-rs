@@ -1,0 +1,19 @@
+--- gdesktop_enums-sys/Cargo.toml.orig	2021-08-20 11:31:53.048499821 -0600
++++ gdesktop_enums-sys/Cargo.toml	2021-08-20 11:32:00.988531835 -0600
+@@ -1,5 +1,5 @@
+ [package]
+-name = "gdesktop-enums-sys"
++name = "gdesktop_enums-sys"
+ version = "0.0.1"
+ links = "\"\""
+ edition = "2018"
+--- gdesktop_enums-sys/src/lib.rs.orig	2021-08-20 11:28:45.383666628 -0600
++++ gdesktop_enums-sys/src/lib.rs	2021-08-20 11:28:55.067713678 -0600
+@@ -187,7 +187,6 @@
+ pub const G_DESKTOP_VISUAL_BELL_FULLSCREEN_FLASH: GDesktopVisualBellType = 0;
+ pub const G_DESKTOP_VISUAL_BELL_FRAME_FLASH: GDesktopVisualBellType = 1;
+
+-#[link(name = "")]
+ extern "C" {
+
+ }
