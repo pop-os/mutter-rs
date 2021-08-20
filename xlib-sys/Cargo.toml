@@ -1,0 +1,30 @@
+[package]
+name = "xlib-sys"
+version = "0.0.1"
+links = "\"X11\""
+edition = "2018"
+build = "build.rs"
+[package.metadata.system-deps.x11]
+name = "x11"
+version = "0.0"
+[package.metadata.docs.rs]
+features = ["dox"]
+
+[lib]
+name = "xlib_sys"
+
+[dependencies]
+libc = "0.2"
+
+[dependencies.glib-sys]
+git = "https://github.com/gtk-rs/gtk-rs-core"
+
+[build-dependencies]
+system-deps = "3"
+
+[dev-dependencies]
+shell-words = "1.0.0"
+tempfile = "3"
+
+[features]
+dox = []

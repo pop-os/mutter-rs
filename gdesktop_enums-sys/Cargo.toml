@@ -1,0 +1,30 @@
+[package]
+name = "gdesktop_enums-sys"
+version = "0.0.1"
+links = "\"\""
+edition = "2018"
+build = "build.rs"
+[package.metadata.system-deps.gsettings_desktop_schemas]
+name = "gsettings-desktop-schemas"
+version = "0.0"
+[package.metadata.docs.rs]
+features = ["dox"]
+
+[lib]
+name = "gdesktop_enums_sys"
+
+[dependencies]
+libc = "0.2"
+
+[dependencies.glib-sys]
+git = "https://github.com/gtk-rs/gtk-rs-core"
+
+[build-dependencies]
+system-deps = "3"
+
+[dev-dependencies]
+shell-words = "1.0.0"
+tempfile = "3"
+
+[features]
+dox = []

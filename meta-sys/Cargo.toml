@@ -1,0 +1,60 @@
+[package]
+name = "meta-sys"
+version = "0.0.1"
+links = "\"mutter-8\""
+edition = "2018"
+build = "build.rs"
+[package.metadata.system-deps.libmutter_8]
+name = "libmutter-8"
+version = "0.0"
+[package.metadata.docs.rs]
+features = ["dox"]
+
+[lib]
+name = "meta_sys"
+
+[dependencies]
+libc = "0.2"
+
+[dependencies.cairo-sys-rs]
+git = "https://github.com/gtk-rs/gtk-rs-core"
+
+[dependencies.clutter-sys]
+path = "../clutter-sys"
+
+[dependencies.cogl-sys]
+path = "../cogl-sys"
+
+[dependencies.gdesktop_enums-sys]
+path = "../gdesktop_enums-sys"
+
+[dependencies.glib-sys]
+git = "https://github.com/gtk-rs/gtk-rs-core"
+
+[dependencies.gio-sys]
+git = "https://github.com/gtk-rs/gtk-rs-core"
+
+[dependencies.gobject-sys]
+git = "https://github.com/gtk-rs/gtk-rs-core"
+
+[dependencies.graphene-sys]
+git = "https://github.com/gtk-rs/gtk-rs-core"
+
+[dependencies.gtk-sys]
+git = "https://github.com/gtk-rs/gtk3-rs"
+
+[dependencies.pango-sys]
+git = "https://github.com/gtk-rs/gtk-rs-core"
+
+[dependencies.xlib-sys]
+path = "../xlib-sys"
+
+[build-dependencies]
+system-deps = "3"
+
+[dev-dependencies]
+shell-words = "1.0.0"
+tempfile = "3"
+
+[features]
+dox = []
