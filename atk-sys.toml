@@ -1,9 +1,0 @@
-[options]
-library = "Atk"
-version = "1.0"
-external_libraries = [
-	"GLib",
-	"GObject",
-]
-target_path = "atk-sys"
-work_mode = "sys"

@@ -74,7 +74,7 @@ name = "clutter_sys"
 libc = "0.2"
 
 [dependencies.atk-sys]
-path = "../atk-sys"
+git = "https://github.com/gtk-rs/gtk3-rs"
 
 [dependencies.cairo-sys-rs]
 git = "https://github.com/gtk-rs/gtk-rs-core"

@@ -14,18 +14,19 @@ cp -v /usr/lib/x86_64-linux-gnu/mutter-8/Meta-8.gir . && patch -p1 < Meta-8.patc
 popd
 
 # Packages to generate, listed in dependency order
-pkgs=(
+sys_pkgs=(
     xlib-sys
     cogl-sys
-    atk-sys
     json-sys
     clutter-sys
     gdesktop_enums-sys
     meta-sys
 )
 
-for pkg in "${pkgs[@]}"
+for pkg in "${sys_pkgs[@]}"
 do
+    # Uncomment to rebuild all automatically generated files
+    #rm -rfv "${pkg}"
     if [ ! -d "${pkg}" ]
     then
         cargo run --release --manifest-path gir/Cargo.toml -- \
