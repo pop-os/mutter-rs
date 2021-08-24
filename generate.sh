@@ -42,3 +42,26 @@ do
     fi
     cargo build --release --manifest-path "${pkg}/Cargo.toml" --all-features
 done
+
+rust_pkgs=(
+    clutter
+    gdesktop_enums
+    meta
+)
+
+for pkg in "${rust_pkgs[@]}"
+do
+    rm -rfv "${pkg}/comments.md" "${pkg}/src/auto"
+    cargo run --release --manifest-path gir/Cargo.toml -- \
+        --config "${pkg}/Gir.toml" \
+        --girs-directories mutter-gir-files \
+        --girs-directories gir-files
+    cargo run --release --manifest-path gir/Cargo.toml -- \
+        --config "${pkg}/Gir.toml" \
+        --girs-directories mutter-gir-files \
+        --girs-directories gir-files \
+        --mode doc \
+        --doc-target-path "comments.md"
+    rustdoc-stripper --regenerate --comment-file "${pkg}/comments.md" --dir "${pkg}/src"
+    cargo build --release --manifest-path "${pkg}/Cargo.toml" --all-features
+done

@@ -1,0 +1,61 @@
+[options]
+library = "Meta"
+version = "8"
+target_path = "."
+work_mode = "normal"
+
+generate = [
+	"Meta.Background",
+	"Meta.BackgroundActor",
+	"Meta.BackgroundGroup",
+	"Meta.Cursor",
+	"Meta.DisplayCorner",
+	"Meta.DisplayDirection",
+	"Meta.FrameType",
+	"Meta.GrabOp",
+	"Meta.KeyBinding",
+	"Meta.KeyBindingFlags",
+	"Meta.MaximizeFlags",
+	"Meta.MotionDirection",
+	"Meta.PadActionType",
+	"Meta.Rectangle",
+	"Meta.Selection",
+	"Meta.SelectionSource",
+	"Meta.SelectionType",
+	"Meta.StackLayer",
+	"Meta.TabList",
+	"Meta.WindowClientType",
+	"Meta.WindowType",
+	"Meta.Workspace",
+	"Meta.WorkspaceManager",
+]
+
+manual = [
+	"cairo.Region",
+	"Clutter.Actor",
+	"Clutter.InputDevice",
+	"GDesktopEnums.BackgroundStyle",
+	"GLib.Error",
+	"Gio.Cancellable",
+	"Gio.File",
+	"Gio.InputStream",
+	"Gio.OutputStream",
+	"Gio.Settings",
+	"Gio.Task",
+	"GObject.Object",
+]
+
+[[object]]
+name = "Meta.Display"
+status = "generate"
+	[[object.function]]
+	name = "sort_windows_by_stacking"
+	ignore = true
+
+
+[[object]]
+name = "Meta.Window"
+status = "generate"
+	[[object.function]]
+	name = "set_icon_geometry"
+	ignore = true

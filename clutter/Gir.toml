@@ -1,0 +1,12 @@
+[options]
+library = "Clutter"
+version = "8"
+target_path = "."
+work_mode = "normal"
+
+generate = [
+	"Clutter.Actor",
+	#"Clutter.Color",
+	"Clutter.InputDevice",
+	"Clutter.StaticColor",
+]

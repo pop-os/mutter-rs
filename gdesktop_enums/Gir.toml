@@ -1,0 +1,9 @@
+[options]
+library = "GDesktopEnums"
+version = "3.0"
+target_path = "."
+work_mode = "normal"
+
+generate = [
+	"GDesktopEnums.BackgroundStyle",
+]
