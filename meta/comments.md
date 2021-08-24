@@ -212,6 +212,14 @@ Horizontal
 Vertical
 <!-- struct MaximizeFlags::const BOTH -->
 Both
+<!-- struct ModalOptions -->
+Options that can be provided when calling [`PluginExt::begin_modal()`][crate::prelude::PluginExt::begin_modal()].
+<!-- struct ModalOptions::const POINTER_ALREADY_GRABBED -->
+if set the pointer is already
+ grabbed by the plugin and should not be grabbed again.
+<!-- struct ModalOptions::const KEYBOARD_ALREADY_GRABBED -->
+if set the keyboard is already
+ grabbed by the plugin and should not be grabbed again.
 <!-- enum MotionDirection::variant Up -->
 Upwards motion
 <!-- enum MotionDirection::variant Down -->
@@ -228,6 +236,14 @@ Motion up and to the right
 Motion down and to the left
 <!-- enum MotionDirection::variant DownRight -->
 Motion down and to the right
+<!-- struct Plugin -->
+
+
+This is an Abstract Base Class, you cannot instantiate it.
+
+# Implements
+
+[`PluginExt`][trait@crate::prelude::PluginExt], [`trait@glib::ObjectExt`]
 <!-- struct Selection -->
 
 
@@ -292,6 +308,33 @@ set, the location should correspond to a dock, task bar or other user
 interface element displaying the icon, and is relative to the root window.
 ## `rect`
 rectangle with the desired geometry or [`None`].
+<!-- struct WindowActor -->
+
+
+This is an Abstract Base Class, you cannot instantiate it.
+
+# Implements
+
+[`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`]
+<!-- impl WindowActor::fn get_image -->
+Flattens the layers of `self` into one ARGB32 image by alpha blending
+the images, and returns the flattened image.
+## `clip`
+A clipping rectangle, to help prevent extra processing.
+In the case that the clipping rectangle is partially or fully
+outside the bounds of the actor, the rectangle will be clipped.
+
+# Returns
+
+a new cairo surface to be freed with
+`cairo_surface_destroy()`.
+<!-- impl WindowActor::fn texture -->
+Gets the ClutterActor that is used to display the contents of the window,
+or NULL if no texture is shown yet, because the window is not mapped.
+
+# Returns
+
+the [`clutter::Actor`][crate::clutter::Actor] for the contents
 <!-- enum WindowClientType::variant Wayland -->
 A Wayland based window
 <!-- enum WindowClientType::variant X11 -->

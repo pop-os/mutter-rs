@@ -16,8 +16,10 @@ generate = [
 	"Meta.KeyBinding",
 	"Meta.KeyBindingFlags",
 	"Meta.MaximizeFlags",
+	"Meta.ModalOptions",
 	"Meta.MotionDirection",
 	"Meta.PadActionType",
+	"Meta.Plugin",
 	"Meta.Rectangle",
 	"Meta.Selection",
 	"Meta.SelectionSource",
@@ -31,7 +33,9 @@ generate = [
 ]
 
 manual = [
+	"cairo.RectangleInt",
 	"cairo.Region",
+	"cairo.Surface",
 	"Clutter.Actor",
 	"Clutter.InputDevice",
 	"GDesktopEnums.BackgroundStyle",
@@ -52,10 +56,16 @@ status = "generate"
 	name = "sort_windows_by_stacking"
 	ignore = true
 
-
 [[object]]
 name = "Meta.Window"
 status = "generate"
 	[[object.function]]
 	name = "set_icon_geometry"
+	ignore = true
+
+[[object]]
+name = "Meta.WindowActor"
+status = "generate"
+	[[object.function]]
+	name = "get_image"
 	ignore = true

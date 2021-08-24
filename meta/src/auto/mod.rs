@@ -15,6 +15,9 @@ pub use self::background_group::{BackgroundGroup, NONE_BACKGROUND_GROUP};
 mod display;
 pub use self::display::{Display};
 
+mod plugin;
+pub use self::plugin::{Plugin, NONE_PLUGIN};
+
 mod selection;
 pub use self::selection::{Selection};
 
@@ -23,6 +26,9 @@ pub use self::selection_source::{SelectionSource, NONE_SELECTION_SOURCE};
 
 mod window;
 pub use self::window::{Window};
+
+mod window_actor;
+pub use self::window_actor::{WindowActor};
 
 mod workspace;
 pub use self::workspace::{Workspace};
@@ -53,8 +59,10 @@ pub use self::enums::WindowType;
 mod flags;
 pub use self::flags::KeyBindingFlags;
 pub use self::flags::MaximizeFlags;
+pub use self::flags::ModalOptions;
 
 #[doc(hidden)]
 pub mod traits {
+    pub use super::plugin::PluginExt;
     pub use super::selection_source::SelectionSourceExt;
 }
