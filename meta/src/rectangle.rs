@@ -4,7 +4,6 @@ use glib::translate::{
     Uninitialized,
     ToGlibPtr,
 };
-use std::mem;
 
 use crate::Rectangle;
 
