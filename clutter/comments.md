@@ -456,25 +456,18 @@ a copy
  of the list of `ClutterConstraint`<!-- -->s. The contents of the list are
  owned by the [`Actor`][crate::Actor]. Use `g_list_free()` to free the resources
  allocated by the returned `GList`
-<!-- trait ActorExt::fn content -->
-Retrieves the contents of `self`.
-
-# Returns
-
-a pointer to the `ClutterContent` instance,
- or [`None`] if none was set
 <!-- trait ActorExt::fn content_box -->
-Retrieves the bounding box for the `ClutterContent` of `self`.
+Retrieves the bounding box for the [`Content`][crate::Content] of `self`.
 
 The bounding box is relative to the actor's allocation.
 
-If no `ClutterContent` is set for `self`, or if `self` has not been
+If no [`Content`][crate::Content] is set for `self`, or if `self` has not been
 allocated yet, then the result is undefined.
 
 The content box is guaranteed to be, at most, as big as the allocation
 of the [`Actor`][crate::Actor].
 
-If the `ClutterContent` used by the actor has a preferred size, then
+If the [`Content`][crate::Content] used by the actor has a preferred size, then
 it is possible to modify the content box by using the
 `property::Actor::content-gravity` property.
 
@@ -483,7 +476,7 @@ it is possible to modify the content box by using the
 
 ## `box_`
 the return location for the bounding
- box for the `ClutterContent`
+ box for the [`Content`][crate::Content]
 <!-- trait ActorExt::fn content_gravity -->
 Retrieves the content gravity as set using
 `clutter_actor_set_content_gravity()`.
@@ -904,12 +897,8 @@ If `transform` is [`None`], the child transform will be unset.
 The `property::Actor::child-transform` property is animatable.
 ## `transform`
 a `graphene_matrix_t`, or [`None`]
-<!-- trait ActorExt::fn set_content -->
-Sets the contents of a [`Actor`][crate::Actor].
-## `content`
-a `ClutterContent`, or [`None`]
 <!-- trait ActorExt::fn set_content_gravity -->
-Sets the gravity of the `ClutterContent` used by `self`.
+Sets the gravity of the [`Content`][crate::Content] used by `self`.
 
 See the description of the `property::Actor::content-gravity` property for
 more information.
@@ -919,7 +908,7 @@ The `property::Actor::content-gravity` property is animatable.
 the `ClutterContentGravity`
 <!-- trait ActorExt::fn set_content_repeat -->
 Sets the policy for repeating the `property::Actor::content` of a
-[`Actor`][crate::Actor]. The behaviour is deferred to the `ClutterContent`
+[`Actor`][crate::Actor]. The behaviour is deferred to the [`Content`][crate::Content]
 implementation.
 ## `repeat`
 the repeat policy
@@ -1386,6 +1375,12 @@ the X axis.
 <!-- trait ActorExt::fn y_expand -->
 Whether a layout manager should assign more space to the actor on
 the Y axis.
+<!-- struct Content -->
+
+
+# Implements
+
+[`ContentExt`][trait@crate::prelude::ContentExt]
 <!-- struct InputDevice -->
 Generic representation of an input device. The actual contents of this
 structure depend on the backend used.

@@ -9,6 +9,9 @@ pub use self::background::{Background};
 mod background_actor;
 pub use self::background_actor::{BackgroundActor};
 
+mod background_content;
+pub use self::background_content::{BackgroundContent};
+
 mod background_group;
 pub use self::background_group::{BackgroundGroup, NONE_BACKGROUND_GROUP};
 

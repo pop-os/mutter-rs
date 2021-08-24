@@ -15,6 +15,21 @@ the background that are obscured by other windows.
 # Implements
 
 [`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`]
+<!-- struct BackgroundContent -->
+This class handles tracking and painting the root window background.
+By integrating with `MetaWindowGroup` we can avoid painting parts of
+the background that are obscured by other windows.
+
+# Implements
+
+[`trait@glib::ObjectExt`], [`trait@clutter::prelude::ContentExt`]
+<!-- impl BackgroundContent::fn set_rounded_clip_bounds -->
+Sets the bounding clip rectangle of the [`BackgroundContent`][crate::BackgroundContent] that's used
+when a rounded clip set via [`set_rounded_clip_radius()`][Self::set_rounded_clip_radius()]
+is in effect, set it to [`None`] to use no bounding clip, rounding the edges
+of the full texture.
+## `bounds`
+The new bounding clip rectangle, or [`None`]
 <!-- struct BackgroundGroup -->
 
 

@@ -3,6 +3,9 @@
 // from mutter-gir-files
 // DO NOT EDIT
 
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+use crate::Content;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
@@ -436,11 +439,17 @@ pub trait ActorExt: 'static {
     //#[doc(alias = "get_constraints")]
     //fn constraints(&self) -> /*Ignored*/Vec<Constraint>;
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //#[doc(alias = "clutter_actor_get_content")]
-    //#[doc(alias = "get_content")]
-    //fn content(&self) -> /*Ignored*/Option<Content>;
+    /// Retrieves the contents of `self`.
+    ///
+    /// # Returns
+    ///
+    /// a pointer to the [`Content`][crate::Content] instance,
+    ///  or [`None`] if none was set
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    #[doc(alias = "clutter_actor_get_content")]
+    #[doc(alias = "get_content")]
+    fn content(&self) -> Option<Content>;
 
     //#[cfg(any(feature = "v1_10", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
@@ -1901,10 +1910,13 @@ pub trait ActorExt: 'static {
     #[doc(alias = "clutter_actor_set_clip_to_allocation")]
     fn set_clip_to_allocation(&self, clip_set: bool);
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //#[doc(alias = "clutter_actor_set_content")]
-    //fn set_content(&self, content: /*Ignored*/Option<&Content>);
+    /// Sets the contents of a [`Actor`][crate::Actor].
+    /// ## `content`
+    /// a [`Content`][crate::Content], or [`None`]
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    #[doc(alias = "clutter_actor_set_content")]
+    fn set_content<P: IsA<Content>>(&self, content: Option<&P>);
 
     //#[cfg(any(feature = "v1_10", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
@@ -3652,11 +3664,13 @@ impl<O: IsA<Actor>> ActorExt for O {
     //    unsafe { TODO: call ffi:clutter_actor_get_constraints() }
     //}
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //fn content(&self) -> /*Ignored*/Option<Content> {
-    //    unsafe { TODO: call ffi:clutter_actor_get_content() }
-    //}
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    fn content(&self) -> Option<Content> {
+        unsafe {
+            from_glib_none(ffi::clutter_actor_get_content(self.as_ref().to_glib_none().0))
+        }
+    }
 
     //#[cfg(any(feature = "v1_10", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
@@ -4595,11 +4609,13 @@ impl<O: IsA<Actor>> ActorExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //fn set_content(&self, content: /*Ignored*/Option<&Content>) {
-    //    unsafe { TODO: call ffi:clutter_actor_set_content() }
-    //}
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    fn set_content<P: IsA<Content>>(&self, content: Option<&P>) {
+        unsafe {
+            ffi::clutter_actor_set_content(self.as_ref().to_glib_none().0, content.map(|p| p.as_ref()).to_glib_none().0);
+        }
+    }
 
     //#[cfg(any(feature = "v1_10", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]

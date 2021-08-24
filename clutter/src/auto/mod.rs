@@ -6,6 +6,9 @@
 mod actor;
 pub use self::actor::{Actor, NONE_ACTOR};
 
+mod content;
+pub use self::content::{Content, NONE_CONTENT};
+
 mod input_device;
 pub use self::input_device::{InputDevice};
 
@@ -17,4 +20,5 @@ pub use self::enums::StaticColor;
 #[doc(hidden)]
 pub mod traits {
     pub use super::actor::ActorExt;
+    pub use super::content::ContentExt;
 }
