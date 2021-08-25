@@ -1,4 +1,97 @@
 <!-- file * -->
+<!-- fn add_verbose_topic -->
+Ensure log messages for the given topic `topic`
+will be printed.
+## `topic`
+Topic for which logging will be started
+<!-- fn backend -->
+Accessor for the singleton MetaBackend.
+
+# Returns
+
+The only `MetaBackend` there is.
+<!-- fn option_context -->
+Returns a `GOptionContext` initialized with mutter-related options.
+Parse the command-line args with this before calling [`init()`][crate::init()].
+
+# Returns
+
+the `GOptionContext`
+<!-- fn keybindings_set_custom_handler -->
+Allows users to register a custom handler for a
+builtin key binding.
+## `name`
+The name of the keybinding to set
+## `handler`
+The new handler function
+## `free_data`
+Will be called when this handler is overridden.
+
+# Returns
+
+[`true`] if the binding known as `name` was found,
+[`false`] otherwise.
+<!-- fn later_add -->
+Sets up a callback to be called at some later time. `when` determines the
+particular later occasion at which it is called. This is much like `g_idle_add()`,
+except that the functions interact properly with clutter event handling.
+If a "later" function is added from a clutter event handler, and is supposed
+to be run before the stage is redrawn, it will be run before that redraw
+of the stage, not the next one.
+## `when`
+enumeration value determining the phase at which to run the callback
+## `func`
+callback to run later
+## `notify`
+function to call to destroy `data` when it is no longer in use, or [`None`]
+
+# Returns
+
+an integer ID (guaranteed to be non-zero) that can be used
+ to cancel the callback and prevent it from being run.
+<!-- fn prefs_add_listener -->
+## `func`
+a `MetaPrefsChangedFunc`
+<!-- fn prefs_remove_listener -->
+## `func`
+a `MetaPrefsChangedFunc`
+<!-- fn quit -->
+Stops Mutter. This tells the event loop to stop processing; it is
+rather dangerous to use this because this will leave the user with
+no window manager. We generally do this only if, for example, the
+session manager asks us to; we assume the session manager knows
+what it's talking about.
+## `code`
+The success or failure code to return to the calling process.
+<!-- fn remove_verbose_topic -->
+Stop printing log messages for the given topic `topic`. Note
+that this method does not stack with `meta_add_verbose_topic()`;
+i.e. if two calls to `meta_add_verbose_topic()` for the same
+topic are made, one call to `meta_remove_verbose_topic()` will
+remove it.
+## `topic`
+Topic for which logging will be stopped
+<!-- fn show_dialog -->
+## `type_`
+type of dialog
+## `message`
+message
+## `timeout`
+timeout
+## `display`
+display
+## `ok_text`
+text for Ok button
+## `cancel_text`
+text for Cancel button
+## `icon_name`
+icon name
+## `transient_for`
+window XID of parent
+## `columns`
+columns
+## `entries`
+entries
 <!-- struct Background -->
 This class handles tracking and painting the root window background.
 By integrating with [`WindowGroup`][crate::WindowGroup] we can avoid painting parts of

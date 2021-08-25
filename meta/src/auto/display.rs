@@ -717,7 +717,7 @@ impl Display {
 
     /// The ::restart signal is emitted to indicate that compositor
     /// should reexec the process. This is
-    /// emitted when `meta_restart()` is called, either by Mutter
+    /// emitted when [`restart()`][crate::restart()] is called, either by Mutter
     /// internally or by the embedding compositor. See also
     /// ::show-restart-message.
     ///
@@ -795,7 +795,7 @@ impl Display {
 
     /// The ::show-restart-message signal will be emitted to indicate
     /// that the compositor should show a message during restart. This is
-    /// emitted when `meta_restart()` is called, either by Mutter
+    /// emitted when [`restart()`][crate::restart()] is called, either by Mutter
     /// internally or by the embedding compositor. The message should be
     /// immediately added to the Clutter stage in its final form -
     /// ::restart will be emitted to exit the application and leave the

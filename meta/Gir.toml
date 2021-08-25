@@ -58,6 +58,16 @@ manual = [
 ]
 
 [[object]]
+name = "Meta.*"
+status = "generate"
+	[[object.constant]]
+	name = "DEFAULT_ICON_NAME"
+	ignore = true
+	[[object.function]]
+	name = "rect"
+	ignore = true
+
+[[object]]
 name = "Meta.Display"
 status = "generate"
 	[[object.function]]

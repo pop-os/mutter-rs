@@ -74,6 +74,8 @@ pub use self::flags::KeyBindingFlags;
 pub use self::flags::MaximizeFlags;
 pub use self::flags::ModalOptions;
 
+pub mod functions;
+
 #[doc(hidden)]
 pub mod traits {
     pub use super::plugin::PluginExt;
