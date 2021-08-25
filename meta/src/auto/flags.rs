@@ -12,6 +12,82 @@ use glib::Type;
 use std::fmt;
 
 bitflags! {
+    #[doc(alias = "MetaDirection")]
+    pub struct Direction: u32 {
+        #[doc(alias = "META_DIRECTION_LEFT")]
+        const LEFT = ffi::META_DIRECTION_LEFT as u32;
+        #[doc(alias = "META_DIRECTION_RIGHT")]
+        const RIGHT = ffi::META_DIRECTION_RIGHT as u32;
+        #[doc(alias = "META_DIRECTION_TOP")]
+        const TOP = ffi::META_DIRECTION_TOP as u32;
+        #[doc(alias = "META_DIRECTION_BOTTOM")]
+        const BOTTOM = ffi::META_DIRECTION_BOTTOM as u32;
+        #[doc(alias = "META_DIRECTION_UP")]
+        const UP = ffi::META_DIRECTION_UP as u32;
+        #[doc(alias = "META_DIRECTION_DOWN")]
+        const DOWN = ffi::META_DIRECTION_DOWN as u32;
+        #[doc(alias = "META_DIRECTION_HORIZONTAL")]
+        const HORIZONTAL = ffi::META_DIRECTION_HORIZONTAL as u32;
+        #[doc(alias = "META_DIRECTION_VERTICAL")]
+        const VERTICAL = ffi::META_DIRECTION_VERTICAL as u32;
+    }
+}
+
+impl fmt::Display for Direction {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        <Self as fmt::Debug>::fmt(self, f)
+    }
+}
+
+#[doc(hidden)]
+impl IntoGlib for Direction {
+    type GlibType = ffi::MetaDirection;
+
+    fn into_glib(self) -> ffi::MetaDirection {
+        self.bits()
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<ffi::MetaDirection> for Direction {
+    unsafe fn from_glib(value: ffi::MetaDirection) -> Self {
+        Self::from_bits_truncate(value)
+    }
+}
+
+impl StaticType for Direction {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::meta_direction_get_type()) }
+    }
+}
+
+impl glib::value::ValueType for Direction {
+    type Type = Self;
+}
+
+unsafe impl<'a> FromValue<'a> for Direction {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        from_glib(glib::gobject_ffi::g_value_get_flags(value.to_glib_none().0))
+    }
+}
+
+impl ToValue for Direction {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_flags(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
+bitflags! {
     #[doc(alias = "MetaKeyBindingFlags")]
     pub struct KeyBindingFlags: u32 {
         #[doc(alias = "META_KEY_BINDING_NONE")]

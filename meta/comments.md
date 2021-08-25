@@ -1,7 +1,7 @@
 <!-- file * -->
 <!-- struct Background -->
 This class handles tracking and painting the root window background.
-By integrating with `MetaWindowGroup` we can avoid painting parts of
+By integrating with [`WindowGroup`][crate::WindowGroup] we can avoid painting parts of
 the background that are obscured by other windows.
 
 # Implements
@@ -9,7 +9,7 @@ the background that are obscured by other windows.
 [`trait@glib::ObjectExt`]
 <!-- struct BackgroundActor -->
 This class handles tracking and painting the root window background.
-By integrating with `MetaWindowGroup` we can avoid painting parts of
+By integrating with [`WindowGroup`][crate::WindowGroup] we can avoid painting parts of
 the background that are obscured by other windows.
 
 # Implements
@@ -17,7 +17,7 @@ the background that are obscured by other windows.
 [`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`]
 <!-- struct BackgroundContent -->
 This class handles tracking and painting the root window background.
-By integrating with `MetaWindowGroup` we can avoid painting parts of
+By integrating with [`WindowGroup`][crate::WindowGroup] we can avoid painting parts of
 the background that are obscured by other windows.
 
 # Implements
@@ -36,6 +36,14 @@ The new bounding clip rectangle, or [`None`]
 # Implements
 
 [`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`]
+<!-- struct Compositor -->
+
+
+This is an Abstract Base Class, you cannot instantiate it.
+
+# Implements
+
+[`trait@glib::ObjectExt`]
 <!-- enum Cursor::variant Default -->
 Default cursor
 <!-- enum Cursor::variant NorthResize -->
@@ -74,6 +82,22 @@ crosshair (action forbidden)
 I-beam (text input)
 <!-- enum Cursor::variant Blank -->
 Invisible cursor
+<!-- struct Direction::const LEFT -->
+Left
+<!-- struct Direction::const RIGHT -->
+Right
+<!-- struct Direction::const TOP -->
+Top
+<!-- struct Direction::const BOTTOM -->
+Bottom
+<!-- struct Direction::const UP -->
+Up
+<!-- struct Direction::const DOWN -->
+Down
+<!-- struct Direction::const HORIZONTAL -->
+Horizontal
+<!-- struct Direction::const VERTICAL -->
+Vertical
 <!-- struct Display -->
 
 
@@ -301,6 +325,12 @@ Dock layer
 Override-redirect layer
 <!-- enum StackLayer::variant Last -->
 Marks the end of the [`StackLayer`][crate::StackLayer] enumeration
+<!-- struct Stage -->
+
+
+# Implements
+
+[`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`]
 <!-- enum TabList::variant Normal -->
 Normal windows
 <!-- enum TabList::variant Docks -->
@@ -354,6 +384,12 @@ the [`clutter::Actor`][crate::clutter::Actor] for the contents
 A Wayland based window
 <!-- enum WindowClientType::variant X11 -->
 An X11 based window
+<!-- struct WindowGroup -->
+
+
+# Implements
+
+[`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`]
 <!-- enum WindowType::variant Normal -->
 Normal
 <!-- enum WindowType::variant Desktop -->

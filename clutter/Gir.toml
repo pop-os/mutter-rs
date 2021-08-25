@@ -6,8 +6,17 @@ work_mode = "normal"
 
 generate = [
 	"Clutter.Actor",
-	#"Clutter.Color",
 	"Clutter.Content",
 	"Clutter.InputDevice",
 	"Clutter.StaticColor",
 ]
+
+[[object]]
+name = "Clutter.Color"
+status = "generate"
+	[[object.function]]
+	name = "equal"
+	ignore = true
+	[[object.function]]
+	name = "hash"
+	ignore = true

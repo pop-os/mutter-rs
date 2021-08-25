@@ -418,14 +418,6 @@ or `get_preferred_height()` virtual functions.
 
 ## `box_`
 the function fills this in with the actor's allocation
-<!-- trait ActorExt::fn background_color -->
-Retrieves the color set using `clutter_actor_set_background_color()`.
-
-# Returns
-
-
-## `color`
-return location for a `ClutterColor`
 <!-- trait ActorExt::fn child_transform -->
 Retrieves the child transformation matrix set using
 `clutter_actor_set_child_transform()`; if none is currently set,
@@ -874,19 +866,6 @@ parent's implementation; the default implementation of the
 function.
 ## `box_`
 a `ClutterActorBox`
-<!-- trait ActorExt::fn set_background_color -->
-Sets the background color of a [`Actor`][crate::Actor].
-
-The background color will be used to cover the whole allocation of the
-actor. The default background color of an actor is transparent.
-
-To check whether an actor has a background color, you can use the
-`property::Actor::background-color-set` actor property.
-
-The `property::Actor::background-color` property is animatable.
-## `color`
-a `ClutterColor`, or [`None`] to unset a previously
- set color
 <!-- trait ActorExt::fn set_child_transform -->
 Sets the transformation matrix to be applied to all the children
 of `self` prior to their own transformations. The default child
@@ -1375,6 +1354,47 @@ the X axis.
 <!-- trait ActorExt::fn y_expand -->
 Whether a layout manager should assign more space to the actor on
 the Y axis.
+<!-- struct Color -->
+Color representation.
+<!-- impl Color::fn copy -->
+Makes a copy of the color structure. The result must be
+freed using `clutter_color_free()`.
+
+# Returns
+
+an allocated copy of `self`.
+<!-- impl Color::fn equal -->
+Compares two [`Color`][crate::Color]<!-- -->s and checks if they are the same.
+
+This function can be passed to `g_hash_table_new()` as the `key_equal_func`
+parameter, when using [`Color`][crate::Color]<!-- -->s as keys in a `GHashTable`.
+## `v2`
+a [`Color`][crate::Color]
+
+# Returns
+
+[`true`] if the two colors are the same.
+<!-- impl Color::fn free -->
+Frees a color structure created with `clutter_color_copy()`.
+<!-- impl Color::fn hash -->
+Converts a [`Color`][crate::Color] to a hash value.
+
+This function can be passed to `g_hash_table_new()` as the `hash_func`
+parameter, when using [`Color`][crate::Color]<!-- -->s as keys in a `GHashTable`.
+
+# Returns
+
+a hash value corresponding to the color
+<!-- impl Color::fn to_string -->
+Returns a textual specification of `self` in the hexadecimal form
+`<literal>`&num;rrggbbaa`</literal>`, where `<literal>`r`</literal>`,
+`<literal>`g`</literal>`, `<literal>`b`</literal>` and `<literal>`a`</literal>` are
+hexadecimal digits representing the red, green, blue and alpha components
+respectively.
+
+# Returns
+
+a newly-allocated text string
 <!-- struct Content -->
 
 

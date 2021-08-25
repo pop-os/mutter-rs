@@ -15,6 +15,9 @@ pub use self::background_content::{BackgroundContent};
 mod background_group;
 pub use self::background_group::{BackgroundGroup, NONE_BACKGROUND_GROUP};
 
+mod compositor;
+pub use self::compositor::{Compositor};
+
 mod display;
 pub use self::display::{Display};
 
@@ -27,11 +30,17 @@ pub use self::selection::{Selection};
 mod selection_source;
 pub use self::selection_source::{SelectionSource, NONE_SELECTION_SOURCE};
 
+mod stage;
+pub use self::stage::{Stage};
+
 mod window;
 pub use self::window::{Window};
 
 mod window_actor;
 pub use self::window_actor::{WindowActor};
+
+mod window_group;
+pub use self::window_group::{WindowGroup};
 
 mod workspace;
 pub use self::workspace::{Workspace};
@@ -60,6 +69,7 @@ pub use self::enums::WindowClientType;
 pub use self::enums::WindowType;
 
 mod flags;
+pub use self::flags::Direction;
 pub use self::flags::KeyBindingFlags;
 pub use self::flags::MaximizeFlags;
 pub use self::flags::ModalOptions;

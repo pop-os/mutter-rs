@@ -3,6 +3,7 @@
 // from mutter-gir-files
 // DO NOT EDIT
 
+use crate::Compositor;
 use crate::Cursor;
 use crate::DisplayDirection;
 use crate::GrabOp;
@@ -98,11 +99,13 @@ impl Display {
         }
     }
 
-    //#[doc(alias = "meta_display_get_compositor")]
-    //#[doc(alias = "get_compositor")]
-    //pub fn compositor(&self) -> /*Ignored*/Option<Compositor> {
-    //    unsafe { TODO: call ffi:meta_display_get_compositor() }
-    //}
+    #[doc(alias = "meta_display_get_compositor")]
+    #[doc(alias = "get_compositor")]
+    pub fn compositor(&self) -> Option<Compositor> {
+        unsafe {
+            from_glib_none(ffi::meta_display_get_compositor(self.to_glib_none().0))
+        }
+    }
 
     //#[doc(alias = "meta_display_get_compositor_modifiers")]
     //#[doc(alias = "get_compositor_modifiers")]

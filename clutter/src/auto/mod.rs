@@ -12,6 +12,9 @@ pub use self::content::{Content, NONE_CONTENT};
 mod input_device;
 pub use self::input_device::{InputDevice};
 
+mod color;
+pub use self::color::Color;
+
 mod enums;
 #[cfg(any(feature = "v1_6", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_6")))]

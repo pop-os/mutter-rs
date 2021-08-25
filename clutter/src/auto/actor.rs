@@ -5,6 +5,9 @@
 
 #[cfg(any(feature = "v1_10", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+use crate::Color;
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
 use crate::Content;
 use glib::object::Cast;
 use glib::object::IsA;
@@ -351,11 +354,18 @@ pub trait ActorExt: 'static {
     //#[doc(alias = "get_allocation_box")]
     //fn allocation_box(&self, box_: /*Ignored*/ActorBox);
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //#[doc(alias = "clutter_actor_get_background_color")]
-    //#[doc(alias = "get_background_color")]
-    //fn background_color(&self, color: /*Ignored*/Color);
+    /// Retrieves the color set using [`set_background_color()`][Self::set_background_color()].
+    ///
+    /// # Returns
+    ///
+    ///
+    /// ## `color`
+    /// return location for a [`Color`][crate::Color]
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    #[doc(alias = "clutter_actor_get_background_color")]
+    #[doc(alias = "get_background_color")]
+    fn background_color(&self) -> Color;
 
     /// Retrieves the actor at the given `index_` inside the list of
     /// children of `self`.
@@ -1830,10 +1840,22 @@ pub trait ActorExt: 'static {
     //#[doc(alias = "clutter_actor_set_allocation")]
     //fn set_allocation(&self, box_: /*Ignored*/&ActorBox);
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //#[doc(alias = "clutter_actor_set_background_color")]
-    //fn set_background_color(&self, color: /*Ignored*/Option<&Color>);
+    /// Sets the background color of a [`Actor`][crate::Actor].
+    ///
+    /// The background color will be used to cover the whole allocation of the
+    /// actor. The default background color of an actor is transparent.
+    ///
+    /// To check whether an actor has a background color, you can use the
+    /// `property::Actor::background-color-set` actor property.
+    ///
+    /// The `property::Actor::background-color` property is animatable.
+    /// ## `color`
+    /// a [`Color`][crate::Color], or [`None`] to unset a previously
+    ///  set color
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    #[doc(alias = "clutter_actor_set_background_color")]
+    fn set_background_color(&self, color: Option<&Color>);
 
     /// Sets `child` to be above `sibling` in the list of children of `self`.
     ///
@@ -3599,11 +3621,15 @@ impl<O: IsA<Actor>> ActorExt for O {
     //    unsafe { TODO: call ffi:clutter_actor_get_allocation_box() }
     //}
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //fn background_color(&self, color: /*Ignored*/Color) {
-    //    unsafe { TODO: call ffi:clutter_actor_get_background_color() }
-    //}
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    fn background_color(&self) -> Color {
+        unsafe {
+            let mut color = Color::uninitialized();
+            ffi::clutter_actor_get_background_color(self.as_ref().to_glib_none().0, color.to_glib_none_mut().0);
+            color
+        }
+    }
 
     #[cfg(any(feature = "v1_10", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
@@ -4557,11 +4583,13 @@ impl<O: IsA<Actor>> ActorExt for O {
     //    unsafe { TODO: call ffi:clutter_actor_set_allocation() }
     //}
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //fn set_background_color(&self, color: /*Ignored*/Option<&Color>) {
-    //    unsafe { TODO: call ffi:clutter_actor_set_background_color() }
-    //}
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    fn set_background_color(&self, color: Option<&Color>) {
+        unsafe {
+            ffi::clutter_actor_set_background_color(self.as_ref().to_glib_none().0, color.to_glib_none().0);
+        }
+    }
 
     #[cfg(any(feature = "v1_10", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]

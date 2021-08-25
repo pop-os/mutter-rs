@@ -38,10 +38,12 @@ impl Background {
         }
     }
 
-    //#[doc(alias = "meta_background_set_color")]
-    //pub fn set_color(&self, color: /*Ignored*/&mut clutter::Color) {
-    //    unsafe { TODO: call ffi:meta_background_set_color() }
-    //}
+    #[doc(alias = "meta_background_set_color")]
+    pub fn set_color(&self, color: &mut clutter::Color) {
+        unsafe {
+            ffi::meta_background_set_color(self.to_glib_none().0, color.to_glib_none_mut().0);
+        }
+    }
 
     /// Set the background to `file`
     /// ## `file`
@@ -56,7 +58,7 @@ impl Background {
     }
 
     //#[doc(alias = "meta_background_set_gradient")]
-    //pub fn set_gradient(&self, shading_direction: /*Ignored*/gdesktop_enums::BackgroundShading, color: /*Ignored*/&mut clutter::Color, second_color: /*Ignored*/&mut clutter::Color) {
+    //pub fn set_gradient(&self, shading_direction: /*Ignored*/gdesktop_enums::BackgroundShading, color: &mut clutter::Color, second_color: &mut clutter::Color) {
     //    unsafe { TODO: call ffi:meta_background_set_gradient() }
     //}
 
