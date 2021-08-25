@@ -1,4 +1,381 @@
 <!-- file * -->
+<!-- fn add_debug_flags -->
+Adds the debug flags passed to the list of debug flags.
+<!-- fn cairo_clear -->
+Utility function to clear a Cairo context.
+## `cr`
+a Cairo context
+<!-- fn cairo_set_source_color -->
+Utility function for setting the source color of `cr` using
+a [`Color`][crate::Color]. This function is the equivalent of:
+
+
+```text
+  cairo_set_source_rgba (cr,
+                         color->red / 255.0,
+                         color->green / 255.0,
+                         color->blue / 255.0,
+                         color->alpha / 255.0);
+```
+## `cr`
+a Cairo context
+## `color`
+a [`Color`][crate::Color]
+<!-- fn do_event -->
+Processes an event.
+
+The `event` must be a valid `ClutterEvent` and have a [`Stage`][crate::Stage]
+associated to it.
+
+This function is only useful when embedding Clutter inside another
+toolkit, and it should never be called by applications.
+## `event`
+a `ClutterEvent`.
+<!-- fn feature_available -->
+Checks whether `feature` is available. `feature` can be a logical
+OR of `ClutterFeatureFlags`.
+## `feature`
+a `ClutterFeatureFlags`
+
+# Returns
+
+[`true`] if a feature is available
+<!-- fn feature_get_all -->
+Returns all the supported features.
+
+# Returns
+
+a logical OR of all the supported features.
+<!-- fn current_event -->
+If an event is currently being processed, return that event.
+This function is intended to be used to access event state
+that might not be exposed by higher-level widgets. For
+example, to get the key modifier state from a Button 'clicked'
+event.
+
+# Returns
+
+The current ClutterEvent, or [`None`] if none
+<!-- fn default_backend -->
+Retrieves the default `ClutterBackend` used by Clutter. The
+`ClutterBackend` holds backend-specific configuration options.
+
+# Returns
+
+the default backend. You should
+ not ref or unref the returned object. Applications should rarely
+ need to use this.
+<!-- fn default_text_direction -->
+Retrieves the default direction for the text. The text direction is
+determined by the locale and/or by the `CLUTTER_TEXT_DIRECTION`
+environment variable.
+
+The default text direction can be overridden on a per-actor basis by using
+`clutter_actor_set_text_direction()`.
+
+# Returns
+
+the default text direction
+<!-- fn font_map -->
+Retrieves the `PangoFontMap` instance used by Clutter.
+You can use the global font map object with the COGL
+Pango API.
+
+# Returns
+
+the `PangoFontMap` instance. The returned
+ value is owned by Clutter and it should never be unreferenced.
+<!-- fn option_group -->
+Returns a `GOptionGroup` for the command line arguments recognized
+by Clutter. You should add this group to your `GOptionContext` with
+`g_option_context_add_group()`, if you are using `g_option_context_parse()`
+to parse your commandline arguments.
+
+Calling `g_option_context_parse()` with Clutter's `GOptionGroup` will result
+in Clutter's initialization. That is, the following code:
+
+
+```text
+  g_option_context_set_main_group (context, clutter_get_option_group ());
+  res = g_option_context_parse (context, &argc, &argc, NULL);
+```
+
+is functionally equivalent to:
+
+
+```text
+  clutter_init (&argc, &argv);
+```
+
+After `g_option_context_parse()` on a `GOptionContext` containing the
+Clutter `GOptionGroup` has returned [`true`], Clutter is guaranteed to be
+initialized.
+
+# Returns
+
+a `GOptionGroup` for the commandline arguments
+ recognized by Clutter
+<!-- fn option_group_without_init -->
+Returns a `GOptionGroup` for the command line arguments recognized
+by Clutter. You should add this group to your `GOptionContext` with
+`g_option_context_add_group()`, if you are using `g_option_context_parse()`
+to parse your commandline arguments.
+
+Unlike `clutter_get_option_group()`, calling `g_option_context_parse()` with
+the `GOptionGroup` returned by this function requires a subsequent explicit
+call to `clutter_init()`; use this function when needing to set foreign
+display connection with `clutter_x11_set_display()`, or with
+``gtk_clutter_init()``.
+
+# Returns
+
+a `GOptionGroup` for the commandline arguments
+ recognized by Clutter
+<!-- fn script_id -->
+Retrieves the Clutter script id, if any.
+## `gobject`
+a `GObject`
+
+# Returns
+
+the script id, or [`None`] if `object` was not defined inside
+ a UI definition file. The returned string is owned by the object and
+ should never be modified or freed.
+<!-- fn init_with_args -->
+This function does the same work as `clutter_init()`. Additionally,
+it allows you to add your own command line options, and it
+automatically generates nicely formatted `<option>`--help`</option>`
+output. Note that your program will be terminated after writing
+out the help output. Also note that, in case of error, the
+error message will be placed inside `error` instead of being
+printed on the display.
+
+Just like `clutter_init()`, if this function returns an error code then
+any subsequent call to any other Clutter API will result in undefined
+behaviour - including segmentation faults.
+## `argv`
+a pointer to the array
+ of command line arguments
+## `parameter_string`
+a string which is displayed in the
+ first line of `<option>`--help`</option>` output, after
+ `<literal>``<replaceable>`programname`</replaceable>` [OPTION...]`</literal>`
+## `entries`
+a [`None`] terminated array of
+ `GOptionEntry`<!-- -->s describing the options of your program
+## `translation_domain`
+a translation domain to use for
+ translating the `<option>`--help`</option>` output for the options in
+ `entries` with `gettext()`, or [`None`]
+
+# Returns
+
+`CLUTTER_INIT_SUCCESS` if Clutter has been successfully
+ initialised, or other values or `ClutterInitError` in case of
+ error.
+<!-- fn param_spec_color -->
+Creates a `GParamSpec` for properties using [`Color`][crate::Color].
+## `name`
+name of the property
+## `nick`
+short name
+## `blurb`
+description (can be translatable)
+## `default_value`
+default value
+## `flags`
+flags for the param spec
+
+# Returns
+
+the newly created `GParamSpec`
+<!-- fn param_spec_units -->
+Creates a `GParamSpec` for properties using `ClutterUnits`.
+## `name`
+name of the property
+## `nick`
+short name
+## `blurb`
+description (can be translatable)
+## `default_type`
+the default type for the `ClutterUnits`
+## `minimum`
+lower boundary
+## `maximum`
+higher boundary
+## `default_value`
+default value
+## `flags`
+flags for the param spec
+
+# Returns
+
+the newly created `GParamSpec`
+<!-- fn remove_debug_flags -->
+Removes the debug flags passed from the list of debug flags.
+<!-- fn threads_add_repaint_func_full -->
+Adds a function to be called whenever Clutter is processing a new
+frame.
+
+If the function returns [`false`] it is automatically removed from the
+list of repaint functions and will not be called again.
+
+This function is guaranteed to be called from within the same thread
+that called `clutter_main()`, and while the Clutter lock is being held;
+the function will be called within the main loop, so it is imperative
+that it does not block, otherwise the frame time budget may be lost.
+
+A repaint function is useful to ensure that an update of the scenegraph
+is performed before the scenegraph is repainted. The `flags` passed to this
+function will determine the section of the frame processing that will
+result in `func` being called.
+
+Adding a repaint function does not automatically ensure that a new
+frame will be queued.
+
+When the repaint function is removed (either because it returned [`false`]
+or because [`threads_remove_repaint_func()`][crate::threads_remove_repaint_func()] has been called) the
+`notify` function will be called, if any is set.
+## `flags`
+flags for the repaint function
+## `func`
+the function to be called within the paint cycle
+## `notify`
+function to be called when removing the repaint
+ function, or [`None`]
+
+# Returns
+
+the ID (greater than 0) of the repaint function. You
+ can use the returned integer to remove the repaint function by
+ calling [`threads_remove_repaint_func()`][crate::threads_remove_repaint_func()].
+<!-- fn value_dup_paint_node -->
+Retrieves a pointer to the `ClutterPaintNode` contained inside
+the passed `GValue`, and if not [`None`] it will increase the
+reference count.
+## `value`
+a `GValue` initialized with `CLUTTER_TYPE_PAINT_NODE`
+
+# Returns
+
+a pointer
+ to the `ClutterPaintNode`, with its reference count increased,
+ or [`None`]
+<!-- fn value_get_color -->
+Gets the [`Color`][crate::Color] contained in `value`.
+## `value`
+a `GValue` initialized to `CLUTTER_TYPE_COLOR`
+
+# Returns
+
+the color inside the passed `GValue`
+<!-- fn value_get_paint_node -->
+Retrieves a pointer to the `ClutterPaintNode` contained inside
+the passed `GValue`.
+## `value`
+a `GValue` initialized with `CLUTTER_TYPE_PAINT_NODE`
+
+# Returns
+
+a pointer to
+ a `ClutterPaintNode`, or [`None`]
+<!-- fn value_get_shader_float -->
+Retrieves the list of floating point values stored inside
+the passed `GValue`. `value` must have been initialized with
+`CLUTTER_TYPE_SHADER_FLOAT`.
+## `value`
+a `GValue`
+
+# Returns
+
+the pointer to a list of
+ floating point values. The returned value is owned by the
+ `GValue` and should never be modified or freed.
+<!-- fn value_get_shader_int -->
+Retrieves the list of integer values stored inside the passed
+`GValue`. `value` must have been initialized with
+`CLUTTER_TYPE_SHADER_INT`.
+## `value`
+a `GValue`
+
+# Returns
+
+the pointer to a list of
+ integer values. The returned value is owned by the `GValue` and
+ should never be modified or freed.
+<!-- fn value_get_shader_matrix -->
+Retrieves a matrix of floating point values stored inside
+the passed `GValue`. `value` must have been initialized with
+`CLUTTER_TYPE_SHADER_MATRIX`.
+## `value`
+a `GValue`
+
+# Returns
+
+the pointer to a matrix
+ of floating point values. The returned value is owned by the `GValue` and
+ should never be modified or freed.
+<!-- fn value_get_units -->
+Gets the `ClutterUnits` contained in `value`.
+## `value`
+a `GValue` initialized to `CLUTTER_TYPE_UNITS`
+
+# Returns
+
+the units inside the passed `GValue`
+<!-- fn value_set_color -->
+Sets `value` to `color`.
+## `value`
+a `GValue` initialized to `CLUTTER_TYPE_COLOR`
+## `color`
+the color to set
+<!-- fn value_set_paint_node -->
+Sets the contents of a `GValue` initialized with `CLUTTER_TYPE_PAINT_NODE`.
+
+This function increased the reference count of `node`; if you do not wish
+to increase the reference count, use `clutter_value_take_paint_node()`
+instead. The reference count will be released by `g_value_unset()`.
+## `value`
+a `GValue` initialized with `CLUTTER_TYPE_PAINT_NODE`
+## `node`
+a `ClutterPaintNode`, or [`None`]
+<!-- fn value_set_shader_float -->
+Sets `floats` as the contents of `value`. The passed `GValue`
+must have been initialized using `CLUTTER_TYPE_SHADER_FLOAT`.
+## `value`
+a `GValue`
+## `floats`
+an array of floating point values
+<!-- fn value_set_shader_int -->
+Sets `ints` as the contents of `value`. The passed `GValue`
+must have been initialized using `CLUTTER_TYPE_SHADER_INT`.
+## `value`
+a `GValue`
+## `ints`
+an array of integer values
+<!-- fn value_set_shader_matrix -->
+Sets `matrix` as the contents of `value`. The passed `GValue`
+must have been initialized using `CLUTTER_TYPE_SHADER_MATRIX`.
+## `value`
+a `GValue`
+## `matrix`
+a matrix of floating point values
+<!-- fn value_set_units -->
+Sets `value` to `units`
+## `value`
+a `GValue` initialized to `CLUTTER_TYPE_UNITS`
+## `units`
+the units to set
+<!-- fn value_take_paint_node -->
+Sets the contents of a `GValue` initialized with `CLUTTER_TYPE_PAINT_NODE`.
+
+Unlike `clutter_value_set_paint_node()`, this function will not take a
+reference on the passed `node`: instead, it will take ownership of the
+current reference count.
+## `value`
+a `GValue`, initialized with `CLUTTER_TYPE_PAINT_NODE`
+## `node`
+a `ClutterPaintNode`, or [`None`]
 <!-- const BUTTON_MIDDLE -->
 The middle button of a pointer device.
 <!-- const BUTTON_PRIMARY -->
@@ -34,40 +411,20 @@ continually animating (and thus able to starve GTK+) than
 vice-versa.
 <!-- static STAGE_TYPE -->
 The default GObject type for the Clutter stage.
+<!-- struct Action -->
+
+
+This is an Abstract Base Class, you cannot instantiate it.
+
+# Implements
+
+[`ActorMetaExt`][trait@crate::prelude::ActorMetaExt]
 <!-- struct Actor -->
 Base class for actors.
 
 # Implements
 
-[`ActorExt`][trait@crate::prelude::ActorExt], [`ContainerExt`][trait@crate::prelude::ContainerExt]
-<!-- trait ActorExt::fn add_action -->
-Adds `action` to the list of actions applied to `self`
-
-A `ClutterAction` can only belong to one actor at a time
-
-The [`Actor`][crate::Actor] will hold a reference on `action` until either
-`clutter_actor_remove_action()` or [`clear_actions()`][Self::clear_actions()]
-is called
-## `action`
-a `ClutterAction`
-<!-- trait ActorExt::fn add_action_with_name -->
-A convenience function for setting the name of a `ClutterAction`
-while adding it to the list of actions applied to `self`
-
-This function is the logical equivalent of:
-
-
-
-**⚠️ The following code is in C ⚠️**
-
-```C
-  clutter_actor_meta_set_name (CLUTTER_ACTOR_META (action), name);
-  clutter_actor_add_action (self, action);
-```
-## `name`
-the name to set on the action
-## `action`
-a `ClutterAction`
+[`ActorExt`][trait@crate::prelude::ActorExt], [`AnimatableExt`][trait@crate::prelude::AnimatableExt], [`ContainerExt`][trait@crate::prelude::ContainerExt], [`ScriptableExt`][trait@crate::prelude::ScriptableExt]
 <!-- trait ActorExt::fn add_effect -->
 Adds `effect` to the list of `ClutterEffect`<!-- -->s applied to `self`
 
@@ -354,26 +711,6 @@ their uses.
 # Returns
 
 the `AtkObject` associated with `actor`
-<!-- trait ActorExt::fn action -->
-Retrieves the `ClutterAction` with the given name in the list
-of actions applied to `self`
-## `name`
-the name of the action to retrieve
-
-# Returns
-
-a `ClutterAction` for the given
- name, or [`None`]. The returned `ClutterAction` is owned by the
- actor and it should not be unreferenced directly
-<!-- trait ActorExt::fn actions -->
-Retrieves the list of actions applied to `self`
-
-# Returns
-
-a copy
- of the list of `ClutterAction`<!-- -->s. The contents of the list are
- owned by the [`Actor`][crate::Actor]. Use `g_list_free()` to free the resources
- allocated by the returned `GList`
 <!-- trait ActorExt::fn allocation_box -->
 Gets the layout box an actor has been assigned. The allocation can
 only be assumed valid inside a `paint()` method; anywhere else, it
@@ -488,12 +825,6 @@ a list
  of `ClutterEffect`<!-- -->s, or [`None`]. The elements of the returned
  list are owned by Clutter and they should not be freed. You should
  free the returned list using `g_list_free()` when done
-<!-- trait ActorExt::fn flags -->
-Retrieves the flags set on `self`
-
-# Returns
-
-a bitwise or of `ClutterActorFlags` or 0
 <!-- trait ActorExt::fn layout_manager -->
 Retrieves the `ClutterLayoutManager` used by `self`.
 
@@ -676,20 +1007,6 @@ the name of the transition
 a `ClutterTransition`, or [`None`] is none
  was found to match the passed name; the returned instance is owned
  by Clutter and it should not be freed
-<!-- trait ActorExt::fn x_align -->
-Retrieves the horizontal alignment policy set using
-`clutter_actor_set_x_align()`.
-
-# Returns
-
-the horizontal alignment policy.
-<!-- trait ActorExt::fn y_align -->
-Retrieves the vertical alignment policy set using
-`clutter_actor_set_y_align()`.
-
-# Returns
-
-the vertical alignment policy.
 <!-- trait ActorExt::fn needs_expand -->
 Checks whether an actor, or any of its children, is set to expand
 horizontally or vertically.
@@ -771,12 +1088,6 @@ If `clip` is [`None`] this function is equivalent to
 [`queue_redraw()`][Self::queue_redraw()].
 ## `clip`
 a rectangular clip region, or [`None`]
-<!-- trait ActorExt::fn remove_action -->
-Removes `action` from the list of actions applied to `self`
-
-The reference held by `self` on the `ClutterAction` will be released
-## `action`
-a `ClutterAction`
 <!-- trait ActorExt::fn remove_effect -->
 Removes `effect` from the list of effects applied to `self`
 
@@ -835,12 +1146,6 @@ will be used when increasing the size of the content.
 the minification filter for the content
 ## `mag_filter`
 the magnification filter for the content
-<!-- trait ActorExt::fn set_flags -->
-Sets `flags` on `self`
-
-This function will emit notifications for the changed properties
-## `flags`
-the flags to set
 <!-- trait ActorExt::fn set_layout_manager -->
 Sets the `ClutterLayoutManager` delegate object that will be used to
 lay out the children of `self`.
@@ -957,20 +1262,6 @@ The `property::Actor::transform` property is animatable.
 ## `transform`
 a `graphene_matrix_t`, or [`None`] to
  unset a custom transformation
-<!-- trait ActorExt::fn set_x_align -->
-Sets the horizontal alignment policy of a [`Actor`][crate::Actor], in case the
-actor received extra horizontal space.
-
-See also the `property::Actor::x-align` property.
-## `x_align`
-the horizontal alignment policy
-<!-- trait ActorExt::fn set_y_align -->
-Sets the vertical alignment policy of a [`Actor`][crate::Actor], in case the
-actor received extra vertical space.
-
-See also the `property::Actor::y-align` property.
-## `y_align`
-the vertical alignment policy
 <!-- trait ActorExt::fn should_pick -->
 Should be called inside the implementation of the
 `signal::Actor::pick` virtual function in order to check whether
@@ -983,12 +1274,6 @@ a `ClutterPickContext`
 # Returns
 
 [`true`] if the actor should be picked, [`false`] otherwise
-<!-- trait ActorExt::fn unset_flags -->
-Unsets `flags` on `self`
-
-This function will emit notifications for the changed properties
-## `flags`
-the flags to unset
 <!-- trait ActorExt::fn connect_button_press_event -->
 The ::button-press-event signal is emitted each time a mouse button
 is pressed on `actor`.
@@ -1122,8 +1407,6 @@ a `ClutterEvent`
 
 `CLUTTER_EVENT_STOP` if the event has been handled by
  the actor, or `CLUTTER_EVENT_PROPAGATE` to continue the emission.
-<!-- trait ActorExt::fn set_actions -->
-Adds a `ClutterAction` to the actor
 <!-- trait ActorExt::fn allocation -->
 The allocation for the actor, in pixels
 
@@ -1280,6 +1563,98 @@ the X axis.
 <!-- trait ActorExt::fn y_expand -->
 Whether a layout manager should assign more space to the actor on
 the Y axis.
+<!-- enum ActorAlign::variant Fill -->
+Stretch to cover the whole allocated space
+<!-- enum ActorAlign::variant Start -->
+Snap to left or top side, leaving space
+ to the right or bottom. For horizontal layouts, in right-to-left
+ locales this should be reversed.
+<!-- enum ActorAlign::variant Center -->
+Center the actor inside the allocation
+<!-- enum ActorAlign::variant End -->
+Snap to right or bottom side, leaving space
+ to the left or top. For horizontal layouts, in right-to-left locales
+ this should be reversed.
+<!-- struct ActorFlags -->
+Flags used to signal the state of an actor.
+<!-- struct ActorFlags::const MAPPED -->
+the actor will be painted (is visible, and inside
+ a toplevel, and all parents visible)
+<!-- struct ActorFlags::const REALIZED -->
+the resources associated to the actor have been
+ allocated
+<!-- struct ActorFlags::const REACTIVE -->
+the actor 'reacts' to mouse events emitting event
+ signals
+<!-- struct ActorFlags::const VISIBLE -->
+the actor has been shown by the application program
+<!-- struct ActorFlags::const NO_LAYOUT -->
+the actor provides an explicit layout management
+ policy for its children; this flag will prevent Clutter from automatic
+ queueing of relayout and will defer all layouting to the actor itself
+<!-- struct ActorMeta -->
+
+
+This is an Abstract Base Class, you cannot instantiate it.
+
+# Implements
+
+[`ActorMetaExt`][trait@crate::prelude::ActorMetaExt]
+<!-- trait ActorMetaExt::fn enabled -->
+Whether or not the [`ActorMeta`][crate::ActorMeta] is enabled
+<!-- struct Animatable -->
+
+
+# Implements
+
+[`AnimatableExt`][trait@crate::prelude::AnimatableExt]
+<!-- trait AnimatableExt::fn find_property -->
+Finds the `GParamSpec` for `property_name`
+## `property_name`
+the name of the animatable property to find
+
+# Returns
+
+The `GParamSpec` for the given property
+ or [`None`]
+<!-- trait AnimatableExt::fn initial_state -->
+Retrieves the current state of `property_name` and sets `value` with it
+## `property_name`
+the name of the animatable property to retrieve
+## `value`
+a `GValue` initialized to the type of the property to retrieve
+<!-- trait AnimatableExt::fn interpolate_value -->
+Asks a [`Animatable`][crate::Animatable] implementation to interpolate a
+a named property between the initial and final values of
+a `ClutterInterval`, using `progress` as the interpolation
+value, and store the result inside `value`.
+
+This function should be used for every property animation
+involving [`Animatable`][crate::Animatable]<!-- -->s.
+
+This function replaces `clutter_animatable_animate_property()`.
+## `property_name`
+the name of the property to interpolate
+## `interval`
+a `ClutterInterval` with the animation range
+## `progress`
+the progress to use to interpolate between the
+ initial and final values of the `interval`
+
+# Returns
+
+[`true`] if the interpolation was successful,
+ and [`false`] otherwise
+
+## `value`
+return location for an initialized `GValue`
+ using the same type of the `interval`
+<!-- trait AnimatableExt::fn set_final_state -->
+Sets the current state of `property_name` to `value`
+## `property_name`
+the name of the animatable property to set
+## `value`
+the value of the animatable property to set
 <!-- enum AnimationMode::variant CustomMode -->
 custom progress function
 <!-- enum AnimationMode::variant Linear -->
@@ -1440,7 +1815,7 @@ This is an Abstract Base Class, you cannot instantiate it.
 
 # Implements
 
-[`ConstraintExt`][trait@crate::prelude::ConstraintExt]
+[`ConstraintExt`][trait@crate::prelude::ConstraintExt], [`ActorMetaExt`][trait@crate::prelude::ActorMetaExt]
 <!-- trait ConstraintExt::fn update_preferred_size -->
 Asks the `self` to update the size request of a [`Actor`][crate::Actor].
 ## `actor`
@@ -1648,13 +2023,44 @@ Product ID of this device.
 The `ClutterSeat` instance which owns the device
 <!-- impl InputDevice::fn set_vendor_id -->
 Vendor ID of this device.
+<!-- struct Scriptable -->
+[`Scriptable`][crate::Scriptable] is an opaque structure whose members cannot be directly
+accessed
+
+# Implements
+
+[`ScriptableExt`][trait@crate::prelude::ScriptableExt]
+<!-- trait ScriptableExt::fn parse_custom_node -->
+Parses the passed JSON node. The implementation must set the type
+of the passed `GValue` pointer using `g_value_init()`.
+## `script`
+the `ClutterScript` creating the scriptable instance
+## `value`
+the generic value to be set
+## `name`
+the name of the node
+## `node`
+the JSON node to be parsed
+
+# Returns
+
+[`true`] if the node was successfully parsed, [`false`] otherwise.
+<!-- trait ScriptableExt::fn set_custom_property -->
+Overrides the common properties setting. The underlying virtual
+function should be used when implementing custom properties.
+## `script`
+the `ClutterScript` creating the scriptable instance
+## `name`
+the name of the property
+## `value`
+the value of the property
 <!-- struct Stage -->
 The [`Stage`][crate::Stage] structure contains only private data
 and should be accessed using the provided API
 
 # Implements
 
-[`StageExt`][trait@crate::prelude::StageExt], [`ActorExt`][trait@crate::prelude::ActorExt], [`ContainerExt`][trait@crate::prelude::ContainerExt]
+[`StageExt`][trait@crate::prelude::StageExt], [`ActorExt`][trait@crate::prelude::ActorExt], [`AnimatableExt`][trait@crate::prelude::AnimatableExt], [`ContainerExt`][trait@crate::prelude::ContainerExt], [`ScriptableExt`][trait@crate::prelude::ScriptableExt]
 <!-- trait StageExt::fn actor_at_pos -->
 Checks the scene at the coordinates `x` and `y` and returns a pointer
 to the [`Actor`][crate::Actor] at those coordinates. The result is the actor which
@@ -1877,3 +2283,202 @@ Aluminium, fifth variant (555753ff)
 Aluminium, sixth variant (2e3436ff)
 <!-- enum StaticColor::variant Transparent -->
 Transparent color (00000000)
+<!-- struct Text -->
+The [`Text`][crate::Text] struct contains only private data.
+
+# Implements
+
+[`TextExt`][trait@crate::prelude::TextExt], [`ActorExt`][trait@crate::prelude::ActorExt], [`AnimatableExt`][trait@crate::prelude::AnimatableExt], [`ContainerExt`][trait@crate::prelude::ContainerExt], [`ScriptableExt`][trait@crate::prelude::ScriptableExt]
+<!-- trait TextExt::fn attributes -->
+Gets the attribute list that was set on the [`Text`][crate::Text] actor
+`clutter_text_set_attributes()`, if any.
+
+# Returns
+
+the attribute list, or [`None`] if none was set. The
+ returned value is owned by the [`Text`][crate::Text] and should not be unreferenced.
+<!-- trait TextExt::fn cursor_rect -->
+Retrieves the rectangle that contains the cursor.
+
+The coordinates of the rectangle's origin are in actor-relative
+coordinates.
+
+# Returns
+
+
+## `rect`
+return location of a `ClutterRect`
+<!-- trait TextExt::fn ellipsize -->
+Returns the ellipsizing position of a [`Text`][crate::Text] actor, as
+set by `clutter_text_set_ellipsize()`.
+
+# Returns
+
+`PangoEllipsizeMode`
+<!-- trait TextExt::fn font_description -->
+Retrieves the `PangoFontDescription` used by `self`
+
+# Returns
+
+a `PangoFontDescription`. The returned value is owned
+ by the [`Text`][crate::Text] actor and it should not be modified or freed
+<!-- trait TextExt::fn layout -->
+Retrieves the current `PangoLayout` used by a [`Text`][crate::Text] actor.
+
+# Returns
+
+a `PangoLayout`. The returned object is owned by
+ the [`Text`][crate::Text] actor and should not be modified or freed
+<!-- trait TextExt::fn line_alignment -->
+Retrieves the alignment of a [`Text`][crate::Text], as set by
+`clutter_text_set_line_alignment()`.
+
+# Returns
+
+a `PangoAlignment`
+<!-- trait TextExt::fn line_wrap_mode -->
+Retrieves the line wrap mode used by the [`Text`][crate::Text] actor.
+
+See clutter_text_set_line_wrap_mode ().
+
+# Returns
+
+the wrap mode used by the [`Text`][crate::Text]
+<!-- trait TextExt::fn set_attributes -->
+Sets the attributes list that are going to be applied to the
+[`Text`][crate::Text] contents.
+
+The [`Text`][crate::Text] actor will take a reference on the `PangoAttrList`
+passed to this function.
+## `attrs`
+a `PangoAttrList` or [`None`] to unset the attributes
+<!-- trait TextExt::fn set_ellipsize -->
+Sets the mode used to ellipsize (add an ellipsis: "...") to the
+text if there is not enough space to render the entire contents
+of a [`Text`][crate::Text] actor
+## `mode`
+a `PangoEllipsizeMode`
+<!-- trait TextExt::fn set_font_description -->
+Sets `font_desc` as the font description for a [`Text`][crate::Text]
+
+The `PangoFontDescription` is copied by the [`Text`][crate::Text] actor
+so you can safely call `pango_font_description_free()` on it after
+calling this function.
+## `font_desc`
+a `PangoFontDescription`
+<!-- trait TextExt::fn set_line_alignment -->
+Sets the way that the lines of a wrapped label are aligned with
+respect to each other. This does not affect the overall alignment
+of the label within its allocated or specified width.
+
+To align a [`Text`][crate::Text] actor you should add it to a container
+that supports alignment, or use the anchor point.
+## `alignment`
+A `PangoAlignment`
+<!-- trait TextExt::fn set_line_wrap_mode -->
+If line wrapping is enabled (see [`set_line_wrap()`][Self::set_line_wrap()]) this
+function controls how the line wrapping is performed. The default is
+`PANGO_WRAP_WORD` which means wrap on word boundaries.
+## `wrap_mode`
+the line wrapping mode
+<!-- trait TextExt::fn set_preedit_string -->
+Sets, or unsets, the pre-edit string. This function is useful
+for input methods to display a string (with eventual specific
+Pango attributes) before it is entered inside the [`Text`][crate::Text]
+buffer.
+
+The preedit string and attributes are ignored if the [`Text`][crate::Text]
+actor is not editable.
+
+This function should not be used by applications
+## `preedit_str`
+the pre-edit string, or [`None`] to unset it
+## `preedit_attrs`
+the pre-edit string attributes
+## `cursor_pos`
+the cursor position for the pre-edit string
+<!-- trait TextExt::fn connect_cursor_event -->
+The ::cursor-event signal is emitted whenever the cursor position
+changes inside a [`Text`][crate::Text] actor. Inside `rect` it is stored
+the current position and size of the cursor, relative to the actor
+itself.
+
+# Deprecated since 1.16
+
+Use the `signal::Text::cursor-changed` signal instead
+## `rect`
+the coordinates of the cursor
+<!-- trait TextExt::fn connect_insert_text -->
+This signal is emitted when text is inserted into the actor by
+the user. It is emitted before `self_` text changes.
+## `new_text`
+the new text to insert
+## `new_text_length`
+the length of the new text, in bytes, or -1 if
+ new_text is nul-terminated
+## `position`
+the position, in characters, at which to insert the
+ new text. this is an in-out parameter. After the signal
+ emission is finished, it should point after the newly
+ inserted text.
+<!-- trait TextExt::fn activatable -->
+Toggles whether return invokes the activate signal or not.
+<!-- trait TextExt::fn cursor_visible -->
+Whether the input cursor is visible or not.
+
+The cursor will only be visible if this property and either
+the `property::Text::editable` or the `property::Text::selectable` properties
+are set to [`true`].
+<!-- trait TextExt::fn editable -->
+Whether key events delivered to the actor causes editing.
+<!-- trait TextExt::fn justify -->
+Whether the contents of the [`Text`][crate::Text] should be justified
+on both margins.
+<!-- trait TextExt::fn line_wrap -->
+Whether to wrap the lines of `property::Text::text` if the contents
+exceed the available allocation. The wrapping strategy is
+controlled by the `property::Text::line-wrap-mode` property.
+<!-- trait TextExt::fn selectable -->
+Whether it is possible to select text, either using the pointer
+or the keyboard.
+
+This property depends on the `property::Actor::reactive` property being
+set to [`true`].
+<!-- trait TextExt::fn single_line_mode -->
+Whether the [`Text`][crate::Text] actor should be in single line mode
+or not. A single line [`Text`][crate::Text] actor will only contain a
+single line of text, scrolling it in case its length is bigger
+than the allocated size.
+
+Setting this property will also set the `property::Text::activatable`
+property as a side-effect.
+
+The `property::Text::single-line-mode` property is used only if the
+`property::Text::editable` property is set to [`true`].
+<!-- trait TextExt::fn use_markup -->
+Whether the text includes Pango markup.
+
+For more information about the Pango markup format, see
+`pango_layout_set_markup()` in the Pango documentation.
+
+It is not possible to round-trip this property between
+[`true`] and [`false`]. Once a string with markup has been set on
+a [`Text`][crate::Text] actor with :use-markup set to [`true`], the markup
+is stripped from the string.
+<!-- struct TextBuffer -->
+The [`TextBuffer`][crate::TextBuffer] structure contains private
+data and it should only be accessed using the provided API.
+
+# Implements
+
+[`TextBufferExt`][trait@crate::prelude::TextBufferExt]
+<!-- impl TextBuffer::fn new_with_text -->
+Create a new ClutterTextBuffer object with some text.
+## `text`
+initial buffer text
+## `text_len`
+initial buffer text length, or -1 for null-terminated.
+
+# Returns
+
+A new ClutterTextBuffer object.

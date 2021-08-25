@@ -365,6 +365,85 @@ impl ToValue for DisplayDirection {
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
 #[non_exhaustive]
+#[doc(alias = "MetaExitCode")]
+pub enum ExitCode {
+    #[doc(alias = "META_EXIT_SUCCESS")]
+    Success,
+    #[doc(alias = "META_EXIT_ERROR")]
+    Error,
+#[doc(hidden)]
+    __Unknown(i32),
+}
+
+impl fmt::Display for ExitCode {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "ExitCode::{}", match *self {
+            Self::Success => "Success",
+            Self::Error => "Error",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[doc(hidden)]
+impl IntoGlib for ExitCode {
+    type GlibType = ffi::MetaExitCode;
+
+    fn into_glib(self) -> ffi::MetaExitCode {
+        match self {
+            Self::Success => ffi::META_EXIT_SUCCESS,
+            Self::Error => ffi::META_EXIT_ERROR,
+            Self::__Unknown(value) => value,
+}
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<ffi::MetaExitCode> for ExitCode {
+    unsafe fn from_glib(value: ffi::MetaExitCode) -> Self {
+        match value {
+            ffi::META_EXIT_SUCCESS => Self::Success,
+            ffi::META_EXIT_ERROR => Self::Error,
+            value => Self::__Unknown(value),
+}
+    }
+}
+
+impl StaticType for ExitCode {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::meta_exit_code_get_type()) }
+    }
+}
+
+impl glib::value::ValueType for ExitCode {
+    type Type = Self;
+}
+
+unsafe impl<'a> FromValue<'a> for ExitCode {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+impl ToValue for ExitCode {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
 #[doc(alias = "MetaFrameType")]
 pub enum FrameType {
     #[doc(alias = "META_FRAME_TYPE_NORMAL")]

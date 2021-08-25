@@ -3,8 +3,21 @@
 // from mutter-gir-files
 // DO NOT EDIT
 
+mod action;
+pub use self::action::{Action, NONE_ACTION};
+
 mod actor;
 pub use self::actor::{Actor, NONE_ACTOR};
+
+#[cfg(any(feature = "v1_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+mod actor_meta;
+#[cfg(any(feature = "v1_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+pub use self::actor_meta::{ActorMeta, NONE_ACTOR_META};
+
+mod animatable;
+pub use self::animatable::{Animatable, NONE_ANIMATABLE};
 
 #[cfg(any(feature = "v1_4", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
@@ -26,6 +39,13 @@ pub use self::content::{Content, NONE_CONTENT};
 mod input_device;
 pub use self::input_device::{InputDevice};
 
+#[cfg(any(feature = "v0_6", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
+mod scriptable;
+#[cfg(any(feature = "v0_6", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
+pub use self::scriptable::{Scriptable, NONE_SCRIPTABLE};
+
 #[cfg(any(feature = "v0_2", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_2")))]
 mod stage;
@@ -33,10 +53,27 @@ mod stage;
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_2")))]
 pub use self::stage::{Stage, NONE_STAGE};
 
+#[cfg(any(feature = "v1_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+mod text;
+#[cfg(any(feature = "v1_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+pub use self::text::{Text, NONE_TEXT};
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+mod text_buffer;
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+pub use self::text_buffer::{TextBuffer, NONE_TEXT_BUFFER};
+
 mod color;
 pub use self::color::Color;
 
 mod enums;
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+pub use self::enums::ActorAlign;
 #[cfg(any(feature = "v1_0", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
 pub use self::enums::AnimationMode;
@@ -44,9 +81,18 @@ pub use self::enums::AnimationMode;
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_6")))]
 pub use self::enums::StaticColor;
 
+mod flags;
+pub use self::flags::ActorFlags;
+
+pub mod functions;
+
 #[doc(hidden)]
 pub mod traits {
     pub use super::actor::ActorExt;
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    pub use super::actor_meta::ActorMetaExt;
+    pub use super::animatable::AnimatableExt;
     #[cfg(any(feature = "v1_4", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
     pub use super::constraint::ConstraintExt;
@@ -54,7 +100,16 @@ pub mod traits {
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
     pub use super::container::ContainerExt;
     pub use super::content::ContentExt;
+    #[cfg(any(feature = "v0_6", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
+    pub use super::scriptable::ScriptableExt;
     #[cfg(any(feature = "v0_2", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_2")))]
     pub use super::stage::StageExt;
+    #[cfg(any(feature = "v1_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+    pub use super::text::TextExt;
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    pub use super::text_buffer::TextBufferExt;
 }

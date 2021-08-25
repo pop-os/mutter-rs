@@ -22,7 +22,118 @@ use glib::Type;
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
 use std::fmt;
 
-/// The animation modes used by `ClutterAnimatable`. This
+/// Controls how a [`Actor`][crate::Actor] should align itself inside the extra space
+/// assigned to it during the allocation.
+///
+/// Alignment only matters if the allocated space given to an actor is
+/// bigger than its natural size; for example, when the `property::Actor::x-expand`
+/// or the `property::Actor::y-expand` properties of [`Actor`][crate::Actor] are set to [`true`].
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = "ClutterActorAlign")]
+pub enum ActorAlign {
+    #[doc(alias = "CLUTTER_ACTOR_ALIGN_FILL")]
+    Fill,
+    #[doc(alias = "CLUTTER_ACTOR_ALIGN_START")]
+    Start,
+    #[doc(alias = "CLUTTER_ACTOR_ALIGN_CENTER")]
+    Center,
+    #[doc(alias = "CLUTTER_ACTOR_ALIGN_END")]
+    End,
+#[doc(hidden)]
+    __Unknown(i32),
+}
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+impl fmt::Display for ActorAlign {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "ActorAlign::{}", match *self {
+            Self::Fill => "Fill",
+            Self::Start => "Start",
+            Self::Center => "Center",
+            Self::End => "End",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+#[doc(hidden)]
+impl IntoGlib for ActorAlign {
+    type GlibType = ffi::ClutterActorAlign;
+
+    fn into_glib(self) -> ffi::ClutterActorAlign {
+        match self {
+            Self::Fill => ffi::CLUTTER_ACTOR_ALIGN_FILL,
+            Self::Start => ffi::CLUTTER_ACTOR_ALIGN_START,
+            Self::Center => ffi::CLUTTER_ACTOR_ALIGN_CENTER,
+            Self::End => ffi::CLUTTER_ACTOR_ALIGN_END,
+            Self::__Unknown(value) => value,
+}
+    }
+}
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+#[doc(hidden)]
+impl FromGlib<ffi::ClutterActorAlign> for ActorAlign {
+    unsafe fn from_glib(value: ffi::ClutterActorAlign) -> Self {
+        match value {
+            ffi::CLUTTER_ACTOR_ALIGN_FILL => Self::Fill,
+            ffi::CLUTTER_ACTOR_ALIGN_START => Self::Start,
+            ffi::CLUTTER_ACTOR_ALIGN_CENTER => Self::Center,
+            ffi::CLUTTER_ACTOR_ALIGN_END => Self::End,
+            value => Self::__Unknown(value),
+}
+    }
+}
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+impl StaticType for ActorAlign {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::clutter_actor_align_get_type()) }
+    }
+}
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+impl glib::value::ValueType for ActorAlign {
+    type Type = Self;
+}
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+unsafe impl<'a> FromValue<'a> for ActorAlign {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+impl ToValue for ActorAlign {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
+/// The animation modes used by [`Animatable`][crate::Animatable]. This
 /// enumeration can be expanded in later versions of Clutter.
 ///
 /// <figure id="easing-modes">

@@ -3,12 +3,13 @@
 // from mutter-gir-files
 // DO NOT EDIT
 
+use crate::ActorMeta;
 use glib::object::IsA;
 use std::fmt;
 
 glib::wrapper! {
     #[doc(alias = "ClutterConstraint")]
-    pub struct Constraint(Object<ffi::ClutterConstraint, ffi::ClutterConstraintClass>);
+    pub struct Constraint(Object<ffi::ClutterConstraint, ffi::ClutterConstraintClass>) @extends ActorMeta;
 
     match fn {
         type_ => || ffi::clutter_constraint_get_type(),

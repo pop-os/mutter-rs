@@ -58,6 +58,7 @@ mod enums;
 pub use self::enums::Cursor;
 pub use self::enums::DisplayCorner;
 pub use self::enums::DisplayDirection;
+pub use self::enums::ExitCode;
 pub use self::enums::FrameType;
 pub use self::enums::GrabOp;
 pub use self::enums::MotionDirection;

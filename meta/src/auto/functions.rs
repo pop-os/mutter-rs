@@ -4,6 +4,7 @@
 // DO NOT EDIT
 
 use crate::Display;
+use crate::ExitCode;
 use glib::translate::*;
 use std::ptr;
 
@@ -56,10 +57,12 @@ pub fn enable_unredirect_for_display(display: &Display) {
     }
 }
 
-//#[doc(alias = "meta_exit")]
-//pub fn exit(code: /*Ignored*/ExitCode) {
-//    unsafe { TODO: call ffi:meta_exit() }
-//}
+#[doc(alias = "meta_exit")]
+pub fn exit(code: ExitCode) {
+    unsafe {
+        ffi::meta_exit(code.into_glib());
+    }
+}
 
 #[doc(alias = "meta_external_binding_name_for_action")]
 pub fn external_binding_name_for_action(keybinding_action: u32) -> Option<glib::GString> {
@@ -106,11 +109,13 @@ pub fn g_utf8_strndup(src: &str, n: usize) -> Option<glib::GString> {
 //    unsafe { TODO: call ffi:meta_get_debug_paint_flags() }
 //}
 
-//#[doc(alias = "meta_get_exit_code")]
-//#[doc(alias = "get_exit_code")]
-//pub fn exit_code() -> /*Ignored*/ExitCode {
-//    unsafe { TODO: call ffi:meta_get_exit_code() }
-//}
+#[doc(alias = "meta_get_exit_code")]
+#[doc(alias = "get_exit_code")]
+pub fn exit_code() -> ExitCode {
+    unsafe {
+        from_glib(ffi::meta_get_exit_code())
+    }
+}
 
 /// ## `display`
 /// a [`Display`][crate::Display]
@@ -577,10 +582,19 @@ pub fn push_no_msg_prefix() {
     }
 }
 
-//#[doc(alias = "meta_quit")]
-//pub fn quit(code: /*Ignored*/ExitCode) {
-//    unsafe { TODO: call ffi:meta_quit() }
-//}
+/// Stops Mutter. This tells the event loop to stop processing; it is
+/// rather dangerous to use this because this will leave the user with
+/// no window manager. We generally do this only if, for example, the
+/// session manager asks us to; we assume the session manager knows
+/// what it's talking about.
+/// ## `code`
+/// The success or failure code to return to the calling process.
+#[doc(alias = "meta_quit")]
+pub fn quit(code: ExitCode) {
+    unsafe {
+        ffi::meta_quit(code.into_glib());
+    }
+}
 
 /// Registers mutter with the session manager. Call this after completing your own
 /// initialization.
@@ -668,7 +682,7 @@ pub fn set_wm_name(wm_name: &str) {
 }
 
 //#[doc(alias = "meta_show_dialog")]
-//pub fn show_dialog(type_: &str, message: &str, timeout: &str, display: &str, ok_text: &str, cancel_text: &str, icon_name: &str, transient_for: i32, columns: /*Unimplemented*/&[&Fundamental: Pointer], entries: /*Unimplemented*/&[&Fundamental: Pointer]) -> /*Ignored*/glib::Pid {
+//pub fn show_dialog(type_: &str, message: &str, timeout: &str, display: &str, ok_text: &str, cancel_text: &str, icon_name: &str, transient_for: i32, columns: /*Unimplemented*/&[&Fundamental: Pointer], entries: /*Unimplemented*/&[&Fundamental: Pointer]) -> glib::Pid {
 //    unsafe { TODO: call ffi:meta_show_dialog() }
 //}
 

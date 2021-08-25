@@ -4,8 +4,10 @@
 // DO NOT EDIT
 
 use crate::Actor;
+use crate::Animatable;
 use crate::Container;
 use crate::InputDevice;
+use crate::Scriptable;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
@@ -20,7 +22,7 @@ use std::mem::transmute;
 
 glib::wrapper! {
     #[doc(alias = "ClutterStage")]
-    pub struct Stage(Object<ffi::ClutterStage, ffi::ClutterStageClass>) @extends Actor, @implements Container;
+    pub struct Stage(Object<ffi::ClutterStage, ffi::ClutterStageClass>) @extends Actor, @implements Animatable, Container, Scriptable;
 
     match fn {
         type_ => || ffi::clutter_stage_get_type(),
@@ -175,7 +177,7 @@ pub trait StageExt: 'static {
     //fn is_redraw_queued_on_view(&self, view: /*Ignored*/&StageView) -> bool;
 
     //#[doc(alias = "clutter_stage_paint_to_buffer")]
-    //fn paint_to_buffer(&self, rect: /*Ignored*/&cairo::RectangleInt, scale: f32, data: /*Unimplemented*/Vec<u8>, stride: i32, format: /*Ignored*/cogl::PixelFormat, paint_flags: /*Ignored*/PaintFlag, error: /*Ignored*/Option<glib::Error>) -> bool;
+    //fn paint_to_buffer(&self, rect: /*Ignored*/&cairo::RectangleInt, scale: f32, data: /*Unimplemented*/Vec<u8>, stride: i32, format: /*Ignored*/cogl::PixelFormat, paint_flags: /*Ignored*/PaintFlag) -> Result<(), glib::Error>;
 
     //#[doc(alias = "clutter_stage_paint_to_framebuffer")]
     //fn paint_to_framebuffer(&self, framebuffer: /*Ignored*/&cogl::Framebuffer, rect: /*Ignored*/&cairo::RectangleInt, scale: f32, paint_flags: /*Ignored*/PaintFlag);
@@ -452,7 +454,7 @@ impl<O: IsA<Stage>> StageExt for O {
     //    unsafe { TODO: call ffi:clutter_stage_is_redraw_queued_on_view() }
     //}
 
-    //fn paint_to_buffer(&self, rect: /*Ignored*/&cairo::RectangleInt, scale: f32, data: /*Unimplemented*/Vec<u8>, stride: i32, format: /*Ignored*/cogl::PixelFormat, paint_flags: /*Ignored*/PaintFlag, error: /*Ignored*/Option<glib::Error>) -> bool {
+    //fn paint_to_buffer(&self, rect: /*Ignored*/&cairo::RectangleInt, scale: f32, data: /*Unimplemented*/Vec<u8>, stride: i32, format: /*Ignored*/cogl::PixelFormat, paint_flags: /*Ignored*/PaintFlag) -> Result<(), glib::Error> {
     //    unsafe { TODO: call ffi:clutter_stage_paint_to_buffer() }
     //}
 

@@ -3,6 +3,16 @@
 // from mutter-gir-files
 // DO NOT EDIT
 
+#[cfg(any(feature = "v1_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+use crate::Action;
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+use crate::ActorAlign;
+#[cfg(any(feature = "v1_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+use crate::ActorFlags;
+use crate::Animatable;
 #[cfg(any(feature = "v1_10", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
 use crate::AnimationMode;
@@ -16,6 +26,7 @@ use crate::Container;
 #[cfg(any(feature = "v1_10", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
 use crate::Content;
+use crate::Scriptable;
 #[cfg(any(feature = "v0_8", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_8")))]
 use crate::Stage;
@@ -33,7 +44,7 @@ use std::mem::transmute;
 
 glib::wrapper! {
     #[doc(alias = "ClutterActor")]
-    pub struct Actor(Object<ffi::ClutterActor, ffi::ClutterActorClass>) @implements Container;
+    pub struct Actor(Object<ffi::ClutterActor, ffi::ClutterActorClass>) @implements Animatable, Container, Scriptable;
 
     match fn {
         type_ => || ffi::clutter_actor_get_type(),
@@ -73,17 +84,43 @@ pub const NONE_ACTOR: Option<&Actor> = None;
 ///
 /// # Implementors
 ///
-/// [`Actor`][struct@crate::Actor], [`Stage`][struct@crate::Stage]
+/// [`Actor`][struct@crate::Actor], [`Stage`][struct@crate::Stage], [`Text`][struct@crate::Text]
 pub trait ActorExt: 'static {
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //#[doc(alias = "clutter_actor_add_action")]
-    //fn add_action(&self, action: /*Ignored*/&Action);
+    /// Adds `action` to the list of actions applied to `self`
+    ///
+    /// A [`Action`][crate::Action] can only belong to one actor at a time
+    ///
+    /// The [`Actor`][crate::Actor] will hold a reference on `action` until either
+    /// [`remove_action()`][Self::remove_action()] or [`clear_actions()`][Self::clear_actions()]
+    /// is called
+    /// ## `action`
+    /// a [`Action`][crate::Action]
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    #[doc(alias = "clutter_actor_add_action")]
+    fn add_action<P: IsA<Action>>(&self, action: &P);
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //#[doc(alias = "clutter_actor_add_action_with_name")]
-    //fn add_action_with_name(&self, name: &str, action: /*Ignored*/&Action);
+    /// A convenience function for setting the name of a [`Action`][crate::Action]
+    /// while adding it to the list of actions applied to `self`
+    ///
+    /// This function is the logical equivalent of:
+    ///
+    ///
+    ///
+    /// **⚠️ The following code is in C ⚠️**
+    ///
+    /// ```C
+    ///   clutter_actor_meta_set_name (CLUTTER_ACTOR_META (action), name);
+    ///   clutter_actor_add_action (self, action);
+    /// ```
+    /// ## `name`
+    /// the name to set on the action
+    /// ## `action`
+    /// a [`Action`][crate::Action]
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    #[doc(alias = "clutter_actor_add_action_with_name")]
+    fn add_action_with_name<P: IsA<Action>>(&self, name: &str, action: &P);
 
     /// Adds `child` to the children of `self`.
     ///
@@ -371,17 +408,35 @@ pub trait ActorExt: 'static {
     //#[doc(alias = "get_accessible")]
     //fn accessible(&self) -> /*Ignored*/Option<atk::Object>;
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //#[doc(alias = "clutter_actor_get_action")]
-    //#[doc(alias = "get_action")]
-    //fn action(&self, name: &str) -> /*Ignored*/Option<Action>;
+    /// Retrieves the [`Action`][crate::Action] with the given name in the list
+    /// of actions applied to `self`
+    /// ## `name`
+    /// the name of the action to retrieve
+    ///
+    /// # Returns
+    ///
+    /// a [`Action`][crate::Action] for the given
+    ///  name, or [`None`]. The returned [`Action`][crate::Action] is owned by the
+    ///  actor and it should not be unreferenced directly
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    #[doc(alias = "clutter_actor_get_action")]
+    #[doc(alias = "get_action")]
+    fn action(&self, name: &str) -> Option<Action>;
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //#[doc(alias = "clutter_actor_get_actions")]
-    //#[doc(alias = "get_actions")]
-    //fn actions(&self) -> /*Ignored*/Vec<Action>;
+    /// Retrieves the list of actions applied to `self`
+    ///
+    /// # Returns
+    ///
+    /// a copy
+    ///  of the list of [`Action`][crate::Action]<!-- -->s. The contents of the list are
+    ///  owned by the [`Actor`][crate::Actor]. Use `g_list_free()` to free the resources
+    ///  allocated by the returned `GList`
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    #[doc(alias = "clutter_actor_get_actions")]
+    #[doc(alias = "get_actions")]
+    fn actions(&self) -> Vec<Action>;
 
     //#[cfg(any(feature = "v0_8", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_8")))]
@@ -638,11 +693,16 @@ pub trait ActorExt: 'static {
     #[doc(alias = "get_fixed_position_set")]
     fn is_fixed_position_set(&self) -> bool;
 
-    //#[cfg(any(feature = "v1_0", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
-    //#[doc(alias = "clutter_actor_get_flags")]
-    //#[doc(alias = "get_flags")]
-    //fn flags(&self) -> /*Ignored*/ActorFlags;
+    /// Retrieves the flags set on `self`
+    ///
+    /// # Returns
+    ///
+    /// a bitwise or of [`ActorFlags`][crate::ActorFlags] or 0
+    #[cfg(any(feature = "v1_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+    #[doc(alias = "clutter_actor_get_flags")]
+    #[doc(alias = "get_flags")]
+    fn flags(&self) -> ActorFlags;
 
     /// Retrieves the height of a [`Actor`][crate::Actor].
     ///
@@ -1296,11 +1356,17 @@ pub trait ActorExt: 'static {
     #[doc(alias = "get_x")]
     fn x(&self) -> f32;
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //#[doc(alias = "clutter_actor_get_x_align")]
-    //#[doc(alias = "get_x_align")]
-    //fn x_align(&self) -> /*Ignored*/ActorAlign;
+    /// Retrieves the horizontal alignment policy set using
+    /// [`set_x_align()`][Self::set_x_align()].
+    ///
+    /// # Returns
+    ///
+    /// the horizontal alignment policy.
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    #[doc(alias = "clutter_actor_get_x_align")]
+    #[doc(alias = "get_x_align")]
+    fn x_align(&self) -> ActorAlign;
 
     /// Retrieves the value set with [`set_x_expand()`][Self::set_x_expand()].
     ///
@@ -1337,11 +1403,17 @@ pub trait ActorExt: 'static {
     #[doc(alias = "get_y")]
     fn y(&self) -> f32;
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //#[doc(alias = "clutter_actor_get_y_align")]
-    //#[doc(alias = "get_y_align")]
-    //fn y_align(&self) -> /*Ignored*/ActorAlign;
+    /// Retrieves the vertical alignment policy set using
+    /// [`set_y_align()`][Self::set_y_align()].
+    ///
+    /// # Returns
+    ///
+    /// the vertical alignment policy.
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    #[doc(alias = "clutter_actor_get_y_align")]
+    #[doc(alias = "get_y_align")]
+    fn y_align(&self) -> ActorAlign;
 
     /// Retrieves the value set with [`set_y_expand()`][Self::set_y_expand()].
     ///
@@ -1671,7 +1743,7 @@ pub trait ActorExt: 'static {
     #[doc(alias = "clutter_actor_is_visible")]
     fn is_visible(&self) -> bool;
 
-    /// Sets the `CLUTTER_ACTOR_MAPPED` flag on the actor and possibly maps
+    /// Sets the [`ActorFlags::MAPPED`][crate::ActorFlags::MAPPED] flag on the actor and possibly maps
     /// and realizes its children if they are visible. Does nothing if the
     /// actor is not visible.
     ///
@@ -1779,12 +1851,17 @@ pub trait ActorExt: 'static {
     #[doc(alias = "clutter_actor_realize")]
     fn realize(&self);
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //#[doc(alias = "clutter_actor_remove_action")]
-    //fn remove_action(&self, action: /*Ignored*/&Action);
+    /// Removes `action` from the list of actions applied to `self`
+    ///
+    /// The reference held by `self` on the [`Action`][crate::Action] will be released
+    /// ## `action`
+    /// a [`Action`][crate::Action]
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    #[doc(alias = "clutter_actor_remove_action")]
+    fn remove_action<P: IsA<Action>>(&self, action: &P);
 
-    /// Removes the `ClutterAction` with the given name from the list
+    /// Removes the [`Action`][crate::Action] with the given name from the list
     /// of actions applied to `self`
     /// ## `name`
     /// the name of the action to remove
@@ -2063,10 +2140,15 @@ pub trait ActorExt: 'static {
     #[doc(alias = "clutter_actor_set_fixed_position_set")]
     fn set_fixed_position_set(&self, is_set: bool);
 
-    //#[cfg(any(feature = "v1_0", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
-    //#[doc(alias = "clutter_actor_set_flags")]
-    //fn set_flags(&self, flags: /*Ignored*/ActorFlags);
+    /// Sets `flags` on `self`
+    ///
+    /// This function will emit notifications for the changed properties
+    /// ## `flags`
+    /// the flags to set
+    #[cfg(any(feature = "v1_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+    #[doc(alias = "clutter_actor_set_flags")]
+    fn set_flags(&self, flags: ActorFlags);
 
     /// Forces a height on an actor, causing the actor's preferred width
     /// and height (if any) to be ignored.
@@ -2314,10 +2396,16 @@ pub trait ActorExt: 'static {
     #[doc(alias = "clutter_actor_set_x")]
     fn set_x(&self, x: f32);
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //#[doc(alias = "clutter_actor_set_x_align")]
-    //fn set_x_align(&self, x_align: /*Ignored*/ActorAlign);
+    /// Sets the horizontal alignment policy of a [`Actor`][crate::Actor], in case the
+    /// actor received extra horizontal space.
+    ///
+    /// See also the `property::Actor::x-align` property.
+    /// ## `x_align`
+    /// the horizontal alignment policy
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    #[doc(alias = "clutter_actor_set_x_align")]
+    fn set_x_align(&self, x_align: ActorAlign);
 
     /// Sets whether a [`Actor`][crate::Actor] should expand horizontally; this means
     /// that layout manager should allocate extra space for the actor, if
@@ -2346,10 +2434,16 @@ pub trait ActorExt: 'static {
     #[doc(alias = "clutter_actor_set_y")]
     fn set_y(&self, y: f32);
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //#[doc(alias = "clutter_actor_set_y_align")]
-    //fn set_y_align(&self, y_align: /*Ignored*/ActorAlign);
+    /// Sets the vertical alignment policy of a [`Actor`][crate::Actor], in case the
+    /// actor received extra vertical space.
+    ///
+    /// See also the `property::Actor::y-align` property.
+    /// ## `y_align`
+    /// the vertical alignment policy
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    #[doc(alias = "clutter_actor_set_y_align")]
+    fn set_y_align(&self, y_align: ActorAlign);
 
     /// Sets whether a [`Actor`][crate::Actor] should expand horizontally; this means
     /// that layout manager should allocate extra space for the actor, if
@@ -2431,7 +2525,7 @@ pub trait ActorExt: 'static {
     #[doc(alias = "clutter_actor_uninhibit_culling")]
     fn uninhibit_culling(&self);
 
-    /// Unsets the `CLUTTER_ACTOR_MAPPED` flag on the actor and possibly
+    /// Unsets the [`ActorFlags::MAPPED`][crate::ActorFlags::MAPPED] flag on the actor and possibly
     /// unmaps its children if they were mapped.
     ///
     /// Calling this function is not encouraged: the default [`Actor`][crate::Actor]
@@ -2485,14 +2579,20 @@ pub trait ActorExt: 'static {
     #[doc(alias = "clutter_actor_unrealize")]
     fn unrealize(&self);
 
-    //#[cfg(any(feature = "v1_0", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
-    //#[doc(alias = "clutter_actor_unset_flags")]
-    //fn unset_flags(&self, flags: /*Ignored*/ActorFlags);
+    /// Unsets `flags` on `self`
+    ///
+    /// This function will emit notifications for the changed properties
+    /// ## `flags`
+    /// the flags to unset
+    #[cfg(any(feature = "v1_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+    #[doc(alias = "clutter_actor_unset_flags")]
+    fn unset_flags(&self, flags: ActorFlags);
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //fn set_actions<P: IsA</*Ignored*/Action>>(&self, actions: Option<&P>);
+    /// Adds a [`Action`][crate::Action] to the actor
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    fn set_actions<P: IsA<Action>>(&self, actions: Option<&P>);
 
     //#[cfg(any(feature = "v0_8", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_8")))]
@@ -3494,17 +3594,21 @@ pub trait ActorExt: 'static {
 }
 
 impl<O: IsA<Actor>> ActorExt for O {
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //fn add_action(&self, action: /*Ignored*/&Action) {
-    //    unsafe { TODO: call ffi:clutter_actor_add_action() }
-    //}
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    fn add_action<P: IsA<Action>>(&self, action: &P) {
+        unsafe {
+            ffi::clutter_actor_add_action(self.as_ref().to_glib_none().0, action.as_ref().to_glib_none().0);
+        }
+    }
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //fn add_action_with_name(&self, name: &str, action: /*Ignored*/&Action) {
-    //    unsafe { TODO: call ffi:clutter_actor_add_action_with_name() }
-    //}
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    fn add_action_with_name<P: IsA<Action>>(&self, name: &str, action: &P) {
+        unsafe {
+            ffi::clutter_actor_add_action_with_name(self.as_ref().to_glib_none().0, name.to_glib_none().0, action.as_ref().to_glib_none().0);
+        }
+    }
 
     #[cfg(any(feature = "v1_10", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
@@ -3684,17 +3788,21 @@ impl<O: IsA<Actor>> ActorExt for O {
     //    unsafe { TODO: call ffi:clutter_actor_get_accessible() }
     //}
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //fn action(&self, name: &str) -> /*Ignored*/Option<Action> {
-    //    unsafe { TODO: call ffi:clutter_actor_get_action() }
-    //}
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    fn action(&self, name: &str) -> Option<Action> {
+        unsafe {
+            from_glib_none(ffi::clutter_actor_get_action(self.as_ref().to_glib_none().0, name.to_glib_none().0))
+        }
+    }
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //fn actions(&self) -> /*Ignored*/Vec<Action> {
-    //    unsafe { TODO: call ffi:clutter_actor_get_actions() }
-    //}
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    fn actions(&self) -> Vec<Action> {
+        unsafe {
+            FromGlibPtrContainer::from_glib_container(ffi::clutter_actor_get_actions(self.as_ref().to_glib_none().0))
+        }
+    }
 
     //#[cfg(any(feature = "v0_8", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_8")))]
@@ -3878,11 +3986,13 @@ impl<O: IsA<Actor>> ActorExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v1_0", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
-    //fn flags(&self) -> /*Ignored*/ActorFlags {
-    //    unsafe { TODO: call ffi:clutter_actor_get_flags() }
-    //}
+    #[cfg(any(feature = "v1_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+    fn flags(&self) -> ActorFlags {
+        unsafe {
+            from_glib(ffi::clutter_actor_get_flags(self.as_ref().to_glib_none().0))
+        }
+    }
 
     fn height(&self) -> f32 {
         unsafe {
@@ -4258,11 +4368,13 @@ impl<O: IsA<Actor>> ActorExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //fn x_align(&self) -> /*Ignored*/ActorAlign {
-    //    unsafe { TODO: call ffi:clutter_actor_get_x_align() }
-    //}
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    fn x_align(&self) -> ActorAlign {
+        unsafe {
+            from_glib(ffi::clutter_actor_get_x_align(self.as_ref().to_glib_none().0))
+        }
+    }
 
     #[cfg(any(feature = "v1_12", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_12")))]
@@ -4278,11 +4390,13 @@ impl<O: IsA<Actor>> ActorExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //fn y_align(&self) -> /*Ignored*/ActorAlign {
-    //    unsafe { TODO: call ffi:clutter_actor_get_y_align() }
-    //}
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    fn y_align(&self) -> ActorAlign {
+        unsafe {
+            from_glib(ffi::clutter_actor_get_y_align(self.as_ref().to_glib_none().0))
+        }
+    }
 
     #[cfg(any(feature = "v1_12", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_12")))]
@@ -4564,11 +4678,13 @@ impl<O: IsA<Actor>> ActorExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //fn remove_action(&self, action: /*Ignored*/&Action) {
-    //    unsafe { TODO: call ffi:clutter_actor_remove_action() }
-    //}
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    fn remove_action<P: IsA<Action>>(&self, action: &P) {
+        unsafe {
+            ffi::clutter_actor_remove_action(self.as_ref().to_glib_none().0, action.as_ref().to_glib_none().0);
+        }
+    }
 
     #[cfg(any(feature = "v1_4", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
@@ -4788,11 +4904,13 @@ impl<O: IsA<Actor>> ActorExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v1_0", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
-    //fn set_flags(&self, flags: /*Ignored*/ActorFlags) {
-    //    unsafe { TODO: call ffi:clutter_actor_set_flags() }
-    //}
+    #[cfg(any(feature = "v1_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+    fn set_flags(&self, flags: ActorFlags) {
+        unsafe {
+            ffi::clutter_actor_set_flags(self.as_ref().to_glib_none().0, flags.into_glib());
+        }
+    }
 
     #[cfg(any(feature = "v0_2", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_2")))]
@@ -4970,11 +5088,13 @@ impl<O: IsA<Actor>> ActorExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //fn set_x_align(&self, x_align: /*Ignored*/ActorAlign) {
-    //    unsafe { TODO: call ffi:clutter_actor_set_x_align() }
-    //}
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    fn set_x_align(&self, x_align: ActorAlign) {
+        unsafe {
+            ffi::clutter_actor_set_x_align(self.as_ref().to_glib_none().0, x_align.into_glib());
+        }
+    }
 
     #[cfg(any(feature = "v1_12", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_12")))]
@@ -4992,11 +5112,13 @@ impl<O: IsA<Actor>> ActorExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //fn set_y_align(&self, y_align: /*Ignored*/ActorAlign) {
-    //    unsafe { TODO: call ffi:clutter_actor_set_y_align() }
-    //}
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    fn set_y_align(&self, y_align: ActorAlign) {
+        unsafe {
+            ffi::clutter_actor_set_y_align(self.as_ref().to_glib_none().0, y_align.into_glib());
+        }
+    }
 
     #[cfg(any(feature = "v1_12", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_12")))]
@@ -5057,19 +5179,21 @@ impl<O: IsA<Actor>> ActorExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v1_0", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
-    //fn unset_flags(&self, flags: /*Ignored*/ActorFlags) {
-    //    unsafe { TODO: call ffi:clutter_actor_unset_flags() }
-    //}
+    #[cfg(any(feature = "v1_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+    fn unset_flags(&self, flags: ActorFlags) {
+        unsafe {
+            ffi::clutter_actor_unset_flags(self.as_ref().to_glib_none().0, flags.into_glib());
+        }
+    }
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //fn set_actions<P: IsA</*Ignored*/Action>>(&self, actions: Option<&P>) {
-    //    unsafe {
-    //        glib::gobject_ffi::g_object_set_property(self.to_glib_none().0 as *mut glib::gobject_ffi::GObject, b"actions\0".as_ptr() as *const _, actions.to_value().to_glib_none().0);
-    //    }
-    //}
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    fn set_actions<P: IsA<Action>>(&self, actions: Option<&P>) {
+        unsafe {
+            glib::gobject_ffi::g_object_set_property(self.to_glib_none().0 as *mut glib::gobject_ffi::GObject, b"actions\0".as_ptr() as *const _, actions.to_value().to_glib_none().0);
+        }
+    }
 
     //#[cfg(any(feature = "v0_8", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_8")))]

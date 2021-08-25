@@ -5,14 +5,34 @@ target_path = "."
 work_mode = "normal"
 
 generate = [
+	"Clutter.Action",
 	"Clutter.Actor",
+	"Clutter.ActorAlign",
+	"Clutter.ActorFlags",
+	"Clutter.ActorMeta",
+	"Clutter.Animatable",
 	"Clutter.AnimationMode",
 	"Clutter.Constraint",
 	"Clutter.Container",
 	"Clutter.Content",
 	"Clutter.InputDevice",
+	"Clutter.Scriptable",
 	"Clutter.StaticColor",
+	"Clutter.Text",
 ]
+
+manual = [
+	"GLib.DestroyNotify",
+	"GLib.Error",
+	"GLib.SourceFunc",
+]
+
+[[object]]
+name = "Clutter.*"
+status = "generate"
+	[[object.constant]]
+	pattern = "*"
+	ignore = true
 
 [[object]]
 name = "Clutter.Color"
@@ -29,4 +49,11 @@ name = "Clutter.Stage"
 status = "generate"
 	[[object.function]]
 	name = "read_pixels"
+	ignore = true
+
+[[object]]
+name = "Clutter.TextBuffer"
+status = "generate"
+	[[object.function]]
+	name = "new_with_text"
 	ignore = true

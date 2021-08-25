@@ -14,6 +14,7 @@ generate = [
 	"Meta.Direction",
 	"Meta.DisplayCorner",
 	"Meta.DisplayDirection",
+	"Meta.ExitCode",
 	"Meta.FrameType",
 	"Meta.GrabOp",
 	"Meta.KeyBinding",
@@ -49,6 +50,7 @@ manual = [
 	"Clutter.Stage",
 	"GDesktopEnums.BackgroundStyle",
 	"GLib.Error",
+	"GLib.Pid",
 	"Gio.Cancellable",
 	"Gio.File",
 	"Gio.InputStream",
@@ -62,7 +64,7 @@ manual = [
 name = "Meta.*"
 status = "generate"
 	[[object.constant]]
-	name = "DEFAULT_ICON_NAME"
+	pattern = "*"
 	ignore = true
 	[[object.function]]
 	name = "rect"

@@ -55,14 +55,6 @@ a `MetaPrefsChangedFunc`
 <!-- fn prefs_remove_listener -->
 ## `func`
 a `MetaPrefsChangedFunc`
-<!-- fn quit -->
-Stops Mutter. This tells the event loop to stop processing; it is
-rather dangerous to use this because this will leave the user with
-no window manager. We generally do this only if, for example, the
-session manager asks us to; we assume the session manager knows
-what it's talking about.
-## `code`
-The success or failure code to return to the calling process.
 <!-- fn remove_verbose_topic -->
 Stop printing log messages for the given topic `topic`. Note
 that this method does not stack with `meta_add_verbose_topic()`;
@@ -268,6 +260,10 @@ down
 left
 <!-- enum DisplayDirection::variant Right -->
 right
+<!-- enum ExitCode::variant Success -->
+Success
+<!-- enum ExitCode::variant Error -->
+Error
 <!-- enum FrameType::variant Normal -->
 Normal frame
 <!-- enum FrameType::variant Dialog -->
