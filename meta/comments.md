@@ -107,7 +107,7 @@ the background that are obscured by other windows.
 
 # Implements
 
-[`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`]
+[`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`], [`trait@clutter::prelude::ContainerExt`]
 <!-- struct BackgroundContent -->
 This class handles tracking and painting the root window background.
 By integrating with [`WindowGroup`][crate::WindowGroup] we can avoid painting parts of
@@ -128,7 +128,7 @@ The new bounding clip rectangle, or [`None`]
 
 # Implements
 
-[`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`]
+[`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`], [`trait@clutter::prelude::ContainerExt`]
 <!-- struct Compositor -->
 
 
@@ -423,7 +423,7 @@ Marks the end of the [`StackLayer`][crate::StackLayer] enumeration
 
 # Implements
 
-[`trait@clutter::prelude::StageExt`], [`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`]
+[`trait@clutter::prelude::StageExt`], [`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`], [`trait@clutter::prelude::ContainerExt`]
 <!-- enum TabList::variant Normal -->
 Normal windows
 <!-- enum TabList::variant Docks -->
@@ -453,7 +453,7 @@ This is an Abstract Base Class, you cannot instantiate it.
 
 # Implements
 
-[`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`]
+[`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`], [`trait@clutter::prelude::ContainerExt`]
 <!-- impl WindowActor::fn get_image -->
 Flattens the layers of `self` into one ARGB32 image by alpha blending
 the images, and returns the flattened image.
@@ -482,7 +482,7 @@ An X11 based window
 
 # Implements
 
-[`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`]
+[`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`], [`trait@clutter::prelude::ContainerExt`]
 <!-- enum WindowType::variant Normal -->
 Normal
 <!-- enum WindowType::variant Desktop -->

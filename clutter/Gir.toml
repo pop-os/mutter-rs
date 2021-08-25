@@ -6,6 +6,9 @@ work_mode = "normal"
 
 generate = [
 	"Clutter.Actor",
+	"Clutter.AnimationMode",
+	"Clutter.Constraint",
+	"Clutter.Container",
 	"Clutter.Content",
 	"Clutter.InputDevice",
 	"Clutter.StaticColor",

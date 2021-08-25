@@ -4,6 +4,7 @@
 // DO NOT EDIT
 
 use crate::Actor;
+use crate::Container;
 use crate::InputDevice;
 use glib::object::Cast;
 use glib::object::IsA;
@@ -19,7 +20,7 @@ use std::mem::transmute;
 
 glib::wrapper! {
     #[doc(alias = "ClutterStage")]
-    pub struct Stage(Object<ffi::ClutterStage, ffi::ClutterStageClass>) @extends Actor;
+    pub struct Stage(Object<ffi::ClutterStage, ffi::ClutterStageClass>) @extends Actor, @implements Container;
 
     match fn {
         type_ => || ffi::clutter_stage_get_type(),

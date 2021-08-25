@@ -43,6 +43,7 @@ manual = [
 	"cairo.Surface",
 	"Clutter.Actor",
 	"Clutter.Color",
+	"Clutter.Container",
 	"Clutter.Content",
 	"Clutter.InputDevice",
 	"Clutter.Stage",

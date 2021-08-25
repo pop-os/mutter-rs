@@ -39,7 +39,7 @@ Base class for actors.
 
 # Implements
 
-[`ActorExt`][trait@crate::prelude::ActorExt]
+[`ActorExt`][trait@crate::prelude::ActorExt], [`ContainerExt`][trait@crate::prelude::ContainerExt]
 <!-- trait ActorExt::fn add_action -->
 Adds `action` to the list of actions applied to `self`
 
@@ -68,33 +68,6 @@ This function is the logical equivalent of:
 the name to set on the action
 ## `action`
 a `ClutterAction`
-<!-- trait ActorExt::fn add_constraint -->
-Adds `constraint` to the list of `ClutterConstraint`<!-- -->s applied
-to `self`
-
-The [`Actor`][crate::Actor] will hold a reference on the `constraint` until
-either `clutter_actor_remove_constraint()` or
-[`clear_constraints()`][Self::clear_constraints()] is called.
-## `constraint`
-a `ClutterConstraint`
-<!-- trait ActorExt::fn add_constraint_with_name -->
-A convenience function for setting the name of a `ClutterConstraint`
-while adding it to the list of constraints applied to `self`
-
-This function is the logical equivalent of:
-
-
-
-**⚠️ The following code is in C ⚠️**
-
-```C
-  clutter_actor_meta_set_name (CLUTTER_ACTOR_META (constraint), name);
-  clutter_actor_add_constraint (self, constraint);
-```
-## `name`
-the name to set on the constraint
-## `constraint`
-a `ClutterConstraint`
 <!-- trait ActorExt::fn add_effect -->
 Adds `effect` to the list of `ClutterEffect`<!-- -->s applied to `self`
 
@@ -428,26 +401,6 @@ the `transform` matrix will be initialized to the identity matrix.
 
 ## `transform`
 a `graphene_matrix_t`
-<!-- trait ActorExt::fn constraint -->
-Retrieves the `ClutterConstraint` with the given name in the list
-of constraints applied to `self`
-## `name`
-the name of the constraint to retrieve
-
-# Returns
-
-a `ClutterConstraint` for the given
- name, or [`None`]. The returned `ClutterConstraint` is owned by the
- actor and it should not be unreferenced directly
-<!-- trait ActorExt::fn constraints -->
-Retrieves the list of constraints applied to `self`
-
-# Returns
-
-a copy
- of the list of `ClutterConstraint`<!-- -->s. The contents of the list are
- owned by the [`Actor`][crate::Actor]. Use `g_list_free()` to free the resources
- allocated by the returned `GList`
 <!-- trait ActorExt::fn content_box -->
 Retrieves the bounding box for the [`Content`][crate::Content] of `self`.
 
@@ -515,13 +468,6 @@ a pointer to the default
  is not guaranteed to be stable across multiple frames, so if you
  want to retain it, you will need to copy it using
  `clutter_paint_volume_copy()`.
-<!-- trait ActorExt::fn easing_mode -->
-Retrieves the easing mode for the tweening of animatable properties
-of `self` for the current easing state.
-
-# Returns
-
-an easing mode
 <!-- trait ActorExt::fn effect -->
 Retrieves the `ClutterEffect` with the given name in the list
 of effects applied to `self`
@@ -831,12 +777,6 @@ Removes `action` from the list of actions applied to `self`
 The reference held by `self` on the `ClutterAction` will be released
 ## `action`
 a `ClutterAction`
-<!-- trait ActorExt::fn remove_constraint -->
-Removes `constraint` from the list of constraints applied to `self`
-
-The reference held by `self` on the `ClutterConstraint` will be released
-## `constraint`
-a `ClutterConstraint`
 <!-- trait ActorExt::fn remove_effect -->
 Removes `effect` from the list of effects applied to `self`
 
@@ -895,11 +835,6 @@ will be used when increasing the size of the content.
 the minification filter for the content
 ## `mag_filter`
 the magnification filter for the content
-<!-- trait ActorExt::fn set_easing_mode -->
-Sets the easing mode for the tweening of animatable properties
-of `self`.
-## `mode`
-an easing mode, excluding `CLUTTER_CUSTOM_MODE`
 <!-- trait ActorExt::fn set_flags -->
 Sets `flags` on `self`
 
@@ -1005,10 +940,10 @@ Sets the `ClutterTextDirection` for an actor
 
 The passed text direction must not be `CLUTTER_TEXT_DIRECTION_DEFAULT`
 
-If `self` implements `ClutterContainer` then this function will recurse
+If `self` implements [`Container`][crate::Container] then this function will recurse
 inside all the children of `self` (including the internal ones).
 
-Composite actors not implementing `ClutterContainer`, or actors requiring
+Composite actors not implementing [`Container`][crate::Container], or actors requiring
 special handling when the text direction changes, should connect to
 the `GObject::notify` signal for the `property::Actor::text-direction` property
 ## `text_dir`
@@ -1210,8 +1145,6 @@ Setting this property to [`None`] will unset the existing clip.
 
 Setting this property will change the `property::Actor::has-clip`
 property as a side effect.
-<!-- trait ActorExt::fn set_constraints -->
-Adds a `ClutterConstraint` to the actor
 <!-- trait ActorExt::fn set_effect -->
 Adds `ClutterEffect` to the list of effects be applied on a [`Actor`][crate::Actor]
 <!-- trait ActorExt::fn fixed_position_set -->
@@ -1347,6 +1280,117 @@ the X axis.
 <!-- trait ActorExt::fn y_expand -->
 Whether a layout manager should assign more space to the actor on
 the Y axis.
+<!-- enum AnimationMode::variant CustomMode -->
+custom progress function
+<!-- enum AnimationMode::variant Linear -->
+linear tweening
+<!-- enum AnimationMode::variant EaseInQuad -->
+quadratic tweening
+<!-- enum AnimationMode::variant EaseOutQuad -->
+quadratic tweening, inverse of
+ [`EaseInQuad`][Self::EaseInQuad]
+<!-- enum AnimationMode::variant EaseInOutQuad -->
+quadratic tweening, combininig
+ [`EaseInQuad`][Self::EaseInQuad] and [`EaseOutQuad`][Self::EaseOutQuad]
+<!-- enum AnimationMode::variant EaseInCubic -->
+cubic tweening
+<!-- enum AnimationMode::variant EaseOutCubic -->
+cubic tweening, inverse of
+ [`EaseInCubic`][Self::EaseInCubic]
+<!-- enum AnimationMode::variant EaseInOutCubic -->
+cubic tweening, combining
+ [`EaseInCubic`][Self::EaseInCubic] and [`EaseOutCubic`][Self::EaseOutCubic]
+<!-- enum AnimationMode::variant EaseInQuart -->
+quartic tweening
+<!-- enum AnimationMode::variant EaseOutQuart -->
+quartic tweening, inverse of
+ [`EaseInQuart`][Self::EaseInQuart]
+<!-- enum AnimationMode::variant EaseInOutQuart -->
+quartic tweening, combining
+ [`EaseInQuart`][Self::EaseInQuart] and [`EaseOutQuart`][Self::EaseOutQuart]
+<!-- enum AnimationMode::variant EaseInQuint -->
+quintic tweening
+<!-- enum AnimationMode::variant EaseOutQuint -->
+quintic tweening, inverse of
+ [`EaseInQuint`][Self::EaseInQuint]
+<!-- enum AnimationMode::variant EaseInOutQuint -->
+fifth power tweening, combining
+ [`EaseInQuint`][Self::EaseInQuint] and [`EaseOutQuint`][Self::EaseOutQuint]
+<!-- enum AnimationMode::variant EaseInSine -->
+sinusoidal tweening
+<!-- enum AnimationMode::variant EaseOutSine -->
+sinusoidal tweening, inverse of
+ [`EaseInSine`][Self::EaseInSine]
+<!-- enum AnimationMode::variant EaseInOutSine -->
+sine wave tweening, combining
+ [`EaseInSine`][Self::EaseInSine] and [`EaseOutSine`][Self::EaseOutSine]
+<!-- enum AnimationMode::variant EaseInExpo -->
+exponential tweening
+<!-- enum AnimationMode::variant EaseOutExpo -->
+exponential tweening, inverse of
+ [`EaseInExpo`][Self::EaseInExpo]
+<!-- enum AnimationMode::variant EaseInOutExpo -->
+exponential tweening, combining
+ [`EaseInExpo`][Self::EaseInExpo] and [`EaseOutExpo`][Self::EaseOutExpo]
+<!-- enum AnimationMode::variant EaseInCirc -->
+circular tweening
+<!-- enum AnimationMode::variant EaseOutCirc -->
+circular tweening, inverse of
+ [`EaseInCirc`][Self::EaseInCirc]
+<!-- enum AnimationMode::variant EaseInOutCirc -->
+circular tweening, combining
+ [`EaseInCirc`][Self::EaseInCirc] and [`EaseOutCirc`][Self::EaseOutCirc]
+<!-- enum AnimationMode::variant EaseInElastic -->
+elastic tweening, with offshoot on start
+<!-- enum AnimationMode::variant EaseOutElastic -->
+elastic tweening, with offshoot on end
+<!-- enum AnimationMode::variant EaseInOutElastic -->
+elastic tweening with offshoot on both ends
+<!-- enum AnimationMode::variant EaseInBack -->
+overshooting cubic tweening, with
+ backtracking on start
+<!-- enum AnimationMode::variant EaseOutBack -->
+overshooting cubic tweening, with
+ backtracking on end
+<!-- enum AnimationMode::variant EaseInOutBack -->
+overshooting cubic tweening, with
+ backtracking on both ends
+<!-- enum AnimationMode::variant EaseInBounce -->
+exponentially decaying parabolic (bounce)
+ tweening, with bounce on start
+<!-- enum AnimationMode::variant EaseOutBounce -->
+exponentially decaying parabolic (bounce)
+ tweening, with bounce on end
+<!-- enum AnimationMode::variant EaseInOutBounce -->
+exponentially decaying parabolic (bounce)
+ tweening, with bounce on both ends
+<!-- enum AnimationMode::variant Steps -->
+parametrized step function; see `clutter_timeline_set_step_progress()`
+ for further details. (Since 1.12)
+<!-- enum AnimationMode::variant StepStart -->
+equivalent to [`Steps`][Self::Steps] with a number of steps
+ equal to 1, and a step mode of `CLUTTER_STEP_MODE_START`. (Since 1.12)
+<!-- enum AnimationMode::variant StepEnd -->
+equivalent to [`Steps`][Self::Steps] with a number of steps
+ equal to 1, and a step mode of `CLUTTER_STEP_MODE_END`. (Since 1.12)
+<!-- enum AnimationMode::variant CubicBezier -->
+cubic bezier between (0, 0) and (1, 1) with two
+ control points; see `clutter_timeline_set_cubic_bezier_progress()`. (Since 1.12)
+<!-- enum AnimationMode::variant Ease -->
+equivalent to [`CubicBezier`][Self::CubicBezier] with control points
+ in (0.25, 0.1) and (0.25, 1.0). (Since 1.12)
+<!-- enum AnimationMode::variant EaseIn -->
+equivalent to [`CubicBezier`][Self::CubicBezier] with control points
+ in (0.42, 0) and (1.0, 1.0). (Since 1.12)
+<!-- enum AnimationMode::variant EaseOut -->
+equivalent to [`CubicBezier`][Self::CubicBezier] with control points
+ in (0, 0) and (0.58, 1.0). (Since 1.12)
+<!-- enum AnimationMode::variant EaseInOut -->
+equivalent to [`CubicBezier`][Self::CubicBezier] with control points
+ in (0.42, 0) and (0.58, 1.0). (Since 1.12)
+<!-- enum AnimationMode::variant AnimationLast -->
+last animation mode, used as a guard for
+ registered global alpha functions
 <!-- struct Color -->
 Color representation.
 <!-- impl Color::fn copy -->
@@ -1388,6 +1432,150 @@ respectively.
 # Returns
 
 a newly-allocated text string
+<!-- struct Constraint -->
+The [`Constraint`][crate::Constraint] structure contains only
+private data and should be accessed using the provided API
+
+This is an Abstract Base Class, you cannot instantiate it.
+
+# Implements
+
+[`ConstraintExt`][trait@crate::prelude::ConstraintExt]
+<!-- trait ConstraintExt::fn update_preferred_size -->
+Asks the `self` to update the size request of a [`Actor`][crate::Actor].
+## `actor`
+a [`Actor`][crate::Actor]
+## `direction`
+a `ClutterOrientation`
+## `for_size`
+the size in the opposite direction
+## `minimum_size`
+the minimum size to modify
+## `natural_size`
+the natural size to modify
+<!-- struct Container -->
+[`Container`][crate::Container] is an opaque structure whose members cannot be directly
+accessed
+
+# Implements
+
+[`ContainerExt`][trait@crate::prelude::ContainerExt]
+<!-- impl Container::fn class_find_child_property -->
+Looks up the `GParamSpec` for a child property of `klass`.
+## `klass`
+a `GObjectClass` implementing the [`Container`][crate::Container] interface.
+## `property_name`
+a property name.
+
+# Returns
+
+The `GParamSpec` for the property or [`None`]
+ if no such property exist.
+<!-- impl Container::fn class_list_child_properties -->
+Returns an array of `GParamSpec` for all child properties.
+## `klass`
+a `GObjectClass` implementing the [`Container`][crate::Container] interface.
+
+# Returns
+
+an array
+ of `GParamSpec`<!-- -->s which should be freed after use.
+<!-- trait ContainerExt::fn add -->
+Adds a list of [`Actor`][crate::Actor]<!-- -->s to `self`. Each time and
+actor is added, the "actor-added" signal is emitted. Each actor should
+be parented to `self`, which takes a reference on the actor. You
+cannot add a [`Actor`][crate::Actor] to more than one [`Container`][crate::Container].
+
+This function will call `ClutterContainerIface.add()`, which is a
+deprecated virtual function. The default implementation will
+call [`ActorExt::add_child()`][crate::prelude::ActorExt::add_child()].
+
+# Deprecated since 1.10
+
+Use [`ActorExt::add_child()`][crate::prelude::ActorExt::add_child()] instead.
+## `first_actor`
+the first [`Actor`][crate::Actor] to add
+<!-- trait ContainerExt::fn child_get -->
+Gets `self` specific properties of an actor.
+
+In general, a copy is made of the property contents and the caller is
+responsible for freeing the memory in the appropriate manner for the type, for
+instance by calling `g_free()` or `g_object_unref()`.
+## `actor`
+a [`Actor`][crate::Actor] that is a child of `self`.
+## `first_prop`
+name of the first property to be set.
+<!-- trait ContainerExt::fn child_get_property -->
+Gets a container specific property of a child of `self`, In general,
+a copy is made of the property contents and the caller is responsible for
+freeing the memory by calling `g_value_unset()`.
+
+Note that `clutter_container_child_set_property()` is really intended for
+language bindings, `clutter_container_child_set()` is much more convenient
+for C programming.
+## `child`
+a [`Actor`][crate::Actor] that is a child of `self`.
+## `property`
+the name of the property to set.
+## `value`
+the value.
+<!-- trait ContainerExt::fn child_notify -->
+Calls the `ClutterContainerIface.child_notify()` virtual function
+of [`Container`][crate::Container]. The default implementation will emit the
+`signal::Container::child-notify` signal.
+## `child`
+a [`Actor`][crate::Actor]
+## `pspec`
+a `GParamSpec`
+<!-- trait ContainerExt::fn child_set -->
+Sets container specific properties on the child of a container.
+## `actor`
+a [`Actor`][crate::Actor] that is a child of `self`.
+## `first_prop`
+name of the first property to be set.
+<!-- trait ContainerExt::fn child_set_property -->
+Sets a container-specific property on a child of `self`.
+## `child`
+a [`Actor`][crate::Actor] that is a child of `self`.
+## `property`
+the name of the property to set.
+## `value`
+the value.
+<!-- trait ContainerExt::fn child_meta -->
+Retrieves the `ClutterChildMeta` which contains the data about the
+`self` specific state for `actor`.
+## `actor`
+a [`Actor`][crate::Actor] that is a child of `self`.
+
+# Returns
+
+the `ClutterChildMeta` for the `actor` child
+ of `self` or [`None`] if the specifiec actor does not exist or the
+ container is not configured to provide `ClutterChildMeta`<!-- -->s
+<!-- trait ContainerExt::fn remove -->
+Removes a [`None`] terminated list of [`Actor`][crate::Actor]<!-- -->s from
+`self`. Each actor should be unparented, so if you want to keep it
+around you must hold a reference to it yourself, using `g_object_ref()`.
+Each time an actor is removed, the "actor-removed" signal is
+emitted by `self`.
+
+This function will call `ClutterContainerIface.remove()`, which is a
+deprecated virtual function. The default implementation will call
+[`ActorExt::remove_child()`][crate::prelude::ActorExt::remove_child()].
+
+# Deprecated since 1.10
+
+Use [`ActorExt::remove_child()`][crate::prelude::ActorExt::remove_child()] instead.
+## `first_actor`
+first [`Actor`][crate::Actor] to remove
+<!-- trait ContainerExt::fn connect_child_notify -->
+The ::child-notify signal is emitted each time a property is
+being set through the `clutter_container_child_set()` and
+`clutter_container_child_set_property()` calls.
+## `actor`
+the child that has had a property set
+## `pspec`
+the `GParamSpec` of the property set
 <!-- struct Content -->
 
 
@@ -1466,7 +1654,7 @@ and should be accessed using the provided API
 
 # Implements
 
-[`StageExt`][trait@crate::prelude::StageExt], [`ActorExt`][trait@crate::prelude::ActorExt]
+[`StageExt`][trait@crate::prelude::StageExt], [`ActorExt`][trait@crate::prelude::ActorExt], [`ContainerExt`][trait@crate::prelude::ContainerExt]
 <!-- trait StageExt::fn actor_at_pos -->
 Checks the scene at the coordinates `x` and `y` and returns a pointer
 to the [`Actor`][crate::Actor] at those coordinates. The result is the actor which

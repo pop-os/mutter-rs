@@ -3,24 +3,325 @@
 // from mutter-gir-files
 // DO NOT EDIT
 
-#[cfg(any(feature = "v1_6", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_6")))]
+#[cfg(any(feature = "v1_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
 use glib::translate::*;
-#[cfg(any(feature = "v1_6", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_6")))]
+#[cfg(any(feature = "v1_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
 use glib::value::FromValue;
-#[cfg(any(feature = "v1_6", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_6")))]
+#[cfg(any(feature = "v1_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
 use glib::value::ToValue;
-#[cfg(any(feature = "v1_6", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_6")))]
+#[cfg(any(feature = "v1_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
 use glib::StaticType;
-#[cfg(any(feature = "v1_6", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_6")))]
+#[cfg(any(feature = "v1_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
 use glib::Type;
-#[cfg(any(feature = "v1_6", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_6")))]
+#[cfg(any(feature = "v1_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
 use std::fmt;
+
+/// The animation modes used by `ClutterAnimatable`. This
+/// enumeration can be expanded in later versions of Clutter.
+///
+/// <figure id="easing-modes">
+///  `<title>`Easing modes provided by Clutter`</title>`
+///  <graphic fileref="easing-modes.png" format="PNG"/>
+/// `</figure>`
+///
+/// Every global alpha function registered using `clutter_alpha_register_func()`
+/// or `clutter_alpha_register_closure()` will have a logical id greater than
+/// [`AnimationLast`][Self::AnimationLast].
+#[cfg(any(feature = "v1_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = "ClutterAnimationMode")]
+pub enum AnimationMode {
+    #[doc(alias = "CLUTTER_CUSTOM_MODE")]
+    CustomMode,
+    #[doc(alias = "CLUTTER_LINEAR")]
+    Linear,
+    #[doc(alias = "CLUTTER_EASE_IN_QUAD")]
+    EaseInQuad,
+    #[doc(alias = "CLUTTER_EASE_OUT_QUAD")]
+    EaseOutQuad,
+    #[doc(alias = "CLUTTER_EASE_IN_OUT_QUAD")]
+    EaseInOutQuad,
+    #[doc(alias = "CLUTTER_EASE_IN_CUBIC")]
+    EaseInCubic,
+    #[doc(alias = "CLUTTER_EASE_OUT_CUBIC")]
+    EaseOutCubic,
+    #[doc(alias = "CLUTTER_EASE_IN_OUT_CUBIC")]
+    EaseInOutCubic,
+    #[doc(alias = "CLUTTER_EASE_IN_QUART")]
+    EaseInQuart,
+    #[doc(alias = "CLUTTER_EASE_OUT_QUART")]
+    EaseOutQuart,
+    #[doc(alias = "CLUTTER_EASE_IN_OUT_QUART")]
+    EaseInOutQuart,
+    #[doc(alias = "CLUTTER_EASE_IN_QUINT")]
+    EaseInQuint,
+    #[doc(alias = "CLUTTER_EASE_OUT_QUINT")]
+    EaseOutQuint,
+    #[doc(alias = "CLUTTER_EASE_IN_OUT_QUINT")]
+    EaseInOutQuint,
+    #[doc(alias = "CLUTTER_EASE_IN_SINE")]
+    EaseInSine,
+    #[doc(alias = "CLUTTER_EASE_OUT_SINE")]
+    EaseOutSine,
+    #[doc(alias = "CLUTTER_EASE_IN_OUT_SINE")]
+    EaseInOutSine,
+    #[doc(alias = "CLUTTER_EASE_IN_EXPO")]
+    EaseInExpo,
+    #[doc(alias = "CLUTTER_EASE_OUT_EXPO")]
+    EaseOutExpo,
+    #[doc(alias = "CLUTTER_EASE_IN_OUT_EXPO")]
+    EaseInOutExpo,
+    #[doc(alias = "CLUTTER_EASE_IN_CIRC")]
+    EaseInCirc,
+    #[doc(alias = "CLUTTER_EASE_OUT_CIRC")]
+    EaseOutCirc,
+    #[doc(alias = "CLUTTER_EASE_IN_OUT_CIRC")]
+    EaseInOutCirc,
+    #[doc(alias = "CLUTTER_EASE_IN_ELASTIC")]
+    EaseInElastic,
+    #[doc(alias = "CLUTTER_EASE_OUT_ELASTIC")]
+    EaseOutElastic,
+    #[doc(alias = "CLUTTER_EASE_IN_OUT_ELASTIC")]
+    EaseInOutElastic,
+    #[doc(alias = "CLUTTER_EASE_IN_BACK")]
+    EaseInBack,
+    #[doc(alias = "CLUTTER_EASE_OUT_BACK")]
+    EaseOutBack,
+    #[doc(alias = "CLUTTER_EASE_IN_OUT_BACK")]
+    EaseInOutBack,
+    #[doc(alias = "CLUTTER_EASE_IN_BOUNCE")]
+    EaseInBounce,
+    #[doc(alias = "CLUTTER_EASE_OUT_BOUNCE")]
+    EaseOutBounce,
+    #[doc(alias = "CLUTTER_EASE_IN_OUT_BOUNCE")]
+    EaseInOutBounce,
+    #[doc(alias = "CLUTTER_STEPS")]
+    Steps,
+    #[doc(alias = "CLUTTER_STEP_START")]
+    StepStart,
+    #[doc(alias = "CLUTTER_STEP_END")]
+    StepEnd,
+    #[doc(alias = "CLUTTER_CUBIC_BEZIER")]
+    CubicBezier,
+    #[doc(alias = "CLUTTER_EASE")]
+    Ease,
+    #[doc(alias = "CLUTTER_EASE_IN")]
+    EaseIn,
+    #[doc(alias = "CLUTTER_EASE_OUT")]
+    EaseOut,
+    #[doc(alias = "CLUTTER_EASE_IN_OUT")]
+    EaseInOut,
+    #[doc(alias = "CLUTTER_ANIMATION_LAST")]
+    AnimationLast,
+#[doc(hidden)]
+    __Unknown(i32),
+}
+
+#[cfg(any(feature = "v1_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+impl fmt::Display for AnimationMode {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "AnimationMode::{}", match *self {
+            Self::CustomMode => "CustomMode",
+            Self::Linear => "Linear",
+            Self::EaseInQuad => "EaseInQuad",
+            Self::EaseOutQuad => "EaseOutQuad",
+            Self::EaseInOutQuad => "EaseInOutQuad",
+            Self::EaseInCubic => "EaseInCubic",
+            Self::EaseOutCubic => "EaseOutCubic",
+            Self::EaseInOutCubic => "EaseInOutCubic",
+            Self::EaseInQuart => "EaseInQuart",
+            Self::EaseOutQuart => "EaseOutQuart",
+            Self::EaseInOutQuart => "EaseInOutQuart",
+            Self::EaseInQuint => "EaseInQuint",
+            Self::EaseOutQuint => "EaseOutQuint",
+            Self::EaseInOutQuint => "EaseInOutQuint",
+            Self::EaseInSine => "EaseInSine",
+            Self::EaseOutSine => "EaseOutSine",
+            Self::EaseInOutSine => "EaseInOutSine",
+            Self::EaseInExpo => "EaseInExpo",
+            Self::EaseOutExpo => "EaseOutExpo",
+            Self::EaseInOutExpo => "EaseInOutExpo",
+            Self::EaseInCirc => "EaseInCirc",
+            Self::EaseOutCirc => "EaseOutCirc",
+            Self::EaseInOutCirc => "EaseInOutCirc",
+            Self::EaseInElastic => "EaseInElastic",
+            Self::EaseOutElastic => "EaseOutElastic",
+            Self::EaseInOutElastic => "EaseInOutElastic",
+            Self::EaseInBack => "EaseInBack",
+            Self::EaseOutBack => "EaseOutBack",
+            Self::EaseInOutBack => "EaseInOutBack",
+            Self::EaseInBounce => "EaseInBounce",
+            Self::EaseOutBounce => "EaseOutBounce",
+            Self::EaseInOutBounce => "EaseInOutBounce",
+            Self::Steps => "Steps",
+            Self::StepStart => "StepStart",
+            Self::StepEnd => "StepEnd",
+            Self::CubicBezier => "CubicBezier",
+            Self::Ease => "Ease",
+            Self::EaseIn => "EaseIn",
+            Self::EaseOut => "EaseOut",
+            Self::EaseInOut => "EaseInOut",
+            Self::AnimationLast => "AnimationLast",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[cfg(any(feature = "v1_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+#[doc(hidden)]
+impl IntoGlib for AnimationMode {
+    type GlibType = ffi::ClutterAnimationMode;
+
+    fn into_glib(self) -> ffi::ClutterAnimationMode {
+        match self {
+            Self::CustomMode => ffi::CLUTTER_CUSTOM_MODE,
+            Self::Linear => ffi::CLUTTER_LINEAR,
+            Self::EaseInQuad => ffi::CLUTTER_EASE_IN_QUAD,
+            Self::EaseOutQuad => ffi::CLUTTER_EASE_OUT_QUAD,
+            Self::EaseInOutQuad => ffi::CLUTTER_EASE_IN_OUT_QUAD,
+            Self::EaseInCubic => ffi::CLUTTER_EASE_IN_CUBIC,
+            Self::EaseOutCubic => ffi::CLUTTER_EASE_OUT_CUBIC,
+            Self::EaseInOutCubic => ffi::CLUTTER_EASE_IN_OUT_CUBIC,
+            Self::EaseInQuart => ffi::CLUTTER_EASE_IN_QUART,
+            Self::EaseOutQuart => ffi::CLUTTER_EASE_OUT_QUART,
+            Self::EaseInOutQuart => ffi::CLUTTER_EASE_IN_OUT_QUART,
+            Self::EaseInQuint => ffi::CLUTTER_EASE_IN_QUINT,
+            Self::EaseOutQuint => ffi::CLUTTER_EASE_OUT_QUINT,
+            Self::EaseInOutQuint => ffi::CLUTTER_EASE_IN_OUT_QUINT,
+            Self::EaseInSine => ffi::CLUTTER_EASE_IN_SINE,
+            Self::EaseOutSine => ffi::CLUTTER_EASE_OUT_SINE,
+            Self::EaseInOutSine => ffi::CLUTTER_EASE_IN_OUT_SINE,
+            Self::EaseInExpo => ffi::CLUTTER_EASE_IN_EXPO,
+            Self::EaseOutExpo => ffi::CLUTTER_EASE_OUT_EXPO,
+            Self::EaseInOutExpo => ffi::CLUTTER_EASE_IN_OUT_EXPO,
+            Self::EaseInCirc => ffi::CLUTTER_EASE_IN_CIRC,
+            Self::EaseOutCirc => ffi::CLUTTER_EASE_OUT_CIRC,
+            Self::EaseInOutCirc => ffi::CLUTTER_EASE_IN_OUT_CIRC,
+            Self::EaseInElastic => ffi::CLUTTER_EASE_IN_ELASTIC,
+            Self::EaseOutElastic => ffi::CLUTTER_EASE_OUT_ELASTIC,
+            Self::EaseInOutElastic => ffi::CLUTTER_EASE_IN_OUT_ELASTIC,
+            Self::EaseInBack => ffi::CLUTTER_EASE_IN_BACK,
+            Self::EaseOutBack => ffi::CLUTTER_EASE_OUT_BACK,
+            Self::EaseInOutBack => ffi::CLUTTER_EASE_IN_OUT_BACK,
+            Self::EaseInBounce => ffi::CLUTTER_EASE_IN_BOUNCE,
+            Self::EaseOutBounce => ffi::CLUTTER_EASE_OUT_BOUNCE,
+            Self::EaseInOutBounce => ffi::CLUTTER_EASE_IN_OUT_BOUNCE,
+            Self::Steps => ffi::CLUTTER_STEPS,
+            Self::StepStart => ffi::CLUTTER_STEP_START,
+            Self::StepEnd => ffi::CLUTTER_STEP_END,
+            Self::CubicBezier => ffi::CLUTTER_CUBIC_BEZIER,
+            Self::Ease => ffi::CLUTTER_EASE,
+            Self::EaseIn => ffi::CLUTTER_EASE_IN,
+            Self::EaseOut => ffi::CLUTTER_EASE_OUT,
+            Self::EaseInOut => ffi::CLUTTER_EASE_IN_OUT,
+            Self::AnimationLast => ffi::CLUTTER_ANIMATION_LAST,
+            Self::__Unknown(value) => value,
+}
+    }
+}
+
+#[cfg(any(feature = "v1_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+#[doc(hidden)]
+impl FromGlib<ffi::ClutterAnimationMode> for AnimationMode {
+    unsafe fn from_glib(value: ffi::ClutterAnimationMode) -> Self {
+        match value {
+            ffi::CLUTTER_CUSTOM_MODE => Self::CustomMode,
+            ffi::CLUTTER_LINEAR => Self::Linear,
+            ffi::CLUTTER_EASE_IN_QUAD => Self::EaseInQuad,
+            ffi::CLUTTER_EASE_OUT_QUAD => Self::EaseOutQuad,
+            ffi::CLUTTER_EASE_IN_OUT_QUAD => Self::EaseInOutQuad,
+            ffi::CLUTTER_EASE_IN_CUBIC => Self::EaseInCubic,
+            ffi::CLUTTER_EASE_OUT_CUBIC => Self::EaseOutCubic,
+            ffi::CLUTTER_EASE_IN_OUT_CUBIC => Self::EaseInOutCubic,
+            ffi::CLUTTER_EASE_IN_QUART => Self::EaseInQuart,
+            ffi::CLUTTER_EASE_OUT_QUART => Self::EaseOutQuart,
+            ffi::CLUTTER_EASE_IN_OUT_QUART => Self::EaseInOutQuart,
+            ffi::CLUTTER_EASE_IN_QUINT => Self::EaseInQuint,
+            ffi::CLUTTER_EASE_OUT_QUINT => Self::EaseOutQuint,
+            ffi::CLUTTER_EASE_IN_OUT_QUINT => Self::EaseInOutQuint,
+            ffi::CLUTTER_EASE_IN_SINE => Self::EaseInSine,
+            ffi::CLUTTER_EASE_OUT_SINE => Self::EaseOutSine,
+            ffi::CLUTTER_EASE_IN_OUT_SINE => Self::EaseInOutSine,
+            ffi::CLUTTER_EASE_IN_EXPO => Self::EaseInExpo,
+            ffi::CLUTTER_EASE_OUT_EXPO => Self::EaseOutExpo,
+            ffi::CLUTTER_EASE_IN_OUT_EXPO => Self::EaseInOutExpo,
+            ffi::CLUTTER_EASE_IN_CIRC => Self::EaseInCirc,
+            ffi::CLUTTER_EASE_OUT_CIRC => Self::EaseOutCirc,
+            ffi::CLUTTER_EASE_IN_OUT_CIRC => Self::EaseInOutCirc,
+            ffi::CLUTTER_EASE_IN_ELASTIC => Self::EaseInElastic,
+            ffi::CLUTTER_EASE_OUT_ELASTIC => Self::EaseOutElastic,
+            ffi::CLUTTER_EASE_IN_OUT_ELASTIC => Self::EaseInOutElastic,
+            ffi::CLUTTER_EASE_IN_BACK => Self::EaseInBack,
+            ffi::CLUTTER_EASE_OUT_BACK => Self::EaseOutBack,
+            ffi::CLUTTER_EASE_IN_OUT_BACK => Self::EaseInOutBack,
+            ffi::CLUTTER_EASE_IN_BOUNCE => Self::EaseInBounce,
+            ffi::CLUTTER_EASE_OUT_BOUNCE => Self::EaseOutBounce,
+            ffi::CLUTTER_EASE_IN_OUT_BOUNCE => Self::EaseInOutBounce,
+            ffi::CLUTTER_STEPS => Self::Steps,
+            ffi::CLUTTER_STEP_START => Self::StepStart,
+            ffi::CLUTTER_STEP_END => Self::StepEnd,
+            ffi::CLUTTER_CUBIC_BEZIER => Self::CubicBezier,
+            ffi::CLUTTER_EASE => Self::Ease,
+            ffi::CLUTTER_EASE_IN => Self::EaseIn,
+            ffi::CLUTTER_EASE_OUT => Self::EaseOut,
+            ffi::CLUTTER_EASE_IN_OUT => Self::EaseInOut,
+            ffi::CLUTTER_ANIMATION_LAST => Self::AnimationLast,
+            value => Self::__Unknown(value),
+}
+    }
+}
+
+#[cfg(any(feature = "v1_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+impl StaticType for AnimationMode {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::clutter_animation_mode_get_type()) }
+    }
+}
+
+#[cfg(any(feature = "v1_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+impl glib::value::ValueType for AnimationMode {
+    type Type = Self;
+}
+
+#[cfg(any(feature = "v1_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+unsafe impl<'a> FromValue<'a> for AnimationMode {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+#[cfg(any(feature = "v1_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+impl ToValue for AnimationMode {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
 
 /// Named colors, for accessing global colors defined by Clutter
 #[cfg(any(feature = "v1_6", feature = "dox"))]

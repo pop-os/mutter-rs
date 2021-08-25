@@ -9,7 +9,7 @@ use std::fmt;
 
 glib::wrapper! {
     #[doc(alias = "MetaBackgroundGroup")]
-    pub struct BackgroundGroup(Object<ffi::MetaBackgroundGroup, ffi::MetaBackgroundGroupClass>) @extends clutter::Actor;
+    pub struct BackgroundGroup(Object<ffi::MetaBackgroundGroup, ffi::MetaBackgroundGroupClass>) @extends clutter::Actor, @implements clutter::Container;
 
     match fn {
         type_ => || ffi::meta_background_group_get_type(),

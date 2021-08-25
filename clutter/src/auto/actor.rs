@@ -5,7 +5,14 @@
 
 #[cfg(any(feature = "v1_10", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+use crate::AnimationMode;
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
 use crate::Color;
+#[cfg(any(feature = "v1_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+use crate::Constraint;
+use crate::Container;
 #[cfg(any(feature = "v1_10", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
 use crate::Content;
@@ -26,7 +33,7 @@ use std::mem::transmute;
 
 glib::wrapper! {
     #[doc(alias = "ClutterActor")]
-    pub struct Actor(Object<ffi::ClutterActor, ffi::ClutterActorClass>);
+    pub struct Actor(Object<ffi::ClutterActor, ffi::ClutterActorClass>) @implements Container;
 
     match fn {
         type_ => || ffi::clutter_actor_get_type(),
@@ -86,7 +93,7 @@ pub trait ActorExt: 'static {
     /// This function will take into consideration the `property::Actor::depth`
     /// of `child`, and will keep the list of children sorted.
     ///
-    /// This function will emit the `ClutterContainer::actor-added` signal
+    /// This function will emit the `signal::Container::actor-added` signal
     /// on `self`.
     /// ## `child`
     /// a [`Actor`][crate::Actor]
@@ -95,15 +102,40 @@ pub trait ActorExt: 'static {
     #[doc(alias = "clutter_actor_add_child")]
     fn add_child<P: IsA<Actor>>(&self, child: &P);
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //#[doc(alias = "clutter_actor_add_constraint")]
-    //fn add_constraint(&self, constraint: /*Ignored*/&Constraint);
+    /// Adds `constraint` to the list of [`Constraint`][crate::Constraint]<!-- -->s applied
+    /// to `self`
+    ///
+    /// The [`Actor`][crate::Actor] will hold a reference on the `constraint` until
+    /// either [`remove_constraint()`][Self::remove_constraint()] or
+    /// [`clear_constraints()`][Self::clear_constraints()] is called.
+    /// ## `constraint`
+    /// a [`Constraint`][crate::Constraint]
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    #[doc(alias = "clutter_actor_add_constraint")]
+    fn add_constraint<P: IsA<Constraint>>(&self, constraint: &P);
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //#[doc(alias = "clutter_actor_add_constraint_with_name")]
-    //fn add_constraint_with_name(&self, name: &str, constraint: /*Ignored*/&Constraint);
+    /// A convenience function for setting the name of a [`Constraint`][crate::Constraint]
+    /// while adding it to the list of constraints applied to `self`
+    ///
+    /// This function is the logical equivalent of:
+    ///
+    ///
+    ///
+    /// **⚠️ The following code is in C ⚠️**
+    ///
+    /// ```C
+    ///   clutter_actor_meta_set_name (CLUTTER_ACTOR_META (constraint), name);
+    ///   clutter_actor_add_constraint (self, constraint);
+    /// ```
+    /// ## `name`
+    /// the name to set on the constraint
+    /// ## `constraint`
+    /// a [`Constraint`][crate::Constraint]
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    #[doc(alias = "clutter_actor_add_constraint_with_name")]
+    fn add_constraint_with_name<P: IsA<Constraint>>(&self, name: &str, constraint: &P);
 
     //#[cfg(any(feature = "v1_4", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
@@ -399,6 +431,8 @@ pub trait ActorExt: 'static {
     ///  done.
     #[cfg(any(feature = "v1_10", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    #[cfg(any(not(feature = "v0_4"), feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(not(feature = "v0_4"))))]
     #[doc(alias = "clutter_actor_get_children")]
     #[doc(alias = "get_children")]
     fn children(&self) -> Vec<Actor>;
@@ -440,17 +474,35 @@ pub trait ActorExt: 'static {
     #[doc(alias = "get_clip_to_allocation")]
     fn is_clip_to_allocation(&self) -> bool;
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //#[doc(alias = "clutter_actor_get_constraint")]
-    //#[doc(alias = "get_constraint")]
-    //fn constraint(&self, name: &str) -> /*Ignored*/Option<Constraint>;
+    /// Retrieves the [`Constraint`][crate::Constraint] with the given name in the list
+    /// of constraints applied to `self`
+    /// ## `name`
+    /// the name of the constraint to retrieve
+    ///
+    /// # Returns
+    ///
+    /// a [`Constraint`][crate::Constraint] for the given
+    ///  name, or [`None`]. The returned [`Constraint`][crate::Constraint] is owned by the
+    ///  actor and it should not be unreferenced directly
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    #[doc(alias = "clutter_actor_get_constraint")]
+    #[doc(alias = "get_constraint")]
+    fn constraint(&self, name: &str) -> Option<Constraint>;
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //#[doc(alias = "clutter_actor_get_constraints")]
-    //#[doc(alias = "get_constraints")]
-    //fn constraints(&self) -> /*Ignored*/Vec<Constraint>;
+    /// Retrieves the list of constraints applied to `self`
+    ///
+    /// # Returns
+    ///
+    /// a copy
+    ///  of the list of [`Constraint`][crate::Constraint]<!-- -->s. The contents of the list are
+    ///  owned by the [`Actor`][crate::Actor]. Use `g_list_free()` to free the resources
+    ///  allocated by the returned `GList`
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    #[doc(alias = "clutter_actor_get_constraints")]
+    #[doc(alias = "get_constraints")]
+    fn constraints(&self) -> Vec<Constraint>;
 
     /// Retrieves the contents of `self`.
     ///
@@ -518,11 +570,17 @@ pub trait ActorExt: 'static {
     #[doc(alias = "get_easing_duration")]
     fn easing_duration(&self) -> u32;
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //#[doc(alias = "clutter_actor_get_easing_mode")]
-    //#[doc(alias = "get_easing_mode")]
-    //fn easing_mode(&self) -> /*Ignored*/AnimationMode;
+    /// Retrieves the easing mode for the tweening of animatable properties
+    /// of `self` for the current easing state.
+    ///
+    /// # Returns
+    ///
+    /// an easing mode
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    #[doc(alias = "clutter_actor_get_easing_mode")]
+    #[doc(alias = "get_easing_mode")]
+    fn easing_mode(&self) -> AnimationMode;
 
     //#[cfg(any(feature = "v1_4", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
@@ -1471,7 +1529,7 @@ pub trait ActorExt: 'static {
     /// This function will not take into consideration the `property::Actor::depth`
     /// of `child`.
     ///
-    /// This function will emit the `ClutterContainer::actor-added` signal
+    /// This function will emit the `signal::Container::actor-added` signal
     /// on `self`.
     /// ## `child`
     /// a [`Actor`][crate::Actor]
@@ -1492,7 +1550,7 @@ pub trait ActorExt: 'static {
     /// This function will not take into consideration the `property::Actor::depth`
     /// of `child`.
     ///
-    /// This function will emit the `ClutterContainer::actor-added` signal
+    /// This function will emit the `signal::Container::actor-added` signal
     /// on `self`.
     /// ## `child`
     /// a [`Actor`][crate::Actor]
@@ -1513,7 +1571,7 @@ pub trait ActorExt: 'static {
     /// This function will not take into consideration the `property::Actor::depth`
     /// of `child`.
     ///
-    /// This function will emit the `ClutterContainer::actor-added` signal
+    /// This function will emit the `signal::Container::actor-added` signal
     /// on `self`.
     /// ## `child`
     /// a [`Actor`][crate::Actor]
@@ -1761,7 +1819,7 @@ pub trait ActorExt: 'static {
     /// you will have to acquire a referenced on it before calling this
     /// function.
     ///
-    /// This function will emit the `ClutterContainer::actor-removed`
+    /// This function will emit the `signal::Container::actor-removed`
     /// signal on `self`.
     /// ## `child`
     /// a [`Actor`][crate::Actor]
@@ -1774,12 +1832,17 @@ pub trait ActorExt: 'static {
     #[doc(alias = "clutter_actor_remove_clip")]
     fn remove_clip(&self);
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //#[doc(alias = "clutter_actor_remove_constraint")]
-    //fn remove_constraint(&self, constraint: /*Ignored*/&Constraint);
+    /// Removes `constraint` from the list of constraints applied to `self`
+    ///
+    /// The reference held by `self` on the [`Constraint`][crate::Constraint] will be released
+    /// ## `constraint`
+    /// a [`Constraint`][crate::Constraint]
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    #[doc(alias = "clutter_actor_remove_constraint")]
+    fn remove_constraint<P: IsA<Constraint>>(&self, constraint: &P);
 
-    /// Removes the `ClutterConstraint` with the given name from the list
+    /// Removes the [`Constraint`][crate::Constraint] with the given name from the list
     /// of constraints applied to `self`
     /// ## `name`
     /// the name of the constraint to remove
@@ -1982,10 +2045,14 @@ pub trait ActorExt: 'static {
     #[doc(alias = "clutter_actor_set_easing_duration")]
     fn set_easing_duration(&self, msecs: u32);
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //#[doc(alias = "clutter_actor_set_easing_mode")]
-    //fn set_easing_mode(&self, mode: /*Ignored*/AnimationMode);
+    /// Sets the easing mode for the tweening of animatable properties
+    /// of `self`.
+    /// ## `mode`
+    /// an easing mode, excluding [`AnimationMode::CustomMode`][crate::AnimationMode::CustomMode]
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    #[doc(alias = "clutter_actor_set_easing_mode")]
+    fn set_easing_mode(&self, mode: AnimationMode);
 
     /// Sets whether an actor has a fixed position set (and will thus be
     /// unaffected by any layout manager).
@@ -2473,9 +2540,10 @@ pub trait ActorExt: 'static {
     #[doc(alias = "clip-to-allocation")]
     fn set_property_clip_to_allocation(&self, clip_to_allocation: bool);
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //fn set_constraints<P: IsA</*Ignored*/Constraint>>(&self, constraints: Option<&P>);
+    /// Adds a [`Constraint`][crate::Constraint] to the actor
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    fn set_constraints<P: IsA<Constraint>>(&self, constraints: Option<&P>);
 
     //#[cfg(any(feature = "v1_4", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
@@ -2922,7 +2990,7 @@ pub trait ActorExt: 'static {
     /// This signal might result in the finalization of the [`Actor`][crate::Actor]
     /// if all references are released.
     ///
-    /// Composite actors and actors implementing the `ClutterContainer`
+    /// Composite actors and actors implementing the [`Container`][crate::Container]
     /// interface should override the default implementation of the
     /// class handler of this signal and call `clutter_actor_destroy()` on
     /// their children. When overriding the default class handler, it is
@@ -3446,17 +3514,21 @@ impl<O: IsA<Actor>> ActorExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //fn add_constraint(&self, constraint: /*Ignored*/&Constraint) {
-    //    unsafe { TODO: call ffi:clutter_actor_add_constraint() }
-    //}
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    fn add_constraint<P: IsA<Constraint>>(&self, constraint: &P) {
+        unsafe {
+            ffi::clutter_actor_add_constraint(self.as_ref().to_glib_none().0, constraint.as_ref().to_glib_none().0);
+        }
+    }
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //fn add_constraint_with_name(&self, name: &str, constraint: /*Ignored*/&Constraint) {
-    //    unsafe { TODO: call ffi:clutter_actor_add_constraint_with_name() }
-    //}
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    fn add_constraint_with_name<P: IsA<Constraint>>(&self, name: &str, constraint: &P) {
+        unsafe {
+            ffi::clutter_actor_add_constraint_with_name(self.as_ref().to_glib_none().0, name.to_glib_none().0, constraint.as_ref().to_glib_none().0);
+        }
+    }
 
     //#[cfg(any(feature = "v1_4", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
@@ -3656,6 +3728,8 @@ impl<O: IsA<Actor>> ActorExt for O {
 
     #[cfg(any(feature = "v1_10", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    #[cfg(any(not(feature = "v0_4"), feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(not(feature = "v0_4"))))]
     fn children(&self) -> Vec<Actor> {
         unsafe {
             FromGlibPtrContainer::from_glib_container(ffi::clutter_actor_get_children(self.as_ref().to_glib_none().0))
@@ -3687,17 +3761,21 @@ impl<O: IsA<Actor>> ActorExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //fn constraint(&self, name: &str) -> /*Ignored*/Option<Constraint> {
-    //    unsafe { TODO: call ffi:clutter_actor_get_constraint() }
-    //}
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    fn constraint(&self, name: &str) -> Option<Constraint> {
+        unsafe {
+            from_glib_none(ffi::clutter_actor_get_constraint(self.as_ref().to_glib_none().0, name.to_glib_none().0))
+        }
+    }
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //fn constraints(&self) -> /*Ignored*/Vec<Constraint> {
-    //    unsafe { TODO: call ffi:clutter_actor_get_constraints() }
-    //}
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    fn constraints(&self) -> Vec<Constraint> {
+        unsafe {
+            FromGlibPtrContainer::from_glib_container(ffi::clutter_actor_get_constraints(self.as_ref().to_glib_none().0))
+        }
+    }
 
     #[cfg(any(feature = "v1_10", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
@@ -3753,11 +3831,13 @@ impl<O: IsA<Actor>> ActorExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //fn easing_mode(&self) -> /*Ignored*/AnimationMode {
-    //    unsafe { TODO: call ffi:clutter_actor_get_easing_mode() }
-    //}
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    fn easing_mode(&self) -> AnimationMode {
+        unsafe {
+            from_glib(ffi::clutter_actor_get_easing_mode(self.as_ref().to_glib_none().0))
+        }
+    }
 
     //#[cfg(any(feature = "v1_4", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
@@ -4528,11 +4608,13 @@ impl<O: IsA<Actor>> ActorExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //fn remove_constraint(&self, constraint: /*Ignored*/&Constraint) {
-    //    unsafe { TODO: call ffi:clutter_actor_remove_constraint() }
-    //}
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    fn remove_constraint<P: IsA<Constraint>>(&self, constraint: &P) {
+        unsafe {
+            ffi::clutter_actor_remove_constraint(self.as_ref().to_glib_none().0, constraint.as_ref().to_glib_none().0);
+        }
+    }
 
     #[cfg(any(feature = "v1_4", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
@@ -4690,11 +4772,13 @@ impl<O: IsA<Actor>> ActorExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //fn set_easing_mode(&self, mode: /*Ignored*/AnimationMode) {
-    //    unsafe { TODO: call ffi:clutter_actor_set_easing_mode() }
-    //}
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    fn set_easing_mode(&self, mode: AnimationMode) {
+        unsafe {
+            ffi::clutter_actor_set_easing_mode(self.as_ref().to_glib_none().0, mode.into_glib());
+        }
+    }
 
     #[cfg(any(feature = "v0_8", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_8")))]
@@ -5053,13 +5137,13 @@ impl<O: IsA<Actor>> ActorExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v1_4", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
-    //fn set_constraints<P: IsA</*Ignored*/Constraint>>(&self, constraints: Option<&P>) {
-    //    unsafe {
-    //        glib::gobject_ffi::g_object_set_property(self.to_glib_none().0 as *mut glib::gobject_ffi::GObject, b"constraints\0".as_ptr() as *const _, constraints.to_value().to_glib_none().0);
-    //    }
-    //}
+    #[cfg(any(feature = "v1_4", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+    fn set_constraints<P: IsA<Constraint>>(&self, constraints: Option<&P>) {
+        unsafe {
+            glib::gobject_ffi::g_object_set_property(self.to_glib_none().0 as *mut glib::gobject_ffi::GObject, b"constraints\0".as_ptr() as *const _, constraints.to_value().to_glib_none().0);
+        }
+    }
 
     //#[cfg(any(feature = "v1_4", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]

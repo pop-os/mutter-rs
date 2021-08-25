@@ -14,7 +14,7 @@ use std::mem::transmute;
 
 glib::wrapper! {
     #[doc(alias = "MetaWindowActor")]
-    pub struct WindowActor(Object<ffi::MetaWindowActor, ffi::MetaWindowActorClass>) @extends clutter::Actor;
+    pub struct WindowActor(Object<ffi::MetaWindowActor, ffi::MetaWindowActorClass>) @extends clutter::Actor, @implements clutter::Container;
 
     match fn {
         type_ => || ffi::meta_window_actor_get_type(),
