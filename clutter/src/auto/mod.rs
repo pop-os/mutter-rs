@@ -12,6 +12,13 @@ pub use self::content::{Content, NONE_CONTENT};
 mod input_device;
 pub use self::input_device::{InputDevice};
 
+#[cfg(any(feature = "v0_2", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_2")))]
+mod stage;
+#[cfg(any(feature = "v0_2", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_2")))]
+pub use self::stage::{Stage, NONE_STAGE};
+
 mod color;
 pub use self::color::Color;
 
@@ -24,4 +31,7 @@ pub use self::enums::StaticColor;
 pub mod traits {
     pub use super::actor::ActorExt;
     pub use super::content::ContentExt;
+    #[cfg(any(feature = "v0_2", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_2")))]
+    pub use super::stage::StageExt;
 }

@@ -20,3 +20,10 @@ status = "generate"
 	[[object.function]]
 	name = "hash"
 	ignore = true
+
+[[object]]
+name = "Clutter.Stage"
+status = "generate"
+	[[object.function]]
+	name = "read_pixels"
+	ignore = true

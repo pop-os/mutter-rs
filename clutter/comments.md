@@ -192,13 +192,13 @@ Transforms `point` in coordinates relative to the actor into
 ancestor-relative coordinates using the relevant transform
 stack (i.e. scale, rotation, etc).
 
-If `ancestor` is [`None`] the ancestor will be the `ClutterStage`. In
+If `ancestor` is [`None`] the ancestor will be the [`Stage`][crate::Stage]. In
 this case, the coordinates returned will be the coordinates on
 the stage before the projection is applied. This is different from
 the behaviour of `clutter_actor_apply_transform_to_point()`.
 ## `ancestor`
 A [`Actor`][crate::Actor] ancestor, or [`None`] to use the
- default `ClutterStage`
+ default [`Stage`][crate::Stage]
 ## `point`
 A point as `graphene_point3d_t`
 
@@ -647,13 +647,6 @@ the axis of the rotation
 # Returns
 
 the angle of rotation, in degrees
-<!-- trait ActorExt::fn stage -->
-Retrieves the `ClutterStage` where `self` is contained.
-
-# Returns
-
-the stage
- containing the actor, or [`None`]
 <!-- trait ActorExt::fn text_direction -->
 Retrieves the value set using `clutter_actor_set_text_direction()`
 
@@ -1084,7 +1077,7 @@ a `ClutterButtonEvent`
 <!-- trait ActorExt::fn connect_captured_event -->
 The ::captured-event signal is emitted when an event is captured
 by Clutter. This signal will be emitted starting from the top-level
-container (the `ClutterStage`) to the actor which received the event
+container (the [`Stage`][crate::Stage]) to the actor which received the event
 going down the hierarchy. This signal can be used to intercept every
 event before the specialized events (like
 ClutterActor::button-press-event or ::key-released-event) are
@@ -1109,7 +1102,7 @@ a `ClutterCrossingEvent`
 The ::event signal is emitted each time an event is received
 by the `actor`. This signal will be emitted on every actor,
 following the hierarchy chain, until it reaches the top-level
-container (the `ClutterStage`).
+container (the [`Stage`][crate::Stage]).
 ## `event`
 a `ClutterEvent`
 
@@ -1119,7 +1112,7 @@ a `ClutterEvent`
  or [`false`] to continue the emission.
 <!-- trait ActorExt::fn connect_key_press_event -->
 The ::key-press-event signal is emitted each time a keyboard button
-is pressed while `actor` has key focus (see `clutter_stage_set_key_focus()`).
+is pressed while `actor` has key focus (see [`StageExt::set_key_focus()`][crate::prelude::StageExt::set_key_focus()]).
 ## `event`
 a `ClutterKeyEvent`
 
@@ -1130,7 +1123,7 @@ a `ClutterKeyEvent`
 <!-- trait ActorExt::fn connect_key_release_event -->
 The ::key-release-event signal is emitted each time a keyboard button
 is released while `actor` has key focus (see
-`clutter_stage_set_key_focus()`).
+[`StageExt::set_key_focus()`][crate::prelude::StageExt::set_key_focus()]).
 ## `event`
 a `ClutterKeyEvent`
 
@@ -1467,6 +1460,145 @@ Product ID of this device.
 The `ClutterSeat` instance which owns the device
 <!-- impl InputDevice::fn set_vendor_id -->
 Vendor ID of this device.
+<!-- struct Stage -->
+The [`Stage`][crate::Stage] structure contains only private data
+and should be accessed using the provided API
+
+# Implements
+
+[`StageExt`][trait@crate::prelude::StageExt], [`ActorExt`][trait@crate::prelude::ActorExt]
+<!-- trait StageExt::fn actor_at_pos -->
+Checks the scene at the coordinates `x` and `y` and returns a pointer
+to the [`Actor`][crate::Actor] at those coordinates. The result is the actor which
+would be at the specified location on the next redraw, and is not
+necessarily that which was there on the previous redraw. This allows the
+function to perform chronologically correctly after any queued changes to
+the scene, and even if nothing has been drawn.
+
+By using `pick_mode` it is possible to control which actors will be
+painted and thus available.
+## `pick_mode`
+how the scene graph should be painted
+## `x`
+X coordinate to check
+## `y`
+Y coordinate to check
+
+# Returns
+
+the actor at the specified coordinates,
+ if any
+<!-- trait StageExt::fn capture_final_size -->
+Get the size of the framebuffer one must pass to
+`clutter_stage_paint_to_buffer()` or `clutter_stage_paint_to_framebuffer()`
+would be used with the same `rect`.
+## `rect`
+a `cairo_rectangle_int_t`
+
+# Returns
+
+[`true`] if the size has been retrieved, [`false`] otherwise.
+
+## `out_width`
+the final width
+
+## `out_height`
+the final height
+
+## `out_scale`
+the final scale factor
+<!-- trait StageExt::fn device_actor -->
+Retrieves the [`Actor`][crate::Actor] underneath the pointer or touch point
+of `device` and `sequence`.
+## `device`
+a [`InputDevice`][crate::InputDevice]
+## `sequence`
+an optional `ClutterEventSequence`
+
+# Returns
+
+a pointer to the [`Actor`][crate::Actor] or [`None`]
+<!-- trait StageExt::fn perspective -->
+Retrieves the stage perspective.
+
+# Returns
+
+
+## `perspective`
+return location for a
+ `ClutterPerspective`
+<!-- trait StageExt::fn paint_to_buffer -->
+Take a snapshot of the stage to a provided buffer.
+## `rect`
+a `cairo_rectangle_int_t`
+## `scale`
+the scale
+## `data`
+a pointer to the data
+## `stride`
+stride of the image surface
+## `format`
+the pixel format
+## `paint_flags`
+the `ClutterPaintFlag`
+
+# Returns
+
+[`true`] is the buffer has been paint successfully, [`false`] otherwise.
+<!-- trait StageExt::fn read_pixels -->
+Makes a screenshot of the stage in RGBA 8bit data, returns a
+linear buffer with `width` * 4 as rowstride.
+
+The alpha data contained in the returned buffer is driver-dependent,
+and not guaranteed to hold any sensible value.
+## `x`
+x coordinate of the first pixel that is read from stage
+## `y`
+y coordinate of the first pixel that is read from stage
+## `width`
+Width dimension of pixels to be read, or -1 for the
+ entire stage width
+## `height`
+Height dimension of pixels to be read, or -1 for the
+ entire stage height
+
+# Returns
+
+a pointer to newly allocated memory with the buffer
+ or [`None`] if the read failed. Use `g_free()` on the returned data
+ to release the resources it has allocated.
+<!-- trait StageExt::fn connect_after_paint -->
+The ::after-paint signal is emitted after the stage is painted,
+but before the results are displayed on the screen.
+## `view`
+a `ClutterStageView`
+<!-- trait StageExt::fn connect_after_update -->
+## `view`
+a `ClutterStageView`
+<!-- trait StageExt::fn connect_before_paint -->
+The ::before-paint signal is emitted before the stage is painted.
+## `view`
+a `ClutterStageView`
+<!-- trait StageExt::fn connect_before_update -->
+## `view`
+a `ClutterStageView`
+<!-- trait StageExt::fn connect_paint_view -->
+The ::paint-view signal is emitted before a `ClutterStageView` is being
+painted.
+
+The view is painted in the default handler. Hence, if you want to perform
+some action after the view is painted, like reading the contents of the
+framebuffer, use `g_signal_connect_after()` or pass `G_CONNECT_AFTER`.
+## `view`
+a `ClutterStageView`
+## `redraw_clip`
+a `cairo_region_t` with the redraw clip
+<!-- trait StageExt::fn connect_presented -->
+Signals that the [`Stage`][crate::Stage] was presented on the screen to the user.
+## `view`
+the `ClutterStageView` presented
+## `frame_info`
+a `ClutterFrameInfo`
 <!-- enum StaticColor::variant White -->
 White color (ffffffff)
 <!-- enum StaticColor::variant Black -->

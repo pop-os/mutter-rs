@@ -330,7 +330,7 @@ Marks the end of the [`StackLayer`][crate::StackLayer] enumeration
 
 # Implements
 
-[`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`]
+[`trait@clutter::prelude::StageExt`], [`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`]
 <!-- enum TabList::variant Normal -->
 Normal windows
 <!-- enum TabList::variant Docks -->

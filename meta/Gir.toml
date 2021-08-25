@@ -45,6 +45,7 @@ manual = [
 	"Clutter.Color",
 	"Clutter.Content",
 	"Clutter.InputDevice",
+	"Clutter.Stage",
 	"GDesktopEnums.BackgroundStyle",
 	"GLib.Error",
 	"Gio.Cancellable",

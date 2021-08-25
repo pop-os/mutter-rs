@@ -9,6 +9,9 @@ use crate::Color;
 #[cfg(any(feature = "v1_10", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
 use crate::Content;
+#[cfg(any(feature = "v0_8", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_8")))]
+use crate::Stage;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
@@ -63,7 +66,7 @@ pub const NONE_ACTOR: Option<&Actor> = None;
 ///
 /// # Implementors
 ///
-/// [`Actor`][struct@crate::Actor]
+/// [`Actor`][struct@crate::Actor], [`Stage`][struct@crate::Stage]
 pub trait ActorExt: 'static {
     //#[cfg(any(feature = "v1_4", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
@@ -1075,11 +1078,17 @@ pub trait ActorExt: 'static {
     #[doc(alias = "get_size")]
     fn size(&self) -> (f32, f32);
 
-    //#[cfg(any(feature = "v0_8", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_8")))]
-    //#[doc(alias = "clutter_actor_get_stage")]
-    //#[doc(alias = "get_stage")]
-    //fn stage(&self) -> /*Ignored*/Option<Stage>;
+    /// Retrieves the [`Stage`][crate::Stage] where `self` is contained.
+    ///
+    /// # Returns
+    ///
+    /// the stage
+    ///  containing the actor, or [`None`]
+    #[cfg(any(feature = "v0_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_8")))]
+    #[doc(alias = "clutter_actor_get_stage")]
+    #[doc(alias = "get_stage")]
+    fn stage(&self) -> Option<Stage>;
 
     //#[cfg(any(feature = "v1_2", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_2")))]
@@ -1300,7 +1309,7 @@ pub trait ActorExt: 'static {
     #[doc(alias = "get_z_position")]
     fn z_position(&self) -> f32;
 
-    /// Sets the key focus of the `ClutterStage` including `self`
+    /// Sets the key focus of the [`Stage`][crate::Stage] including `self`
     /// to this [`Actor`][crate::Actor].
     #[cfg(any(feature = "v1_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
@@ -4080,11 +4089,13 @@ impl<O: IsA<Actor>> ActorExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v0_8", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_8")))]
-    //fn stage(&self) -> /*Ignored*/Option<Stage> {
-    //    unsafe { TODO: call ffi:clutter_actor_get_stage() }
-    //}
+    #[cfg(any(feature = "v0_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_8")))]
+    fn stage(&self) -> Option<Stage> {
+        unsafe {
+            from_glib_none(ffi::clutter_actor_get_stage(self.as_ref().to_glib_none().0))
+        }
+    }
 
     //#[cfg(any(feature = "v1_2", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_2")))]
