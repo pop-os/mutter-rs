@@ -63,5 +63,13 @@ do
         --mode doc \
         --doc-target-path "comments.md"
     rustdoc-stripper --regenerate --comment-file "${pkg}/comments.md" --dir "${pkg}/src"
+    if [ "${pkg}" == "clutter" -o "${pkg}" == "meta" ]
+    then
+        cargo run --release --manifest-path gir/Cargo.toml -- \
+            --config "${pkg}/Gir.toml" \
+            --girs-directories mutter-gir-files \
+            --girs-directories gir-files \
+            --mode not_bound
+    fi
     cargo build --release --manifest-path "${pkg}/Cargo.toml" --all-features
 done
