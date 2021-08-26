@@ -7,7 +7,6 @@ use crate::Compositor;
 use crate::Cursor;
 use crate::DisplayDirection;
 use crate::GrabOp;
-use crate::KeyBinding;
 use crate::KeyBindingFlags;
 use crate::PadActionType;
 use crate::Rectangle;
@@ -16,7 +15,6 @@ use crate::TabList;
 use crate::Window;
 use crate::Workspace;
 use crate::WorkspaceManager;
-use glib::object::IsA;
 use glib::object::ObjectType as ObjectType_;
 use glib::signal::connect_raw;
 use glib::signal::SignalHandlerId;
@@ -47,52 +45,6 @@ impl Display {
     pub fn add_ignored_crossing_serial(&self, serial: libc::c_ulong) {
         unsafe {
             ffi::meta_display_add_ignored_crossing_serial(self.to_glib_none().0, serial);
-        }
-    }
-
-    /// Add a keybinding at runtime. The key `name` in `schema` needs to be of
-    /// type `G_VARIANT_TYPE_STRING_ARRAY`, with each string describing a
-    /// keybinding in the form of "&lt;Control&gt;a" or "&lt;Shift&gt;&lt;Alt&gt;F1". The parser
-    /// is fairly liberal and allows lower or upper case, and also abbreviations
-    /// such as "&lt;Ctl&gt;" and "&lt;Ctrl&gt;". If the key is set to the empty list or a
-    /// list with a single element of either "" or "disabled", the keybinding is
-    /// disabled.
-    ///
-    /// Use [`remove_keybinding()`][Self::remove_keybinding()] to remove the binding.
-    /// ## `name`
-    /// the binding's name
-    /// ## `settings`
-    /// the [`gio::Settings`][crate::gio::Settings] object where `name` is stored
-    /// ## `flags`
-    /// flags to specify binding details
-    /// ## `handler`
-    /// function to run when the keybinding is invoked
-    /// ## `free_data`
-    /// function to free `user_data`
-    ///
-    /// # Returns
-    ///
-    /// the corresponding keybinding action if the keybinding was
-    ///  added successfully, otherwise `META_KEYBINDING_ACTION_NONE`
-    #[doc(alias = "meta_display_add_keybinding")]
-    pub fn add_keybinding<P: IsA<gio::Settings>, Q: Fn(&Display, &Window, Option<&clutter::KeyEvent>, &KeyBinding) + 'static>(&self, name: &str, settings: &P, flags: KeyBindingFlags, handler: Q) -> u32 {
-        let handler_data: Box_<Q> = Box_::new(handler);
-        unsafe extern "C" fn handler_func<P: IsA<gio::Settings>, Q: Fn(&Display, &Window, Option<&clutter::KeyEvent>, &KeyBinding) + 'static>(display: *mut ffi::MetaDisplay, window: *mut ffi::MetaWindow, event: *mut clutter::ffi::ClutterKeyEvent, binding: *mut ffi::MetaKeyBinding, user_data: glib::ffi::gpointer) {
-            let display = from_glib_borrow(display);
-            let window = from_glib_borrow(window);
-            let event: Borrowed<Option<clutter::KeyEvent>> = from_glib_borrow(event);
-            let binding = from_glib_borrow(binding);
-            let callback: &Q = &*(user_data as *mut _);
-            (*callback)(&display, &window, event.as_ref().as_ref(), &binding);
-        }
-        let handler = Some(handler_func::<P, Q> as _);
-        unsafe extern "C" fn free_data_func<P: IsA<gio::Settings>, Q: Fn(&Display, &Window, Option<&clutter::KeyEvent>, &KeyBinding) + 'static>(data: glib::ffi::gpointer) {
-            let _callback: Box_<Q> = Box_::from_raw(data as *mut _);
-        }
-        let destroy_call6 = Some(free_data_func::<P, Q> as _);
-        let super_callback0: Box_<Q> = handler_data;
-        unsafe {
-            ffi::meta_display_add_keybinding(self.to_glib_none().0, name.to_glib_none().0, settings.as_ref().to_glib_none().0, flags.into_glib(), handler, Box_::into_raw(super_callback0) as *mut _, destroy_call6)
         }
     }
 
@@ -221,7 +173,7 @@ impl Display {
     /// Get the keybinding action bound to `keycode`. Builtin keybindings
     /// have a fixed associated `MetaKeyBindingAction`, for bindings added
     /// dynamically the function will return the keybinding action
-    /// [`add_keybinding()`][Self::add_keybinding()] returns on registration.
+    /// `meta_display_add_keybinding()` returns on registration.
     /// ## `keycode`
     /// Raw keycode
     /// ## `mask`
@@ -493,7 +445,7 @@ impl Display {
     //}
 
     /// Remove keybinding `name`; the function will fail if `name` is not a known
-    /// keybinding or has not been added with [`add_keybinding()`][Self::add_keybinding()].
+    /// keybinding or has not been added with `meta_display_add_keybinding()`.
     /// ## `name`
     /// name of the keybinding to remove
     ///

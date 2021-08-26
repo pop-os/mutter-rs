@@ -78,6 +78,9 @@ status = "generate"
 name = "Meta.Display"
 status = "generate"
 	[[object.function]]
+	name = "add_keybinding"
+	ignore = true
+	[[object.function]]
 	name = "sort_windows_by_stacking"
 	ignore = true
 
