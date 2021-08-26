@@ -18,6 +18,7 @@ generate = [
 	"Clutter.EventFlags",
 	"Clutter.EventType",
 	"Clutter.InputDevice",
+	"Clutter.InputFocus",
 	"Clutter.ModifierType",
 	"Clutter.Scriptable",
 	"Clutter.StaticColor",

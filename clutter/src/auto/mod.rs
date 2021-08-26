@@ -39,6 +39,9 @@ pub use self::content::{Content, NONE_CONTENT};
 mod input_device;
 pub use self::input_device::{InputDevice};
 
+mod input_focus;
+pub use self::input_focus::{InputFocus, NONE_INPUT_FOCUS};
+
 #[cfg(any(feature = "v0_6", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
 mod scriptable;
@@ -109,6 +112,7 @@ pub mod traits {
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
     pub use super::container::ContainerExt;
     pub use super::content::ContentExt;
+    pub use super::input_focus::InputFocusExt;
     #[cfg(any(feature = "v0_6", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
     pub use super::scriptable::ScriptableExt;

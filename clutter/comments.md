@@ -2055,6 +2055,14 @@ Product ID of this device.
 The `ClutterSeat` instance which owns the device
 <!-- impl InputDevice::fn set_vendor_id -->
 Vendor ID of this device.
+<!-- struct InputFocus -->
+
+
+This is an Abstract Base Class, you cannot instantiate it.
+
+# Implements
+
+[`InputFocusExt`][trait@crate::prelude::InputFocusExt]
 <!-- struct KeyEvent -->
 Key event
 <!-- struct ModifierType -->
