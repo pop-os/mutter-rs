@@ -1330,27 +1330,6 @@ a `ClutterEvent`
 
 [`true`] if the event has been handled by the actor,
  or [`false`] to continue the emission.
-<!-- trait ActorExt::fn connect_key_press_event -->
-The ::key-press-event signal is emitted each time a keyboard button
-is pressed while `actor` has key focus (see [`StageExt::set_key_focus()`][crate::prelude::StageExt::set_key_focus()]).
-## `event`
-a `ClutterKeyEvent`
-
-# Returns
-
-[`true`] if the event has been handled by the actor,
- or [`false`] to continue the emission.
-<!-- trait ActorExt::fn connect_key_release_event -->
-The ::key-release-event signal is emitted each time a keyboard button
-is released while `actor` has key focus (see
-[`StageExt::set_key_focus()`][crate::prelude::StageExt::set_key_focus()]).
-## `event`
-a `ClutterKeyEvent`
-
-# Returns
-
-[`true`] if the event has been handled by the actor,
- or [`false`] to continue the emission.
 <!-- trait ActorExt::fn connect_leave_event -->
 The ::leave-event signal is emitted when the pointer leaves the `actor`.
 ## `event`

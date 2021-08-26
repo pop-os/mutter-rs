@@ -62,7 +62,7 @@ do
         --girs-directories gir-files \
         --mode doc \
         --doc-target-path "comments.md"
-    rustdoc-stripper --regenerate --comment-file "${pkg}/comments.md" --dir "${pkg}/src"
+    rustdoc-stripper --regenerate --comment-file "${pkg}/comments.md" --dir "${pkg}/src" --ignore-doc-commented
     if [ "${pkg}" == "clutter" -o "${pkg}" == "meta" ]
     then
         cargo run --release --manifest-path gir/Cargo.toml -- \

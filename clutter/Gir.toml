@@ -22,6 +22,7 @@ generate = [
 ]
 
 manual = [
+	"Clutter.KeyEvent",
 	"GLib.DestroyNotify",
 	"GLib.Error",
 	"GLib.SourceFunc",

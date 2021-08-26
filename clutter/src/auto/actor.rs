@@ -26,6 +26,9 @@ use crate::Container;
 #[cfg(any(feature = "v1_10", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
 use crate::Content;
+#[cfg(any(feature = "v0_6", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
+use crate::KeyEvent;
 use crate::Scriptable;
 #[cfg(any(feature = "v0_8", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_8")))]
@@ -3129,15 +3132,34 @@ pub trait ActorExt: 'static {
     #[doc(alias = "key-focus-out")]
     fn connect_key_focus_out<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
-    //#[cfg(any(feature = "v0_6", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
-    //#[doc(alias = "key-press-event")]
-    //fn connect_key_press_event<Unsupported or ignored types>(&self, f: F) -> SignalHandlerId;
+    /// The ::key-press-event signal is emitted each time a keyboard button
+    /// is pressed while `actor` has key focus (see [`StageExt::set_key_focus()`][crate::prelude::StageExt::set_key_focus()]).
+    /// ## `event`
+    /// a [`KeyEvent`][crate::KeyEvent]
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if the event has been handled by the actor,
+    ///  or [`false`] to continue the emission.
+    #[cfg(any(feature = "v0_6", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
+    #[doc(alias = "key-press-event")]
+    fn connect_key_press_event<F: Fn(&Self, &KeyEvent) -> bool + 'static>(&self, f: F) -> SignalHandlerId;
 
-    //#[cfg(any(feature = "v0_6", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
-    //#[doc(alias = "key-release-event")]
-    //fn connect_key_release_event<Unsupported or ignored types>(&self, f: F) -> SignalHandlerId;
+    /// The ::key-release-event signal is emitted each time a keyboard button
+    /// is released while `actor` has key focus (see
+    /// [`StageExt::set_key_focus()`][crate::prelude::StageExt::set_key_focus()]).
+    /// ## `event`
+    /// a [`KeyEvent`][crate::KeyEvent]
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if the event has been handled by the actor,
+    ///  or [`false`] to continue the emission.
+    #[cfg(any(feature = "v0_6", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
+    #[doc(alias = "key-release-event")]
+    fn connect_key_release_event<F: Fn(&Self, &KeyEvent) -> bool + 'static>(&self, f: F) -> SignalHandlerId;
 
     //#[cfg(any(feature = "v0_6", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
@@ -5845,17 +5867,33 @@ impl<O: IsA<Actor>> ActorExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v0_6", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
-    //fn connect_key_press_event<Unsupported or ignored types>(&self, f: F) -> SignalHandlerId {
-    //    Ignored event: Clutter.KeyEvent
-    //}
+    #[cfg(any(feature = "v0_6", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
+    fn connect_key_press_event<F: Fn(&Self, &KeyEvent) -> bool + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn key_press_event_trampoline<P: IsA<Actor>, F: Fn(&P, &KeyEvent) -> bool + 'static>(this: *mut ffi::ClutterActor, event: *mut ffi::ClutterKeyEvent, f: glib::ffi::gpointer) -> glib::ffi::gboolean {
+            let f: &F = &*(f as *const F);
+            f(Actor::from_glib_borrow(this).unsafe_cast_ref(), &from_glib_borrow(event)).into_glib()
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(self.as_ptr() as *mut _, b"key-press-event\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(key_press_event_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+        }
+    }
 
-    //#[cfg(any(feature = "v0_6", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
-    //fn connect_key_release_event<Unsupported or ignored types>(&self, f: F) -> SignalHandlerId {
-    //    Ignored event: Clutter.KeyEvent
-    //}
+    #[cfg(any(feature = "v0_6", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
+    fn connect_key_release_event<F: Fn(&Self, &KeyEvent) -> bool + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn key_release_event_trampoline<P: IsA<Actor>, F: Fn(&P, &KeyEvent) -> bool + 'static>(this: *mut ffi::ClutterActor, event: *mut ffi::ClutterKeyEvent, f: glib::ffi::gpointer) -> glib::ffi::gboolean {
+            let f: &F = &*(f as *const F);
+            f(Actor::from_glib_borrow(this).unsafe_cast_ref(), &from_glib_borrow(event)).into_glib()
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(self.as_ptr() as *mut _, b"key-release-event\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(key_release_event_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+        }
+    }
 
     //#[cfg(any(feature = "v0_6", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
