@@ -17,20 +17,6 @@ Parse the command-line args with this before calling [`init()`][crate::init()].
 # Returns
 
 the `GOptionContext`
-<!-- fn keybindings_set_custom_handler -->
-Allows users to register a custom handler for a
-builtin key binding.
-## `name`
-The name of the keybinding to set
-## `handler`
-The new handler function
-## `free_data`
-Will be called when this handler is overridden.
-
-# Returns
-
-[`true`] if the binding known as `name` was found,
-[`false`] otherwise.
 <!-- fn later_add -->
 Sets up a callback to be called at some later time. `when` determines the
 particular later occasion at which it is called. This is much like `g_idle_add()`,
@@ -99,7 +85,7 @@ the background that are obscured by other windows.
 
 # Implements
 
-[`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`], [`trait@clutter::prelude::ContainerExt`]
+[`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`], [`trait@clutter::prelude::AnimatableExt`], [`trait@clutter::prelude::ContainerExt`], [`trait@clutter::prelude::ScriptableExt`]
 <!-- struct BackgroundContent -->
 This class handles tracking and painting the root window background.
 By integrating with [`WindowGroup`][crate::WindowGroup] we can avoid painting parts of
@@ -120,7 +106,7 @@ The new bounding clip rectangle, or [`None`]
 
 # Implements
 
-[`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`], [`trait@clutter::prelude::ContainerExt`]
+[`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`], [`trait@clutter::prelude::AnimatableExt`], [`trait@clutter::prelude::ContainerExt`], [`trait@clutter::prelude::ScriptableExt`]
 <!-- struct Compositor -->
 
 
@@ -189,31 +175,6 @@ Vertical
 # Implements
 
 [`trait@glib::ObjectExt`]
-<!-- impl Display::fn add_keybinding -->
-Add a keybinding at runtime. The key `name` in `schema` needs to be of
-type `G_VARIANT_TYPE_STRING_ARRAY`, with each string describing a
-keybinding in the form of "&lt;Control&gt;a" or "&lt;Shift&gt;&lt;Alt&gt;F1". The parser
-is fairly liberal and allows lower or upper case, and also abbreviations
-such as "&lt;Ctl&gt;" and "&lt;Ctrl&gt;". If the key is set to the empty list or a
-list with a single element of either "" or "disabled", the keybinding is
-disabled.
-
-Use [`remove_keybinding()`][Self::remove_keybinding()] to remove the binding.
-## `name`
-the binding's name
-## `settings`
-the [`gio::Settings`][crate::gio::Settings] object where `name` is stored
-## `flags`
-flags to specify binding details
-## `handler`
-function to run when the keybinding is invoked
-## `free_data`
-function to free `user_data`
-
-# Returns
-
-the corresponding keybinding action if the keybinding was
- added successfully, otherwise `META_KEYBINDING_ACTION_NONE`
 <!-- impl Display::fn sound_player -->
 
 # Returns
@@ -419,7 +380,7 @@ Marks the end of the [`StackLayer`][crate::StackLayer] enumeration
 
 # Implements
 
-[`trait@clutter::prelude::StageExt`], [`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`], [`trait@clutter::prelude::ContainerExt`]
+[`trait@clutter::prelude::StageExt`], [`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`], [`trait@clutter::prelude::AnimatableExt`], [`trait@clutter::prelude::ContainerExt`], [`trait@clutter::prelude::ScriptableExt`]
 <!-- enum TabList::variant Normal -->
 Normal windows
 <!-- enum TabList::variant Docks -->
@@ -449,7 +410,7 @@ This is an Abstract Base Class, you cannot instantiate it.
 
 # Implements
 
-[`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`], [`trait@clutter::prelude::ContainerExt`]
+[`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`], [`trait@clutter::prelude::AnimatableExt`], [`trait@clutter::prelude::ContainerExt`], [`trait@clutter::prelude::ScriptableExt`]
 <!-- impl WindowActor::fn get_image -->
 Flattens the layers of `self` into one ARGB32 image by alpha blending
 the images, and returns the flattened image.
@@ -478,7 +439,7 @@ An X11 based window
 
 # Implements
 
-[`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`], [`trait@clutter::prelude::ContainerExt`]
+[`trait@clutter::prelude::ActorExt`], [`trait@glib::ObjectExt`], [`trait@clutter::prelude::AnimatableExt`], [`trait@clutter::prelude::ContainerExt`], [`trait@clutter::prelude::ScriptableExt`]
 <!-- enum WindowType::variant Normal -->
 Normal
 <!-- enum WindowType::variant Desktop -->

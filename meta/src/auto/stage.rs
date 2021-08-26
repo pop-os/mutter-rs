@@ -14,7 +14,7 @@ use std::mem::transmute;
 
 glib::wrapper! {
     #[doc(alias = "MetaStage")]
-    pub struct Stage(Object<ffi::MetaStage, ffi::MetaStageClass>) @extends clutter::Stage, clutter::Actor, @implements clutter::Container;
+    pub struct Stage(Object<ffi::MetaStage, ffi::MetaStageClass>) @extends clutter::Stage, clutter::Actor, @implements clutter::Animatable, clutter::Container, clutter::Scriptable;
 
     match fn {
         type_ => || ffi::meta_stage_get_type(),

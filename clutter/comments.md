@@ -1936,6 +1936,59 @@ the `GParamSpec` of the property set
 # Implements
 
 [`ContentExt`][trait@crate::prelude::ContentExt]
+<!-- struct EventFlags -->
+Flags for the `ClutterEvent`
+<!-- struct EventFlags::const NONE -->
+No flag set
+<!-- struct EventFlags::const FLAG_SYNTHETIC -->
+Synthetic event
+<!-- struct EventFlags::const FLAG_REPEATED -->
+Auto-repeated event
+<!-- enum EventType::variant Nothing -->
+Empty event
+<!-- enum EventType::variant KeyPress -->
+Key press event
+<!-- enum EventType::variant KeyRelease -->
+Key release event
+<!-- enum EventType::variant Motion -->
+Pointer motion event
+<!-- enum EventType::variant Enter -->
+Actor enter event
+<!-- enum EventType::variant Leave -->
+Actor leave event
+<!-- enum EventType::variant ButtonPress -->
+Pointer button press event
+<!-- enum EventType::variant ButtonRelease -->
+Pointer button release event
+<!-- enum EventType::variant Scroll -->
+Pointer scroll event
+<!-- enum EventType::variant TouchBegin -->
+A new touch event sequence has started;
+ event added in 1.10
+<!-- enum EventType::variant TouchUpdate -->
+A touch event sequence has been updated;
+ event added in 1.10
+<!-- enum EventType::variant TouchEnd -->
+A touch event sequence has finished;
+ event added in 1.10
+<!-- enum EventType::variant TouchCancel -->
+A touch event sequence has been canceled;
+ event added in 1.10
+<!-- enum EventType::variant TouchpadPinch -->
+A pinch gesture event, the current state is
+ determined by its phase field; event added in 1.24
+<!-- enum EventType::variant TouchpadSwipe -->
+A swipe gesture event, the current state is
+ determined by its phase field; event added in 1.24
+<!-- enum EventType::variant ProximityIn -->
+A tool entered in proximity to a tablet;
+ event added in 1.28
+<!-- enum EventType::variant ProximityOut -->
+A tool left from the proximity area of a tablet;
+ event added in 1.28
+<!-- enum EventType::variant EventLast -->
+Marks the end of the [`EventType`][crate::EventType] enumeration;
+ added in 1.10
 <!-- struct InputDevice -->
 Generic representation of an input device. The actual contents of this
 structure depend on the backend used.
@@ -2002,6 +2055,51 @@ Product ID of this device.
 The `ClutterSeat` instance which owns the device
 <!-- impl InputDevice::fn set_vendor_id -->
 Vendor ID of this device.
+<!-- struct KeyEvent -->
+Key event
+<!-- struct ModifierType -->
+Masks applied to a `ClutterEvent` by modifiers.
+
+Note that Clutter may add internal values to events which include
+reserved values such as [`MODIFIER_RESERVED_13_MASK`][Self::MODIFIER_RESERVED_13_MASK]. Your code
+should preserve and ignore them. You can use [`MODIFIER_MASK`][Self::MODIFIER_MASK] to
+remove all reserved values.
+<!-- struct ModifierType::const SHIFT_MASK -->
+Mask applied by the Shift key
+<!-- struct ModifierType::const LOCK_MASK -->
+Mask applied by the Caps Lock key
+<!-- struct ModifierType::const CONTROL_MASK -->
+Mask applied by the Control key
+<!-- struct ModifierType::const MOD1_MASK -->
+Mask applied by the first Mod key
+<!-- struct ModifierType::const MOD2_MASK -->
+Mask applied by the second Mod key
+<!-- struct ModifierType::const MOD3_MASK -->
+Mask applied by the third Mod key
+<!-- struct ModifierType::const MOD4_MASK -->
+Mask applied by the fourth Mod key
+<!-- struct ModifierType::const MOD5_MASK -->
+Mask applied by the fifth Mod key
+<!-- struct ModifierType::const BUTTON1_MASK -->
+Mask applied by the first pointer button
+<!-- struct ModifierType::const BUTTON2_MASK -->
+Mask applied by the second pointer button
+<!-- struct ModifierType::const BUTTON3_MASK -->
+Mask applied by the third pointer button
+<!-- struct ModifierType::const BUTTON4_MASK -->
+Mask applied by the fourth pointer button
+<!-- struct ModifierType::const BUTTON5_MASK -->
+Mask applied by the fifth pointer button
+<!-- struct ModifierType::const SUPER_MASK -->
+Mask applied by the Super key
+<!-- struct ModifierType::const HYPER_MASK -->
+Mask applied by the Hyper key
+<!-- struct ModifierType::const META_MASK -->
+Mask applied by the Meta key
+<!-- struct ModifierType::const RELEASE_MASK -->
+Mask applied during release
+<!-- struct ModifierType::const MODIFIER_MASK -->
+A mask covering all modifier types
 <!-- struct Scriptable -->
 [`Scriptable`][crate::Scriptable] is an opaque structure whose members cannot be directly
 accessed

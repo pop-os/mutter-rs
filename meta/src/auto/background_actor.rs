@@ -12,7 +12,7 @@ use std::fmt;
 
 glib::wrapper! {
     #[doc(alias = "MetaBackgroundActor")]
-    pub struct BackgroundActor(Object<ffi::MetaBackgroundActor, ffi::MetaBackgroundActorClass>) @extends clutter::Actor, @implements clutter::Container;
+    pub struct BackgroundActor(Object<ffi::MetaBackgroundActor, ffi::MetaBackgroundActorClass>) @extends clutter::Actor, @implements clutter::Animatable, clutter::Container, clutter::Scriptable;
 
     match fn {
         type_ => || ffi::meta_background_actor_get_type(),

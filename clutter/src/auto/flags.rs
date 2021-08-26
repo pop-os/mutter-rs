@@ -81,3 +81,229 @@ impl ToValue for ActorFlags {
     }
 }
 
+#[cfg(any(feature = "v0_6", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
+bitflags! {
+    #[doc(alias = "ClutterEventFlags")]
+    pub struct EventFlags: u32 {
+        #[doc(alias = "CLUTTER_EVENT_NONE")]
+        const NONE = ffi::CLUTTER_EVENT_NONE as u32;
+        #[doc(alias = "CLUTTER_EVENT_FLAG_SYNTHETIC")]
+        const FLAG_SYNTHETIC = ffi::CLUTTER_EVENT_FLAG_SYNTHETIC as u32;
+        #[doc(alias = "CLUTTER_EVENT_FLAG_INPUT_METHOD")]
+        const FLAG_INPUT_METHOD = ffi::CLUTTER_EVENT_FLAG_INPUT_METHOD as u32;
+        #[doc(alias = "CLUTTER_EVENT_FLAG_REPEATED")]
+        const FLAG_REPEATED = ffi::CLUTTER_EVENT_FLAG_REPEATED as u32;
+        #[doc(alias = "CLUTTER_EVENT_FLAG_RELATIVE_MOTION")]
+        const FLAG_RELATIVE_MOTION = ffi::CLUTTER_EVENT_FLAG_RELATIVE_MOTION as u32;
+    }
+}
+
+#[cfg(any(feature = "v0_6", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
+impl fmt::Display for EventFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        <Self as fmt::Debug>::fmt(self, f)
+    }
+}
+
+#[cfg(any(feature = "v0_6", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
+#[doc(hidden)]
+impl IntoGlib for EventFlags {
+    type GlibType = ffi::ClutterEventFlags;
+
+    fn into_glib(self) -> ffi::ClutterEventFlags {
+        self.bits()
+    }
+}
+
+#[cfg(any(feature = "v0_6", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
+#[doc(hidden)]
+impl FromGlib<ffi::ClutterEventFlags> for EventFlags {
+    unsafe fn from_glib(value: ffi::ClutterEventFlags) -> Self {
+        Self::from_bits_truncate(value)
+    }
+}
+
+#[cfg(any(feature = "v0_6", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
+impl StaticType for EventFlags {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::clutter_event_flags_get_type()) }
+    }
+}
+
+#[cfg(any(feature = "v0_6", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
+impl glib::value::ValueType for EventFlags {
+    type Type = Self;
+}
+
+#[cfg(any(feature = "v0_6", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
+unsafe impl<'a> FromValue<'a> for EventFlags {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        from_glib(glib::gobject_ffi::g_value_get_flags(value.to_glib_none().0))
+    }
+}
+
+#[cfg(any(feature = "v0_6", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
+impl ToValue for EventFlags {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_flags(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+bitflags! {
+    #[doc(alias = "ClutterModifierType")]
+    pub struct ModifierType: u32 {
+        #[doc(alias = "CLUTTER_SHIFT_MASK")]
+        const SHIFT_MASK = ffi::CLUTTER_SHIFT_MASK as u32;
+        #[doc(alias = "CLUTTER_LOCK_MASK")]
+        const LOCK_MASK = ffi::CLUTTER_LOCK_MASK as u32;
+        #[doc(alias = "CLUTTER_CONTROL_MASK")]
+        const CONTROL_MASK = ffi::CLUTTER_CONTROL_MASK as u32;
+        #[doc(alias = "CLUTTER_MOD1_MASK")]
+        const MOD1_MASK = ffi::CLUTTER_MOD1_MASK as u32;
+        #[doc(alias = "CLUTTER_MOD2_MASK")]
+        const MOD2_MASK = ffi::CLUTTER_MOD2_MASK as u32;
+        #[doc(alias = "CLUTTER_MOD3_MASK")]
+        const MOD3_MASK = ffi::CLUTTER_MOD3_MASK as u32;
+        #[doc(alias = "CLUTTER_MOD4_MASK")]
+        const MOD4_MASK = ffi::CLUTTER_MOD4_MASK as u32;
+        #[doc(alias = "CLUTTER_MOD5_MASK")]
+        const MOD5_MASK = ffi::CLUTTER_MOD5_MASK as u32;
+        #[doc(alias = "CLUTTER_BUTTON1_MASK")]
+        const BUTTON1_MASK = ffi::CLUTTER_BUTTON1_MASK as u32;
+        #[doc(alias = "CLUTTER_BUTTON2_MASK")]
+        const BUTTON2_MASK = ffi::CLUTTER_BUTTON2_MASK as u32;
+        #[doc(alias = "CLUTTER_BUTTON3_MASK")]
+        const BUTTON3_MASK = ffi::CLUTTER_BUTTON3_MASK as u32;
+        #[doc(alias = "CLUTTER_BUTTON4_MASK")]
+        const BUTTON4_MASK = ffi::CLUTTER_BUTTON4_MASK as u32;
+        #[doc(alias = "CLUTTER_BUTTON5_MASK")]
+        const BUTTON5_MASK = ffi::CLUTTER_BUTTON5_MASK as u32;
+        #[doc(alias = "CLUTTER_MODIFIER_RESERVED_13_MASK")]
+        const MODIFIER_RESERVED_13_MASK = ffi::CLUTTER_MODIFIER_RESERVED_13_MASK as u32;
+        #[doc(alias = "CLUTTER_MODIFIER_RESERVED_14_MASK")]
+        const MODIFIER_RESERVED_14_MASK = ffi::CLUTTER_MODIFIER_RESERVED_14_MASK as u32;
+        #[doc(alias = "CLUTTER_MODIFIER_RESERVED_15_MASK")]
+        const MODIFIER_RESERVED_15_MASK = ffi::CLUTTER_MODIFIER_RESERVED_15_MASK as u32;
+        #[doc(alias = "CLUTTER_MODIFIER_RESERVED_16_MASK")]
+        const MODIFIER_RESERVED_16_MASK = ffi::CLUTTER_MODIFIER_RESERVED_16_MASK as u32;
+        #[doc(alias = "CLUTTER_MODIFIER_RESERVED_17_MASK")]
+        const MODIFIER_RESERVED_17_MASK = ffi::CLUTTER_MODIFIER_RESERVED_17_MASK as u32;
+        #[doc(alias = "CLUTTER_MODIFIER_RESERVED_18_MASK")]
+        const MODIFIER_RESERVED_18_MASK = ffi::CLUTTER_MODIFIER_RESERVED_18_MASK as u32;
+        #[doc(alias = "CLUTTER_MODIFIER_RESERVED_19_MASK")]
+        const MODIFIER_RESERVED_19_MASK = ffi::CLUTTER_MODIFIER_RESERVED_19_MASK as u32;
+        #[doc(alias = "CLUTTER_MODIFIER_RESERVED_20_MASK")]
+        const MODIFIER_RESERVED_20_MASK = ffi::CLUTTER_MODIFIER_RESERVED_20_MASK as u32;
+        #[doc(alias = "CLUTTER_MODIFIER_RESERVED_21_MASK")]
+        const MODIFIER_RESERVED_21_MASK = ffi::CLUTTER_MODIFIER_RESERVED_21_MASK as u32;
+        #[doc(alias = "CLUTTER_MODIFIER_RESERVED_22_MASK")]
+        const MODIFIER_RESERVED_22_MASK = ffi::CLUTTER_MODIFIER_RESERVED_22_MASK as u32;
+        #[doc(alias = "CLUTTER_MODIFIER_RESERVED_23_MASK")]
+        const MODIFIER_RESERVED_23_MASK = ffi::CLUTTER_MODIFIER_RESERVED_23_MASK as u32;
+        #[doc(alias = "CLUTTER_MODIFIER_RESERVED_24_MASK")]
+        const MODIFIER_RESERVED_24_MASK = ffi::CLUTTER_MODIFIER_RESERVED_24_MASK as u32;
+        #[doc(alias = "CLUTTER_MODIFIER_RESERVED_25_MASK")]
+        const MODIFIER_RESERVED_25_MASK = ffi::CLUTTER_MODIFIER_RESERVED_25_MASK as u32;
+        #[doc(alias = "CLUTTER_SUPER_MASK")]
+        const SUPER_MASK = ffi::CLUTTER_SUPER_MASK as u32;
+        #[doc(alias = "CLUTTER_HYPER_MASK")]
+        const HYPER_MASK = ffi::CLUTTER_HYPER_MASK as u32;
+        #[doc(alias = "CLUTTER_META_MASK")]
+        const META_MASK = ffi::CLUTTER_META_MASK as u32;
+        #[doc(alias = "CLUTTER_MODIFIER_RESERVED_29_MASK")]
+        const MODIFIER_RESERVED_29_MASK = ffi::CLUTTER_MODIFIER_RESERVED_29_MASK as u32;
+        #[doc(alias = "CLUTTER_RELEASE_MASK")]
+        const RELEASE_MASK = ffi::CLUTTER_RELEASE_MASK as u32;
+        #[doc(alias = "CLUTTER_MODIFIER_MASK")]
+        const MODIFIER_MASK = ffi::CLUTTER_MODIFIER_MASK as u32;
+    }
+}
+
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+impl fmt::Display for ModifierType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        <Self as fmt::Debug>::fmt(self, f)
+    }
+}
+
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+#[doc(hidden)]
+impl IntoGlib for ModifierType {
+    type GlibType = ffi::ClutterModifierType;
+
+    fn into_glib(self) -> ffi::ClutterModifierType {
+        self.bits()
+    }
+}
+
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+#[doc(hidden)]
+impl FromGlib<ffi::ClutterModifierType> for ModifierType {
+    unsafe fn from_glib(value: ffi::ClutterModifierType) -> Self {
+        Self::from_bits_truncate(value)
+    }
+}
+
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+impl StaticType for ModifierType {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::clutter_modifier_type_get_type()) }
+    }
+}
+
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+impl glib::value::ValueType for ModifierType {
+    type Type = Self;
+}
+
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+unsafe impl<'a> FromValue<'a> for ModifierType {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        from_glib(glib::gobject_ffi::g_value_get_flags(value.to_glib_none().0))
+    }
+}
+
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+impl ToValue for ModifierType {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_flags(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+

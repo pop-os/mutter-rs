@@ -7,7 +7,7 @@ use std::fmt;
 
 glib::wrapper! {
     #[doc(alias = "MetaWindowGroup")]
-    pub struct WindowGroup(Object<ffi::MetaWindowGroup, ffi::MetaWindowGroupClass>) @extends clutter::Actor, @implements clutter::Container;
+    pub struct WindowGroup(Object<ffi::MetaWindowGroup, ffi::MetaWindowGroupClass>) @extends clutter::Actor, @implements clutter::Animatable, clutter::Container, clutter::Scriptable;
 
     match fn {
         type_ => || ffi::meta_window_group_get_type(),

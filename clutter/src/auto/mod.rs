@@ -77,12 +77,21 @@ pub use self::enums::ActorAlign;
 #[cfg(any(feature = "v1_0", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
 pub use self::enums::AnimationMode;
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+pub use self::enums::EventType;
 #[cfg(any(feature = "v1_6", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_6")))]
 pub use self::enums::StaticColor;
 
 mod flags;
 pub use self::flags::ActorFlags;
+#[cfg(any(feature = "v0_6", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
+pub use self::flags::EventFlags;
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+pub use self::flags::ModifierType;
 
 pub mod functions;
 

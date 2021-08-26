@@ -5,7 +5,10 @@
 
 use crate::Display;
 use crate::ExitCode;
+use crate::KeyBinding;
+use crate::Window;
 use glib::translate::*;
+use std::boxed::Box as Box_;
 use std::ptr;
 
 
@@ -264,10 +267,44 @@ pub fn is_wayland_compositor() -> bool {
     }
 }
 
-//#[doc(alias = "meta_keybindings_set_custom_handler")]
-//pub fn keybindings_set_custom_handler(name: &str, handler: /*Unimplemented*/Fn(&Display, &Window, /*Ignored*/Option<clutter::KeyEvent>, &KeyBinding), user_data: /*Unimplemented*/Option<Fundamental: Pointer>) -> bool {
-//    unsafe { TODO: call ffi:meta_keybindings_set_custom_handler() }
-//}
+/// Allows users to register a custom handler for a
+/// builtin key binding.
+/// ## `name`
+/// The name of the keybinding to set
+/// ## `handler`
+/// The new handler function
+/// ## `free_data`
+/// Will be called when this handler is overridden.
+///
+/// # Returns
+///
+/// [`true`] if the binding known as `name` was found,
+/// [`false`] otherwise.
+#[doc(alias = "meta_keybindings_set_custom_handler")]
+pub fn keybindings_set_custom_handler(name: &str, handler: Option<Box_<dyn Fn(&Display, &Window, Option<&clutter::KeyEvent>, &KeyBinding) + 'static>>) -> bool {
+    let handler_data: Box_<Option<Box_<dyn Fn(&Display, &Window, Option<&clutter::KeyEvent>, &KeyBinding) + 'static>>> = Box_::new(handler);
+    unsafe extern "C" fn handler_func(display: *mut ffi::MetaDisplay, window: *mut ffi::MetaWindow, event: *mut clutter::ffi::ClutterKeyEvent, binding: *mut ffi::MetaKeyBinding, user_data: glib::ffi::gpointer) {
+        let display = from_glib_borrow(display);
+        let window = from_glib_borrow(window);
+        let event: Borrowed<Option<clutter::KeyEvent>> = from_glib_borrow(event);
+        let binding = from_glib_borrow(binding);
+        let callback: &Option<Box_<dyn Fn(&Display, &Window, Option<&clutter::KeyEvent>, &KeyBinding) + 'static>> = &*(user_data as *mut _);
+        if let Some(ref callback) = *callback {
+            callback(&display, &window, event.as_ref().as_ref(), &binding)
+        } else {
+            panic!("cannot get closure...")
+        };
+    }
+    let handler = if handler_data.is_some() { Some(handler_func as _) } else { None };
+    unsafe extern "C" fn free_data_func(data: glib::ffi::gpointer) {
+        let _callback: Box_<Option<Box_<dyn Fn(&Display, &Window, Option<&clutter::KeyEvent>, &KeyBinding) + 'static>>> = Box_::from_raw(data as *mut _);
+    }
+    let destroy_call3 = Some(free_data_func as _);
+    let super_callback0: Box_<Option<Box_<dyn Fn(&Display, &Window, Option<&clutter::KeyEvent>, &KeyBinding) + 'static>>> = handler_data;
+    unsafe {
+        from_glib(ffi::meta_keybindings_set_custom_handler(name.to_glib_none().0, handler, Box_::into_raw(super_callback0) as *mut _, destroy_call3))
+    }
+}
 
 //#[doc(alias = "meta_later_add")]
 //pub fn later_add<P: Fn() -> bool + Send + Sync + 'static>(when: /*Ignored*/LaterType, func: P) -> u32 {

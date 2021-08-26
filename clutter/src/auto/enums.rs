@@ -3,23 +3,23 @@
 // from mutter-gir-files
 // DO NOT EDIT
 
-#[cfg(any(feature = "v1_0", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
 use glib::translate::*;
-#[cfg(any(feature = "v1_0", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
 use glib::value::FromValue;
-#[cfg(any(feature = "v1_0", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
 use glib::value::ToValue;
-#[cfg(any(feature = "v1_0", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
 use glib::StaticType;
-#[cfg(any(feature = "v1_0", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
 use glib::Type;
-#[cfg(any(feature = "v1_0", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
 use std::fmt;
 
 /// Controls how a [`Actor`][crate::Actor] should align itself inside the extra space
@@ -421,6 +421,227 @@ unsafe impl<'a> FromValue<'a> for AnimationMode {
 #[cfg(any(feature = "v1_0", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
 impl ToValue for AnimationMode {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
+/// Types of events.
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = "ClutterEventType")]
+pub enum EventType {
+    #[doc(alias = "CLUTTER_NOTHING")]
+    Nothing,
+    #[doc(alias = "CLUTTER_KEY_PRESS")]
+    KeyPress,
+    #[doc(alias = "CLUTTER_KEY_RELEASE")]
+    KeyRelease,
+    #[doc(alias = "CLUTTER_MOTION")]
+    Motion,
+    #[doc(alias = "CLUTTER_ENTER")]
+    Enter,
+    #[doc(alias = "CLUTTER_LEAVE")]
+    Leave,
+    #[doc(alias = "CLUTTER_BUTTON_PRESS")]
+    ButtonPress,
+    #[doc(alias = "CLUTTER_BUTTON_RELEASE")]
+    ButtonRelease,
+    #[doc(alias = "CLUTTER_SCROLL")]
+    Scroll,
+    #[doc(alias = "CLUTTER_TOUCH_BEGIN")]
+    TouchBegin,
+    #[doc(alias = "CLUTTER_TOUCH_UPDATE")]
+    TouchUpdate,
+    #[doc(alias = "CLUTTER_TOUCH_END")]
+    TouchEnd,
+    #[doc(alias = "CLUTTER_TOUCH_CANCEL")]
+    TouchCancel,
+    #[doc(alias = "CLUTTER_TOUCHPAD_PINCH")]
+    TouchpadPinch,
+    #[doc(alias = "CLUTTER_TOUCHPAD_SWIPE")]
+    TouchpadSwipe,
+    #[doc(alias = "CLUTTER_PROXIMITY_IN")]
+    ProximityIn,
+    #[doc(alias = "CLUTTER_PROXIMITY_OUT")]
+    ProximityOut,
+    #[doc(alias = "CLUTTER_PAD_BUTTON_PRESS")]
+    PadButtonPress,
+    #[doc(alias = "CLUTTER_PAD_BUTTON_RELEASE")]
+    PadButtonRelease,
+    #[doc(alias = "CLUTTER_PAD_STRIP")]
+    PadStrip,
+    #[doc(alias = "CLUTTER_PAD_RING")]
+    PadRing,
+    #[doc(alias = "CLUTTER_DEVICE_ADDED")]
+    DeviceAdded,
+    #[doc(alias = "CLUTTER_DEVICE_REMOVED")]
+    DeviceRemoved,
+    #[doc(alias = "CLUTTER_IM_COMMIT")]
+    ImCommit,
+    #[doc(alias = "CLUTTER_IM_DELETE")]
+    ImDelete,
+    #[doc(alias = "CLUTTER_IM_PREEDIT")]
+    ImPreedit,
+    #[doc(alias = "CLUTTER_EVENT_LAST")]
+    EventLast,
+#[doc(hidden)]
+    __Unknown(i32),
+}
+
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+impl fmt::Display for EventType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "EventType::{}", match *self {
+            Self::Nothing => "Nothing",
+            Self::KeyPress => "KeyPress",
+            Self::KeyRelease => "KeyRelease",
+            Self::Motion => "Motion",
+            Self::Enter => "Enter",
+            Self::Leave => "Leave",
+            Self::ButtonPress => "ButtonPress",
+            Self::ButtonRelease => "ButtonRelease",
+            Self::Scroll => "Scroll",
+            Self::TouchBegin => "TouchBegin",
+            Self::TouchUpdate => "TouchUpdate",
+            Self::TouchEnd => "TouchEnd",
+            Self::TouchCancel => "TouchCancel",
+            Self::TouchpadPinch => "TouchpadPinch",
+            Self::TouchpadSwipe => "TouchpadSwipe",
+            Self::ProximityIn => "ProximityIn",
+            Self::ProximityOut => "ProximityOut",
+            Self::PadButtonPress => "PadButtonPress",
+            Self::PadButtonRelease => "PadButtonRelease",
+            Self::PadStrip => "PadStrip",
+            Self::PadRing => "PadRing",
+            Self::DeviceAdded => "DeviceAdded",
+            Self::DeviceRemoved => "DeviceRemoved",
+            Self::ImCommit => "ImCommit",
+            Self::ImDelete => "ImDelete",
+            Self::ImPreedit => "ImPreedit",
+            Self::EventLast => "EventLast",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+#[doc(hidden)]
+impl IntoGlib for EventType {
+    type GlibType = ffi::ClutterEventType;
+
+    fn into_glib(self) -> ffi::ClutterEventType {
+        match self {
+            Self::Nothing => ffi::CLUTTER_NOTHING,
+            Self::KeyPress => ffi::CLUTTER_KEY_PRESS,
+            Self::KeyRelease => ffi::CLUTTER_KEY_RELEASE,
+            Self::Motion => ffi::CLUTTER_MOTION,
+            Self::Enter => ffi::CLUTTER_ENTER,
+            Self::Leave => ffi::CLUTTER_LEAVE,
+            Self::ButtonPress => ffi::CLUTTER_BUTTON_PRESS,
+            Self::ButtonRelease => ffi::CLUTTER_BUTTON_RELEASE,
+            Self::Scroll => ffi::CLUTTER_SCROLL,
+            Self::TouchBegin => ffi::CLUTTER_TOUCH_BEGIN,
+            Self::TouchUpdate => ffi::CLUTTER_TOUCH_UPDATE,
+            Self::TouchEnd => ffi::CLUTTER_TOUCH_END,
+            Self::TouchCancel => ffi::CLUTTER_TOUCH_CANCEL,
+            Self::TouchpadPinch => ffi::CLUTTER_TOUCHPAD_PINCH,
+            Self::TouchpadSwipe => ffi::CLUTTER_TOUCHPAD_SWIPE,
+            Self::ProximityIn => ffi::CLUTTER_PROXIMITY_IN,
+            Self::ProximityOut => ffi::CLUTTER_PROXIMITY_OUT,
+            Self::PadButtonPress => ffi::CLUTTER_PAD_BUTTON_PRESS,
+            Self::PadButtonRelease => ffi::CLUTTER_PAD_BUTTON_RELEASE,
+            Self::PadStrip => ffi::CLUTTER_PAD_STRIP,
+            Self::PadRing => ffi::CLUTTER_PAD_RING,
+            Self::DeviceAdded => ffi::CLUTTER_DEVICE_ADDED,
+            Self::DeviceRemoved => ffi::CLUTTER_DEVICE_REMOVED,
+            Self::ImCommit => ffi::CLUTTER_IM_COMMIT,
+            Self::ImDelete => ffi::CLUTTER_IM_DELETE,
+            Self::ImPreedit => ffi::CLUTTER_IM_PREEDIT,
+            Self::EventLast => ffi::CLUTTER_EVENT_LAST,
+            Self::__Unknown(value) => value,
+}
+    }
+}
+
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+#[doc(hidden)]
+impl FromGlib<ffi::ClutterEventType> for EventType {
+    unsafe fn from_glib(value: ffi::ClutterEventType) -> Self {
+        match value {
+            ffi::CLUTTER_NOTHING => Self::Nothing,
+            ffi::CLUTTER_KEY_PRESS => Self::KeyPress,
+            ffi::CLUTTER_KEY_RELEASE => Self::KeyRelease,
+            ffi::CLUTTER_MOTION => Self::Motion,
+            ffi::CLUTTER_ENTER => Self::Enter,
+            ffi::CLUTTER_LEAVE => Self::Leave,
+            ffi::CLUTTER_BUTTON_PRESS => Self::ButtonPress,
+            ffi::CLUTTER_BUTTON_RELEASE => Self::ButtonRelease,
+            ffi::CLUTTER_SCROLL => Self::Scroll,
+            ffi::CLUTTER_TOUCH_BEGIN => Self::TouchBegin,
+            ffi::CLUTTER_TOUCH_UPDATE => Self::TouchUpdate,
+            ffi::CLUTTER_TOUCH_END => Self::TouchEnd,
+            ffi::CLUTTER_TOUCH_CANCEL => Self::TouchCancel,
+            ffi::CLUTTER_TOUCHPAD_PINCH => Self::TouchpadPinch,
+            ffi::CLUTTER_TOUCHPAD_SWIPE => Self::TouchpadSwipe,
+            ffi::CLUTTER_PROXIMITY_IN => Self::ProximityIn,
+            ffi::CLUTTER_PROXIMITY_OUT => Self::ProximityOut,
+            ffi::CLUTTER_PAD_BUTTON_PRESS => Self::PadButtonPress,
+            ffi::CLUTTER_PAD_BUTTON_RELEASE => Self::PadButtonRelease,
+            ffi::CLUTTER_PAD_STRIP => Self::PadStrip,
+            ffi::CLUTTER_PAD_RING => Self::PadRing,
+            ffi::CLUTTER_DEVICE_ADDED => Self::DeviceAdded,
+            ffi::CLUTTER_DEVICE_REMOVED => Self::DeviceRemoved,
+            ffi::CLUTTER_IM_COMMIT => Self::ImCommit,
+            ffi::CLUTTER_IM_DELETE => Self::ImDelete,
+            ffi::CLUTTER_IM_PREEDIT => Self::ImPreedit,
+            ffi::CLUTTER_EVENT_LAST => Self::EventLast,
+            value => Self::__Unknown(value),
+}
+    }
+}
+
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+impl StaticType for EventType {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::clutter_event_type_get_type()) }
+    }
+}
+
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+impl glib::value::ValueType for EventType {
+    type Type = Self;
+}
+
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+unsafe impl<'a> FromValue<'a> for EventType {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+impl ToValue for EventType {
     fn to_value(&self) -> glib::Value {
         let mut value = glib::Value::for_value_type::<Self>();
         unsafe {
