@@ -3,6 +3,9 @@
 // from mutter-gir-files
 // DO NOT EDIT
 
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+use crate::Backend;
 use glib::translate::*;
 #[cfg(any(feature = "v0_4", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
@@ -124,13 +127,23 @@ pub fn current_event_time() -> u32 {
     }
 }
 
-//#[cfg(any(feature = "v0_4", feature = "dox"))]
-//#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
-//#[doc(alias = "clutter_get_default_backend")]
-//#[doc(alias = "get_default_backend")]
-//pub fn default_backend() -> /*Ignored*/Option<Backend> {
-//    unsafe { TODO: call ffi:clutter_get_default_backend() }
-//}
+/// Retrieves the default [`Backend`][crate::Backend] used by Clutter. The
+/// [`Backend`][crate::Backend] holds backend-specific configuration options.
+///
+/// # Returns
+///
+/// the default backend. You should
+///  not ref or unref the returned object. Applications should rarely
+///  need to use this.
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+#[doc(alias = "clutter_get_default_backend")]
+#[doc(alias = "get_default_backend")]
+pub fn default_backend() -> Option<Backend> {
+    unsafe {
+        from_glib_none(ffi::clutter_get_default_backend())
+    }
+}
 
 /// Retrieves the default frame rate. See `clutter_set_default_frame_rate()`.
 ///

@@ -6,6 +6,9 @@
 #[cfg(any(feature = "v1_10", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
 use crate::Actor;
+#[cfg(any(feature = "v1_6", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_6")))]
+use crate::Backend;
 #[cfg(any(feature = "v1_10", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
 use glib::object::IsA;
@@ -280,15 +283,16 @@ impl InputDevice {
         }
     }
 
-    //#[cfg(any(feature = "v1_6", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_6")))]
-    //pub fn backend(&self) -> /*Ignored*/Option<Backend> {
-    //    unsafe {
-    //        let mut value = glib::Value::from_type(</*Unknown type*/ as StaticType>::static_type());
-    //        glib::gobject_ffi::g_object_get_property(self.as_ptr() as *mut glib::gobject_ffi::GObject, b"backend\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-    //        value.get().expect("Return Value for property `backend` getter")
-    //    }
-    //}
+    /// The [`Backend`][crate::Backend] that created the device.
+    #[cfg(any(feature = "v1_6", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_6")))]
+    pub fn backend(&self) -> Option<Backend> {
+        unsafe {
+            let mut value = glib::Value::from_type(<Backend as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(self.as_ptr() as *mut glib::gobject_ffi::GObject, b"backend\0".as_ptr() as *const _, value.to_glib_none_mut().0);
+            value.get().expect("Return Value for property `backend` getter")
+        }
+    }
 
     //#[doc(alias = "device-mode")]
     //pub fn get_property_device_mode(&self) -> /*Ignored*/InputMode {

@@ -56,15 +56,6 @@ event.
 # Returns
 
 The current ClutterEvent, or [`None`] if none
-<!-- fn default_backend -->
-Retrieves the default `ClutterBackend` used by Clutter. The
-`ClutterBackend` holds backend-specific configuration options.
-
-# Returns
-
-the default backend. You should
- not ref or unref the returned object. Applications should rarely
- need to use this.
 <!-- fn default_text_direction -->
 Retrieves the default direction for the text. The text direction is
 determined by the locale and/or by the `CLUTTER_TEXT_DIRECTION`
@@ -654,8 +645,8 @@ with the font map, resolution and font options, and the
 given `text`.
 
 If you want to keep around a `PangoLayout` created by this
-function you will have to connect to the `ClutterBackend::font-changed`
-and `ClutterBackend::resolution-changed` signals, and call
+function you will have to connect to the `signal::Backend::font-changed`
+and `signal::Backend::resolution-changed` signals, and call
 `pango_layout_context_changed()` in response to them.
 ## `text`
 the text to set on the `PangoLayout`, or [`None`]
@@ -899,7 +890,7 @@ and font options.
 
 Unlike `clutter_actor_create_pango_context()`, this context is owend
 by the [`Actor`][crate::Actor] and it will be updated each time the options
-stored by the `ClutterBackend` change.
+stored by the [`Backend`][crate::Backend] change.
 
 You can use the returned `PangoContext` to create a `PangoLayout`
 and render text using `cogl_pango_show_layout()` to reuse the
@@ -1745,6 +1736,52 @@ equivalent to [`CubicBezier`][Self::CubicBezier] with control points
 <!-- enum AnimationMode::variant AnimationLast -->
 last animation mode, used as a guard for
  registered global alpha functions
+<!-- struct Backend -->
+[`Backend`][crate::Backend] is an opaque structure whose
+members cannot be directly accessed.
+
+This is an Abstract Base Class, you cannot instantiate it.
+<!-- impl Backend::fn cogl_context -->
+Retrieves the `CoglContext` associated with the given clutter
+`self`. A `CoglContext` is required when using some of the
+experimental 2.0 Cogl API.
+
+Since CoglContext is itself experimental API this API should
+be considered experimental too.
+
+This API is not yet supported on OSX because OSX still
+uses the stub Cogl winsys and the Clutter backend doesn't
+explicitly create a CoglContext.
+
+# Returns
+
+The `CoglContext` associated with `self`.
+<!-- impl Backend::fn default_seat -->
+Returns the default seat
+
+# Returns
+
+the default seat
+<!-- impl Backend::fn font_options -->
+Retrieves the font options for `self`.
+
+# Returns
+
+the font options of the [`Backend`][crate::Backend].
+ The returned `cairo_font_options_t` is owned by the backend and should
+ not be modified or freed
+<!-- impl Backend::fn set_font_options -->
+Sets the new font options for `self`. The [`Backend`][crate::Backend] will
+copy the `cairo_font_options_t`.
+
+If `options` is [`None`], the first following call to
+`clutter_backend_get_font_options()` will return the default font
+options for `self`.
+
+This function is intended for actors creating a Pango layout
+using the PangoCairo API.
+## `options`
+Cairo font options for the backend, or [`None`]
 <!-- struct Color -->
 Color representation.
 <!-- impl Color::fn copy -->
@@ -2039,10 +2076,8 @@ Releases the grab on the `self` for the given `sequence`, if one is
 in place.
 ## `sequence`
 a `ClutterEventSequence`
-<!-- impl InputDevice::fn backend -->
-The `ClutterBackend` that created the device.
 <!-- impl InputDevice::fn set_backend -->
-The `ClutterBackend` that created the device.
+The [`Backend`][crate::Backend] that created the device.
 <!-- impl InputDevice::fn set_device_type -->
 The type of the device
 <!-- impl InputDevice::fn set_has_cursor -->
@@ -2063,6 +2098,14 @@ This is an Abstract Base Class, you cannot instantiate it.
 # Implements
 
 [`InputFocusExt`][trait@crate::prelude::InputFocusExt]
+<!-- struct InputMethod -->
+
+
+This is an Abstract Base Class, you cannot instantiate it.
+
+# Implements
+
+[`InputMethodExt`][trait@crate::prelude::InputMethodExt]
 <!-- struct KeyEvent -->
 Key event
 <!-- struct ModifierType -->

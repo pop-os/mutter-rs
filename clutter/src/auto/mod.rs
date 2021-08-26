@@ -19,6 +19,13 @@ pub use self::actor_meta::{ActorMeta, NONE_ACTOR_META};
 mod animatable;
 pub use self::animatable::{Animatable, NONE_ANIMATABLE};
 
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+mod backend;
+#[cfg(any(feature = "v0_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
+pub use self::backend::{Backend};
+
 #[cfg(any(feature = "v1_4", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
 mod constraint;
@@ -41,6 +48,9 @@ pub use self::input_device::{InputDevice};
 
 mod input_focus;
 pub use self::input_focus::{InputFocus, NONE_INPUT_FOCUS};
+
+mod input_method;
+pub use self::input_method::{InputMethod, NONE_INPUT_METHOD};
 
 #[cfg(any(feature = "v0_6", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
@@ -113,6 +123,7 @@ pub mod traits {
     pub use super::container::ContainerExt;
     pub use super::content::ContentExt;
     pub use super::input_focus::InputFocusExt;
+    pub use super::input_method::InputMethodExt;
     #[cfg(any(feature = "v0_6", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_6")))]
     pub use super::scriptable::ScriptableExt;

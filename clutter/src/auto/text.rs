@@ -634,7 +634,7 @@ pub trait TextExt: 'static {
 
     /// Sets the font used by a [`Text`][crate::Text]. The `font_name` string
     /// must either be [`None`], which means that the font name from the
-    /// default `ClutterBackend` will be used; or be something that can
+    /// default [`Backend`][crate::Backend] will be used; or be something that can
     /// be parsed by the `pango_font_description_from_string()` function,
     /// like:
     ///
