@@ -21,6 +21,9 @@ pub use self::compositor::{Compositor};
 mod display;
 pub use self::display::{Display};
 
+mod monitor_manager;
+pub use self::monitor_manager::{MonitorManager};
+
 mod plugin;
 pub use self::plugin::{Plugin, NONE_PLUGIN};
 

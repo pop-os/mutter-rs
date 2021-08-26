@@ -334,6 +334,12 @@ if set the pointer is already
 <!-- struct ModalOptions::const KEYBOARD_ALREADY_GRABBED -->
 if set the keyboard is already
  grabbed by the plugin and should not be grabbed again.
+<!-- struct MonitorManager -->
+
+
+# Implements
+
+[`trait@glib::ObjectExt`]
 <!-- enum MotionDirection::variant Up -->
 Upwards motion
 <!-- enum MotionDirection::variant Down -->

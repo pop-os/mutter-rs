@@ -21,6 +21,7 @@ generate = [
 	"Meta.KeyBindingFlags",
 	"Meta.MaximizeFlags",
 	"Meta.ModalOptions",
+	"Meta.MonitorManager",
 	"Meta.MotionDirection",
 	"Meta.PadActionType",
 	"Meta.Plugin",
