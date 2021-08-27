@@ -56,26 +56,6 @@ event.
 # Returns
 
 The current ClutterEvent, or [`None`] if none
-<!-- fn default_text_direction -->
-Retrieves the default direction for the text. The text direction is
-determined by the locale and/or by the `CLUTTER_TEXT_DIRECTION`
-environment variable.
-
-The default text direction can be overridden on a per-actor basis by using
-`clutter_actor_set_text_direction()`.
-
-# Returns
-
-the default text direction
-<!-- fn font_map -->
-Retrieves the `PangoFontMap` instance used by Clutter.
-You can use the global font map object with the COGL
-Pango API.
-
-# Returns
-
-the `PangoFontMap` instance. The returned
- value is owned by Clutter and it should never be unreferenced.
 <!-- fn option_group -->
 Returns a `GOptionGroup` for the command line arguments recognized
 by Clutter. You should add this group to your `GOptionContext` with
@@ -416,32 +396,6 @@ Base class for actors.
 # Implements
 
 [`ActorExt`][trait@crate::prelude::ActorExt], [`AnimatableExt`][trait@crate::prelude::AnimatableExt], [`ContainerExt`][trait@crate::prelude::ContainerExt], [`ScriptableExt`][trait@crate::prelude::ScriptableExt]
-<!-- trait ActorExt::fn add_effect -->
-Adds `effect` to the list of `ClutterEffect`<!-- -->s applied to `self`
-
-The [`Actor`][crate::Actor] will hold a reference on the `effect` until either
-`clutter_actor_remove_effect()` or [`clear_effects()`][Self::clear_effects()] is
-called.
-## `effect`
-a `ClutterEffect`
-<!-- trait ActorExt::fn add_effect_with_name -->
-A convenience function for setting the name of a `ClutterEffect`
-while adding it to the list of effectss applied to `self`
-
-This function is the logical equivalent of:
-
-
-
-**⚠️ The following code is in C ⚠️**
-
-```C
-  clutter_actor_meta_set_name (CLUTTER_ACTOR_META (effect), name);
-  clutter_actor_add_effect (self, effect);
-```
-## `name`
-the name to set on the effect
-## `effect`
-a `ClutterEffect`
 <!-- trait ActorExt::fn add_transition -->
 Adds a `transition` to the [`Actor`][crate::Actor]'s list of animations.
 
@@ -617,44 +571,15 @@ the first property of `model` to bind
 <!-- trait ActorExt::fn continue_paint -->
 Run the next stage of the paint sequence. This function should only
 be called within the implementation of the ‘run’ virtual of a
-`ClutterEffect`. It will cause the run method of the next effect to
+[`Effect`][crate::Effect]. It will cause the run method of the next effect to
 be applied, or it will paint the actual actor if the current effect
 is the last effect in the chain.
 <!-- trait ActorExt::fn continue_pick -->
 Run the next stage of the pick sequence. This function should only
 be called within the implementation of the ‘pick’ virtual of a
-`ClutterEffect`. It will cause the run method of the next effect to
+[`Effect`][crate::Effect]. It will cause the run method of the next effect to
 be applied, or it will pick the actual actor if the current effect
 is the last effect in the chain.
-<!-- trait ActorExt::fn create_pango_context -->
-Creates a `PangoContext` for the given actor. The `PangoContext`
-is already configured using the appropriate font map, resolution
-and font options.
-
-See also `clutter_actor_get_pango_context()`.
-
-# Returns
-
-the newly created `PangoContext`.
- Use `g_object_unref()` on the returned value to deallocate its
- resources
-<!-- trait ActorExt::fn create_pango_layout -->
-Creates a new `PangoLayout` from the same `PangoContext` used
-by the [`Actor`][crate::Actor]. The `PangoLayout` is already configured
-with the font map, resolution and font options, and the
-given `text`.
-
-If you want to keep around a `PangoLayout` created by this
-function you will have to connect to the `signal::Backend::font-changed`
-and `signal::Backend::resolution-changed` signals, and call
-`pango_layout_context_changed()` in response to them.
-## `text`
-the text to set on the `PangoLayout`, or [`None`]
-
-# Returns
-
-the newly created `PangoLayout`.
- Use `g_object_unref()` when done
 <!-- trait ActorExt::fn event -->
 This function is used to emit an event on the main stage.
 You should rarely need to use this function, except for
@@ -796,26 +721,6 @@ a pointer to the default
  is not guaranteed to be stable across multiple frames, so if you
  want to retain it, you will need to copy it using
  `clutter_paint_volume_copy()`.
-<!-- trait ActorExt::fn effect -->
-Retrieves the `ClutterEffect` with the given name in the list
-of effects applied to `self`
-## `name`
-the name of the effect to retrieve
-
-# Returns
-
-a `ClutterEffect` for the given
- name, or [`None`]. The returned `ClutterEffect` is owned by the
- actor and it should not be unreferenced directly
-<!-- trait ActorExt::fn effects -->
-Retrieves the `ClutterEffect`<!-- -->s applied on `self`, if any
-
-# Returns
-
-a list
- of `ClutterEffect`<!-- -->s, or [`None`]. The elements of the returned
- list are owned by Clutter and they should not be freed. You should
- free the returned list using `g_list_free()` when done
 <!-- trait ActorExt::fn layout_manager -->
 Retrieves the `ClutterLayoutManager` used by `self`.
 
@@ -883,30 +788,6 @@ a pointer to a `ClutterPaintVolume`,
  or [`None`] if no volume could be determined. The returned pointer
  is not guaranteed to be valid across multiple frames; if you want
  to keep it, you will need to copy it using `clutter_paint_volume_copy()`.
-<!-- trait ActorExt::fn pango_context -->
-Retrieves the `PangoContext` for `self`. The actor's `PangoContext`
-is already configured using the appropriate font map, resolution
-and font options.
-
-Unlike `clutter_actor_create_pango_context()`, this context is owend
-by the [`Actor`][crate::Actor] and it will be updated each time the options
-stored by the [`Backend`][crate::Backend] change.
-
-You can use the returned `PangoContext` to create a `PangoLayout`
-and render text using `cogl_pango_show_layout()` to reuse the
-glyphs cache also used by Clutter.
-
-# Returns
-
-the `PangoContext` for a [`Actor`][crate::Actor].
- The returned `PangoContext` is owned by the actor and should not be
- unreferenced by the application code
-<!-- trait ActorExt::fn request_mode -->
-Retrieves the geometry request mode of `self`
-
-# Returns
-
-the request mode for the actor
 <!-- trait ActorExt::fn rotation_angle -->
 Retrieves the angle of rotation set by `clutter_actor_set_rotation_angle()`.
 ## `axis`
@@ -915,16 +796,6 @@ the axis of the rotation
 # Returns
 
 the angle of rotation, in degrees
-<!-- trait ActorExt::fn text_direction -->
-Retrieves the value set using `clutter_actor_set_text_direction()`
-
-If no text direction has been previously set, the default text
-direction, as returned by `clutter_get_default_text_direction()`, will
-be returned instead
-
-# Returns
-
-the `ClutterTextDirection` for the actor
 <!-- trait ActorExt::fn transform -->
 Retrieves the current transformation matrix of a [`Actor`][crate::Actor].
 
@@ -998,21 +869,6 @@ the name of the transition
 a `ClutterTransition`, or [`None`] is none
  was found to match the passed name; the returned instance is owned
  by Clutter and it should not be freed
-<!-- trait ActorExt::fn needs_expand -->
-Checks whether an actor, or any of its children, is set to expand
-horizontally or vertically.
-
-This function should only be called by layout managers that can
-assign extra space to their children.
-
-If you want to know whether the actor was explicitly set to expand,
-use [`is_x_expand()`][Self::is_x_expand()] or [`is_y_expand()`][Self::is_y_expand()].
-## `orientation`
-the direction of expansion
-
-# Returns
-
-[`true`] if the actor should expand
 <!-- trait ActorExt::fn paint -->
 Renders the actor to display.
 
@@ -1071,20 +927,6 @@ a pointer to an [`Actor`][crate::Actor]
 # Returns
 
 a `ClutterFrameClock`
-<!-- trait ActorExt::fn queue_redraw_with_clip -->
-Queues a redraw on `self` limited to a specific, actor-relative
-rectangular area.
-
-If `clip` is [`None`] this function is equivalent to
-[`queue_redraw()`][Self::queue_redraw()].
-## `clip`
-a rectangular clip region, or [`None`]
-<!-- trait ActorExt::fn remove_effect -->
-Removes `effect` from the list of effects applied to `self`
-
-The reference held by `self` on the `ClutterEffect` will be released
-## `effect`
-a `ClutterEffect`
 <!-- trait ActorExt::fn set_allocation -->
 Stores the allocation of `self` as defined by `box_`.
 
@@ -1210,14 +1052,6 @@ recommended to override the `has_overlaps()` virtual to return [`false`]
 for maximum efficiency.
 ## `redirect`
 New offscreen redirect flags for the actor.
-<!-- trait ActorExt::fn set_request_mode -->
-Sets the geometry request mode of `self`.
-
-The `mode` determines the order for invoking
-[`preferred_width()`][Self::preferred_width()] and
-[`preferred_height()`][Self::preferred_height()]
-## `mode`
-the request mode
 <!-- trait ActorExt::fn set_rotation_angle -->
 Sets the `angle` of rotation of a [`Actor`][crate::Actor] on the given `axis`.
 
@@ -1231,19 +1065,6 @@ property.
 the axis to set the angle one
 ## `angle`
 the angle of rotation, in degrees
-<!-- trait ActorExt::fn set_text_direction -->
-Sets the `ClutterTextDirection` for an actor
-
-The passed text direction must not be `CLUTTER_TEXT_DIRECTION_DEFAULT`
-
-If `self` implements [`Container`][crate::Container] then this function will recurse
-inside all the children of `self` (including the internal ones).
-
-Composite actors not implementing [`Container`][crate::Container], or actors requiring
-special handling when the text direction changes, should connect to
-the `GObject::notify` signal for the `property::Actor::text-direction` property
-## `text_dir`
-the text direction for `self`
 <!-- trait ActorExt::fn set_transform -->
 Overrides the transformations of a [`Actor`][crate::Actor] with a custom
 matrix, which will be applied relative to the origin of the
@@ -1398,8 +1219,6 @@ Setting this property to [`None`] will unset the existing clip.
 
 Setting this property will change the `property::Actor::has-clip`
 property as a side effect.
-<!-- trait ActorExt::fn set_effect -->
-Adds `ClutterEffect` to the list of effects be applied on a [`Actor`][crate::Actor]
 <!-- trait ActorExt::fn fixed_position_set -->
 This flag controls whether the `property::Actor::fixed-x` and
 `property::Actor::fixed-y` properties are used
@@ -1407,126 +1226,6 @@ This flag controls whether the `property::Actor::fixed-x` and
 Whether the actor is reactive to events or not
 
 Only reactive actors will emit event-related signals
-<!-- trait ActorExt::fn get_property_request_mode -->
-Request mode for the [`Actor`][crate::Actor]. The request mode determines the
-type of geometry management used by the actor, either height for width
-(the default) or width for height.
-
-For actors implementing height for width, the parent container should get
-the preferred width first, and then the preferred height for that width.
-
-For actors implementing width for height, the parent container should get
-the preferred height first, and then the preferred width for that height.
-
-For instance:
-
-
-
-**⚠️ The following code is in C ⚠️**
-
-```C
-  ClutterRequestMode mode;
-  gfloat natural_width, min_width;
-  gfloat natural_height, min_height;
-
-  mode = clutter_actor_get_request_mode (child);
-  if (mode == CLUTTER_REQUEST_HEIGHT_FOR_WIDTH)
-    {
-      clutter_actor_get_preferred_width (child, -1,
-                                         &min_width,
-                                         &natural_width);
-      clutter_actor_get_preferred_height (child, natural_width,
-                                          &min_height,
-                                          &natural_height);
-    }
-  else if (mode == CLUTTER_REQUEST_WIDTH_FOR_HEIGHT)
-    {
-      clutter_actor_get_preferred_height (child, -1,
-                                          &min_height,
-                                          &natural_height);
-      clutter_actor_get_preferred_width (child, natural_height,
-                                         &min_width,
-                                         &natural_width);
-    }
-  else if (mode == CLUTTER_REQUEST_CONTENT_SIZE)
-    {
-      ClutterContent *content = clutter_actor_get_content (child);
-
-      min_width, min_height = 0;
-      natural_width = natural_height = 0;
-
-      if (content != NULL)
-        clutter_content_get_preferred_size (content, &natural_width, &natural_height);
-    }
-```
-
-will retrieve the minimum and natural width and height depending on the
-preferred request mode of the [`Actor`][crate::Actor] "child".
-
-The [`preferred_size()`][Self::preferred_size()] function will implement this
-check for you.
-<!-- trait ActorExt::fn set_property_request_mode -->
-Request mode for the [`Actor`][crate::Actor]. The request mode determines the
-type of geometry management used by the actor, either height for width
-(the default) or width for height.
-
-For actors implementing height for width, the parent container should get
-the preferred width first, and then the preferred height for that width.
-
-For actors implementing width for height, the parent container should get
-the preferred height first, and then the preferred width for that height.
-
-For instance:
-
-
-
-**⚠️ The following code is in C ⚠️**
-
-```C
-  ClutterRequestMode mode;
-  gfloat natural_width, min_width;
-  gfloat natural_height, min_height;
-
-  mode = clutter_actor_get_request_mode (child);
-  if (mode == CLUTTER_REQUEST_HEIGHT_FOR_WIDTH)
-    {
-      clutter_actor_get_preferred_width (child, -1,
-                                         &min_width,
-                                         &natural_width);
-      clutter_actor_get_preferred_height (child, natural_width,
-                                          &min_height,
-                                          &natural_height);
-    }
-  else if (mode == CLUTTER_REQUEST_WIDTH_FOR_HEIGHT)
-    {
-      clutter_actor_get_preferred_height (child, -1,
-                                          &min_height,
-                                          &natural_height);
-      clutter_actor_get_preferred_width (child, natural_height,
-                                         &min_width,
-                                         &natural_width);
-    }
-  else if (mode == CLUTTER_REQUEST_CONTENT_SIZE)
-    {
-      ClutterContent *content = clutter_actor_get_content (child);
-
-      min_width, min_height = 0;
-      natural_width = natural_height = 0;
-
-      if (content != NULL)
-        clutter_content_get_preferred_size (content, &natural_width, &natural_height);
-    }
-```
-
-will retrieve the minimum and natural width and height depending on the
-preferred request mode of the [`Actor`][crate::Actor] "child".
-
-The [`preferred_size()`][Self::preferred_size()] function will implement this
-check for you.
-<!-- trait ActorExt::fn get_property_text_direction -->
-The direction of the text inside a [`Actor`][crate::Actor].
-<!-- trait ActorExt::fn set_property_text_direction -->
-The direction of the text inside a [`Actor`][crate::Actor].
 <!-- trait ActorExt::fn x_expand -->
 Whether a layout manager should assign more space to the actor on
 the X axis.
@@ -1762,26 +1461,6 @@ Returns the default seat
 # Returns
 
 the default seat
-<!-- impl Backend::fn font_options -->
-Retrieves the font options for `self`.
-
-# Returns
-
-the font options of the [`Backend`][crate::Backend].
- The returned `cairo_font_options_t` is owned by the backend and should
- not be modified or freed
-<!-- impl Backend::fn set_font_options -->
-Sets the new font options for `self`. The [`Backend`][crate::Backend] will
-copy the `cairo_font_options_t`.
-
-If `options` is [`None`], the first following call to
-`clutter_backend_get_font_options()` will return the default font
-options for `self`.
-
-This function is intended for actors creating a Pango layout
-using the PangoCairo API.
-## `options`
-Cairo font options for the backend, or [`None`]
 <!-- struct Canvas -->
 The [`Canvas`][crate::Canvas] structure contains
 private data and should only be accessed using the provided
@@ -1858,18 +1537,6 @@ This is an Abstract Base Class, you cannot instantiate it.
 # Implements
 
 [`ConstraintExt`][trait@crate::prelude::ConstraintExt], [`ActorMetaExt`][trait@crate::prelude::ActorMetaExt]
-<!-- trait ConstraintExt::fn update_preferred_size -->
-Asks the `self` to update the size request of a [`Actor`][crate::Actor].
-## `actor`
-a [`Actor`][crate::Actor]
-## `direction`
-a `ClutterOrientation`
-## `for_size`
-the size in the opposite direction
-## `minimum_size`
-the minimum size to modify
-## `natural_size`
-the natural size to modify
 <!-- struct Container -->
 [`Container`][crate::Container] is an opaque structure whose members cannot be directly
 accessed
@@ -1999,6 +1666,15 @@ the `GParamSpec` of the property set
 # Implements
 
 [`ContentExt`][trait@crate::prelude::ContentExt]
+<!-- struct Effect -->
+The [`Effect`][crate::Effect] structure contains only private data and should
+be accessed using the provided API
+
+This is an Abstract Base Class, you cannot instantiate it.
+
+# Implements
+
+[`EffectExt`][trait@crate::prelude::EffectExt], [`ActorMetaExt`][trait@crate::prelude::ActorMetaExt]
 <!-- struct EventFlags -->
 Flags for the `ClutterEvent`
 <!-- struct EventFlags::const NONE -->
@@ -2177,6 +1853,17 @@ Mask applied by the Meta key
 Mask applied during release
 <!-- struct ModifierType::const MODIFIER_MASK -->
 A mask covering all modifier types
+<!-- enum Orientation::variant Horizontal -->
+An horizontal orientation
+<!-- enum Orientation::variant Vertical -->
+A vertical orientation
+<!-- enum RequestMode::variant HeightForWidth -->
+Height for width requests
+<!-- enum RequestMode::variant WidthForHeight -->
+Width for height requests
+<!-- enum RequestMode::variant ContentSize -->
+Use the preferred size of the
+ [`Content`][crate::Content], if it has any (available since 1.22)
 <!-- struct Scriptable -->
 [`Scriptable`][crate::Scriptable] is an opaque structure whose members cannot be directly
 accessed
@@ -2236,25 +1923,6 @@ Y coordinate to check
 
 the actor at the specified coordinates,
  if any
-<!-- trait StageExt::fn capture_final_size -->
-Get the size of the framebuffer one must pass to
-`clutter_stage_paint_to_buffer()` or `clutter_stage_paint_to_framebuffer()`
-would be used with the same `rect`.
-## `rect`
-a `cairo_rectangle_int_t`
-
-# Returns
-
-[`true`] if the size has been retrieved, [`false`] otherwise.
-
-## `out_width`
-the final width
-
-## `out_height`
-the final height
-
-## `out_scale`
-the final scale factor
 <!-- trait StageExt::fn device_actor -->
 Retrieves the [`Actor`][crate::Actor] underneath the pointer or touch point
 of `device` and `sequence`.
@@ -2278,7 +1946,7 @@ return location for a
 <!-- trait StageExt::fn paint_to_buffer -->
 Take a snapshot of the stage to a provided buffer.
 ## `rect`
-a `cairo_rectangle_int_t`
+a [`cairo::RectangleInt`][crate::cairo::RectangleInt]
 ## `scale`
 the scale
 ## `data`
@@ -2443,14 +2111,6 @@ The [`Text`][crate::Text] struct contains only private data.
 # Implements
 
 [`TextExt`][trait@crate::prelude::TextExt], [`ActorExt`][trait@crate::prelude::ActorExt], [`AnimatableExt`][trait@crate::prelude::AnimatableExt], [`ContainerExt`][trait@crate::prelude::ContainerExt], [`ScriptableExt`][trait@crate::prelude::ScriptableExt]
-<!-- trait TextExt::fn attributes -->
-Gets the attribute list that was set on the [`Text`][crate::Text] actor
-`clutter_text_set_attributes()`, if any.
-
-# Returns
-
-the attribute list, or [`None`] if none was set. The
- returned value is owned by the [`Text`][crate::Text] and should not be unreferenced.
 <!-- trait TextExt::fn cursor_rect -->
 Retrieves the rectangle that contains the cursor.
 
@@ -2462,95 +2122,6 @@ coordinates.
 
 ## `rect`
 return location of a `ClutterRect`
-<!-- trait TextExt::fn ellipsize -->
-Returns the ellipsizing position of a [`Text`][crate::Text] actor, as
-set by `clutter_text_set_ellipsize()`.
-
-# Returns
-
-`PangoEllipsizeMode`
-<!-- trait TextExt::fn font_description -->
-Retrieves the `PangoFontDescription` used by `self`
-
-# Returns
-
-a `PangoFontDescription`. The returned value is owned
- by the [`Text`][crate::Text] actor and it should not be modified or freed
-<!-- trait TextExt::fn layout -->
-Retrieves the current `PangoLayout` used by a [`Text`][crate::Text] actor.
-
-# Returns
-
-a `PangoLayout`. The returned object is owned by
- the [`Text`][crate::Text] actor and should not be modified or freed
-<!-- trait TextExt::fn line_alignment -->
-Retrieves the alignment of a [`Text`][crate::Text], as set by
-`clutter_text_set_line_alignment()`.
-
-# Returns
-
-a `PangoAlignment`
-<!-- trait TextExt::fn line_wrap_mode -->
-Retrieves the line wrap mode used by the [`Text`][crate::Text] actor.
-
-See clutter_text_set_line_wrap_mode ().
-
-# Returns
-
-the wrap mode used by the [`Text`][crate::Text]
-<!-- trait TextExt::fn set_attributes -->
-Sets the attributes list that are going to be applied to the
-[`Text`][crate::Text] contents.
-
-The [`Text`][crate::Text] actor will take a reference on the `PangoAttrList`
-passed to this function.
-## `attrs`
-a `PangoAttrList` or [`None`] to unset the attributes
-<!-- trait TextExt::fn set_ellipsize -->
-Sets the mode used to ellipsize (add an ellipsis: "...") to the
-text if there is not enough space to render the entire contents
-of a [`Text`][crate::Text] actor
-## `mode`
-a `PangoEllipsizeMode`
-<!-- trait TextExt::fn set_font_description -->
-Sets `font_desc` as the font description for a [`Text`][crate::Text]
-
-The `PangoFontDescription` is copied by the [`Text`][crate::Text] actor
-so you can safely call `pango_font_description_free()` on it after
-calling this function.
-## `font_desc`
-a `PangoFontDescription`
-<!-- trait TextExt::fn set_line_alignment -->
-Sets the way that the lines of a wrapped label are aligned with
-respect to each other. This does not affect the overall alignment
-of the label within its allocated or specified width.
-
-To align a [`Text`][crate::Text] actor you should add it to a container
-that supports alignment, or use the anchor point.
-## `alignment`
-A `PangoAlignment`
-<!-- trait TextExt::fn set_line_wrap_mode -->
-If line wrapping is enabled (see [`set_line_wrap()`][Self::set_line_wrap()]) this
-function controls how the line wrapping is performed. The default is
-`PANGO_WRAP_WORD` which means wrap on word boundaries.
-## `wrap_mode`
-the line wrapping mode
-<!-- trait TextExt::fn set_preedit_string -->
-Sets, or unsets, the pre-edit string. This function is useful
-for input methods to display a string (with eventual specific
-Pango attributes) before it is entered inside the [`Text`][crate::Text]
-buffer.
-
-The preedit string and attributes are ignored if the [`Text`][crate::Text]
-actor is not editable.
-
-This function should not be used by applications
-## `preedit_str`
-the pre-edit string, or [`None`] to unset it
-## `preedit_attrs`
-the pre-edit string attributes
-## `cursor_pos`
-the cursor position for the pre-edit string
 <!-- trait TextExt::fn connect_cursor_event -->
 The ::cursor-event signal is emitted whenever the cursor position
 changes inside a [`Text`][crate::Text] actor. Inside `rect` it is stored
@@ -2613,7 +2184,7 @@ The `property::Text::single-line-mode` property is used only if the
 Whether the text includes Pango markup.
 
 For more information about the Pango markup format, see
-`pango_layout_set_markup()` in the Pango documentation.
+[`Layout::set_markup()`][crate::pango::Layout::set_markup()] in the Pango documentation.
 
 It is not possible to round-trip this property between
 [`true`] and [`false`]. Once a string with markup has been set on
@@ -2636,3 +2207,10 @@ initial buffer text length, or -1 for null-terminated.
 # Returns
 
 A new ClutterTextBuffer object.
+<!-- enum TextDirection::variant Default -->
+Use the default setting, as returned
+ by [`default_text_direction()`][crate::default_text_direction()]
+<!-- enum TextDirection::variant Ltr -->
+Use left-to-right text direction
+<!-- enum TextDirection::variant Rtl -->
+Use right-to-left text direction

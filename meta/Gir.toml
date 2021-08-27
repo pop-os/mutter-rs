@@ -63,6 +63,7 @@ manual = [
 	"Gio.Settings",
 	"Gio.Task",
 	"GObject.Object",
+	"Pango.FontDescription",
 ]
 
 [[object]]

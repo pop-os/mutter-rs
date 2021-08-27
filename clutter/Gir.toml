@@ -17,22 +17,36 @@ generate = [
 	"Clutter.Constraint",
 	"Clutter.Container",
 	"Clutter.Content",
+	"Clutter.Effect",
 	"Clutter.EventFlags",
 	"Clutter.EventType",
 	"Clutter.InputDevice",
 	"Clutter.InputFocus",
 	"Clutter.InputMethod",
 	"Clutter.ModifierType",
+	"Clutter.Orientation",
+	"Clutter.RequestMode",
 	"Clutter.Scriptable",
 	"Clutter.StaticColor",
 	"Clutter.Text",
+	"Clutter.TextDirection",
 ]
 
 manual = [
+	"cairo.FontOptions",
+	"cairo.RectangleInt",
 	"Clutter.KeyEvent",
 	"GLib.DestroyNotify",
 	"GLib.Error",
 	"GLib.SourceFunc",
+	"Pango.Alignment",
+	"Pango.AttrList",
+	"Pango.Context",
+	"Pango.EllipsizeMode",
+	"Pango.FontDescription",
+	"Pango.FontMap",
+	"Pango.Layout",
+	"Pango.WrapMode",
 ]
 
 [[object]]
@@ -55,6 +69,9 @@ status = "generate"
 [[object]]
 name = "Clutter.Stage"
 status = "generate"
+	[[object.function]]
+	name = "capture_into"
+	ignore = true
 	[[object.function]]
 	name = "read_pixels"
 	ignore = true

@@ -15,3 +15,4 @@ gdesktop_enums = { path = "../gdesktop_enums" }
 glib = { git = "https://github.com/gtk-rs/gtk-rs-core" }
 gio = { git = "https://github.com/gtk-rs/gtk-rs-core" }
 libc = "0.2.100"
+pango = { git = "https://github.com/gtk-rs/gtk-rs-core" }
