@@ -1,6 +1,6 @@
 [submodule "gir"]
 	path = gir
-	url = https://github.com/gtk-rs/gir.git
+	url = https://github.com/pop-os/gir.git
 	branch = master
 [submodule "gir-files"]
 	path = gir-files
