@@ -43,7 +43,7 @@ pub const NONE_CONTENT: Option<&Content> = None;
 ///
 /// # Implementors
 ///
-/// [`Canvas`][struct@crate::Canvas], [`Content`][struct@crate::Content]
+/// [`Canvas`][struct@crate::Canvas], [`Content`][struct@crate::Content], [`Image`][struct@crate::Image]
 pub trait ContentExt: 'static {
     /// Retrieves the natural size of the `self`, if any.
     ///

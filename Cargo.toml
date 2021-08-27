@@ -2,10 +2,10 @@
 members = [
     "clutter",
     "clutter-sys",
+    "cogl",
     "cogl-sys",
     "gdesktop_enums",
     "gdesktop_enums-sys",
-    "gir",
     "json-sys",
     "meta",
     "meta-sys",

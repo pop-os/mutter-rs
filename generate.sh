@@ -44,6 +44,7 @@ do
 done
 
 rust_pkgs=(
+	cogl
     clutter
     gdesktop_enums
     meta
@@ -63,7 +64,7 @@ do
         --mode doc \
         --doc-target-path "comments.md"
     rustdoc-stripper --regenerate --comment-file "${pkg}/comments.md" --dir "${pkg}/src" --ignore-doc-commented
-    if [ "${pkg}" == "clutter" -o "${pkg}" == "meta" ]
+    if [ "${pkg}" != "gdesktop_enums" ]
     then
         cargo run --release --manifest-path gir/Cargo.toml -- \
             --config "${pkg}/Gir.toml" \

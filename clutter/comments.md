@@ -1752,6 +1752,92 @@ A tool left from the proximity area of a tablet;
 <!-- enum EventType::variant EventLast -->
 Marks the end of the [`EventType`][crate::EventType] enumeration;
  added in 1.10
+<!-- struct Image -->
+The [`Image`][crate::Image] structure contains
+private data and should only be accessed using the provided
+API.
+
+# Implements
+
+[`ImageExt`][trait@crate::prelude::ImageExt], [`ContentExt`][trait@crate::prelude::ContentExt]
+<!-- trait ImageExt::fn set_area -->
+Sets the image data to be display by `self`, using `rect` to indicate
+the position and size of the image data to be set.
+
+If the `self` does not have any image data set when this function is
+called, a new texture will be created with the size of the width and
+height of the rectangle, i.e. calling this function on a newly created
+[`Image`][crate::Image] will be the equivalent of calling `clutter_image_set_data()`.
+
+If the image data was successfully loaded, the `self` will be invalidated.
+
+In case of error, the `error` value will be set, and this function will
+return [`false`].
+
+The image data is copied in texture memory.
+## `data`
+the image data, as an array of bytes
+## `pixel_format`
+the Cogl pixel format of the image data
+## `rect`
+a rectangle indicating the area that should be set
+## `row_stride`
+the length of each row inside `data`
+
+# Returns
+
+[`true`] if the image data was successfully loaded,
+ and [`false`] otherwise.
+<!-- trait ImageExt::fn set_data -->
+Sets the image data to be displayed by `self`.
+
+If the image data was successfully loaded, the `self` will be invalidated.
+
+In case of error, the `error` value will be set, and this function will
+return [`false`].
+
+The image data is copied in texture memory.
+
+The image data is expected to be a linear array of RGBA or RGB pixel data;
+how to retrieve that data is left to platform specific image loaders. For
+instance, if you use the GdkPixbuf library:
+
+
+
+**⚠️ The following code is in C ⚠️**
+
+```C
+  ClutterContent *image = clutter_image_new ();
+
+  GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+
+  clutter_image_set_data (CLUTTER_IMAGE (image),
+                          gdk_pixbuf_get_pixels (pixbuf),
+                          gdk_pixbuf_get_has_alpha (pixbuf)
+                            ? COGL_PIXEL_FORMAT_RGBA_8888
+                            : COGL_PIXEL_FORMAT_RGB_888,
+                          gdk_pixbuf_get_width (pixbuf),
+                          gdk_pixbuf_get_height (pixbuf),
+                          gdk_pixbuf_get_rowstride (pixbuf),
+                          &error);
+
+  g_object_unref (pixbuf);
+```
+## `data`
+the image data, as an array of bytes
+## `pixel_format`
+the Cogl pixel format of the image data
+## `width`
+the width of the image data
+## `height`
+the height of the image data
+## `row_stride`
+the length of each row inside `data`
+
+# Returns
+
+[`true`] if the image data was successfully loaded,
+ and [`false`] otherwise.
 <!-- struct InputDevice -->
 Generic representation of an input device. The actual contents of this
 structure depend on the backend used.

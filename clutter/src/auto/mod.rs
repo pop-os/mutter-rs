@@ -64,6 +64,13 @@ mod effect;
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_8")))]
 pub use self::effect::{Effect, NONE_EFFECT};
 
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+mod image;
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+pub use self::image::{Image, NONE_IMAGE};
+
 mod input_device;
 pub use self::input_device::{InputDevice};
 
@@ -167,6 +174,9 @@ pub mod traits {
     #[cfg(any(feature = "v1_8", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_8")))]
     pub use super::effect::EffectExt;
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    pub use super::image::ImageExt;
     pub use super::input_focus::InputFocusExt;
     pub use super::input_method::InputMethodExt;
     #[cfg(any(feature = "v0_6", feature = "dox"))]

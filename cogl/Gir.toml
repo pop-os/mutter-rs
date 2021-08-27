@@ -1,0 +1,17 @@
+[options]
+library = "Cogl"
+version = "8"
+target_path = "."
+work_mode = "normal"
+
+generate = [
+	"Cogl.PixelFormat",
+	"Cogl.Texture",
+]
+
+[[object]]
+name = "Cogl.*"
+status = "generate"
+	[[object.constant]]
+	pattern = "*"
+	ignore = true

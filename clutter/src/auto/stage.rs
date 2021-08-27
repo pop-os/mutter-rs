@@ -190,7 +190,7 @@ pub trait StageExt: 'static {
     //fn is_redraw_queued_on_view(&self, view: /*Ignored*/&StageView) -> bool;
 
     //#[doc(alias = "clutter_stage_paint_to_buffer")]
-    //fn paint_to_buffer(&self, rect: &cairo::RectangleInt, scale: f32, data: /*Unimplemented*/Vec<u8>, stride: i32, format: /*Ignored*/cogl::PixelFormat, paint_flags: /*Ignored*/PaintFlag) -> Result<(), glib::Error>;
+    //fn paint_to_buffer(&self, rect: &cairo::RectangleInt, scale: f32, data: /*Unimplemented*/Vec<u8>, stride: i32, format: cogl::PixelFormat, paint_flags: /*Ignored*/PaintFlag) -> Result<(), glib::Error>;
 
     //#[doc(alias = "clutter_stage_paint_to_framebuffer")]
     //fn paint_to_framebuffer(&self, framebuffer: /*Ignored*/&cogl::Framebuffer, rect: &cairo::RectangleInt, scale: f32, paint_flags: /*Ignored*/PaintFlag);
@@ -472,7 +472,7 @@ impl<O: IsA<Stage>> StageExt for O {
     //    unsafe { TODO: call ffi:clutter_stage_is_redraw_queued_on_view() }
     //}
 
-    //fn paint_to_buffer(&self, rect: &cairo::RectangleInt, scale: f32, data: /*Unimplemented*/Vec<u8>, stride: i32, format: /*Ignored*/cogl::PixelFormat, paint_flags: /*Ignored*/PaintFlag) -> Result<(), glib::Error> {
+    //fn paint_to_buffer(&self, rect: &cairo::RectangleInt, scale: f32, data: /*Unimplemented*/Vec<u8>, stride: i32, format: cogl::PixelFormat, paint_flags: /*Ignored*/PaintFlag) -> Result<(), glib::Error> {
     //    unsafe { TODO: call ffi:clutter_stage_paint_to_buffer() }
     //}
 
