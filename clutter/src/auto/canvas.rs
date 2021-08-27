@@ -124,10 +124,27 @@ pub trait CanvasExt: 'static {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
     fn set_width(&self, width: i32);
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //#[doc(alias = "draw")]
-    //fn connect_draw<Unsupported or ignored types>(&self, f: F) -> SignalHandlerId;
+    /// The `signal::Canvas::draw` signal is emitted each time a canvas is
+    /// invalidated.
+    ///
+    /// It is safe to connect multiple handlers to this signal: each
+    /// handler invocation will be automatically protected by `cairo_save()`
+    /// and `cairo_restore()` pairs.
+    /// ## `cr`
+    /// the Cairo context used to draw
+    /// ## `width`
+    /// the width of the `canvas`
+    /// ## `height`
+    /// the height of the `canvas`
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if the signal emission should stop, and
+    ///  [`false`] otherwise
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    #[doc(alias = "draw")]
+    fn connect_draw<F: Fn(&Self, &cairo::Context, i32, i32) -> bool + 'static>(&self, f: F) -> SignalHandlerId;
 
     #[cfg(any(feature = "v1_10", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
@@ -212,11 +229,19 @@ impl<O: IsA<Canvas>> CanvasExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //fn connect_draw<Unsupported or ignored types>(&self, f: F) -> SignalHandlerId {
-    //    Ignored cr: cairo.Context
-    //}
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    fn connect_draw<F: Fn(&Self, &cairo::Context, i32, i32) -> bool + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn draw_trampoline<P: IsA<Canvas>, F: Fn(&P, &cairo::Context, i32, i32) -> bool + 'static>(this: *mut ffi::ClutterCanvas, cr: *mut cairo::ffi::cairo_t, width: libc::c_int, height: libc::c_int, f: glib::ffi::gpointer) -> glib::ffi::gboolean {
+            let f: &F = &*(f as *const F);
+            f(Canvas::from_glib_borrow(this).unsafe_cast_ref(), &from_glib_borrow(cr), width, height).into_glib()
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(self.as_ptr() as *mut _, b"draw\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(draw_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+        }
+    }
 
     #[cfg(any(feature = "v1_10", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]

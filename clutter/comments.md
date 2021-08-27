@@ -1469,24 +1469,6 @@ API.
 # Implements
 
 [`CanvasExt`][trait@crate::prelude::CanvasExt], [`ContentExt`][trait@crate::prelude::ContentExt]
-<!-- trait CanvasExt::fn connect_draw -->
-The `signal::Canvas::draw` signal is emitted each time a canvas is
-invalidated.
-
-It is safe to connect multiple handlers to this signal: each
-handler invocation will be automatically protected by `cairo_save()`
-and `cairo_restore()` pairs.
-## `cr`
-the Cairo context used to draw
-## `width`
-the width of the `canvas`
-## `height`
-the height of the `canvas`
-
-# Returns
-
-[`true`] if the signal emission should stop, and
- [`false`] otherwise
 <!-- struct Color -->
 Color representation.
 <!-- impl Color::fn copy -->

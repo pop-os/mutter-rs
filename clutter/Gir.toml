@@ -33,6 +33,7 @@ generate = [
 ]
 
 manual = [
+	"cairo.Context",
 	"cairo.FontOptions",
 	"cairo.RectangleInt",
 	"Clutter.KeyEvent",
@@ -54,6 +55,12 @@ name = "Clutter.*"
 status = "generate"
 	[[object.constant]]
 	pattern = "*"
+	ignore = true
+	[[object.function]]
+	name = "cairo_clear"
+	ignore = true
+	[[object.function]]
+	name = "cairo_set_source_color"
 	ignore = true
 
 [[object]]

@@ -27,20 +27,6 @@ pub fn base_init() {
     }
 }
 
-//#[cfg(any(feature = "v1_12", feature = "dox"))]
-//#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_12")))]
-//#[doc(alias = "clutter_cairo_clear")]
-//pub fn cairo_clear(cr: /*Ignored*/&mut cairo::Context) {
-//    unsafe { TODO: call ffi:clutter_cairo_clear() }
-//}
-
-//#[cfg(any(feature = "v1_0", feature = "dox"))]
-//#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
-//#[doc(alias = "clutter_cairo_set_source_color")]
-//pub fn cairo_set_source_color(cr: /*Ignored*/&mut cairo::Context, color: &Color) {
-//    unsafe { TODO: call ffi:clutter_cairo_set_source_color() }
-//}
-
 /// Disable loading the accessibility support. It has the same effect
 /// as setting the environment variable
 /// CLUTTER_DISABLE_ACCESSIBILITY. For the same reason, this method
