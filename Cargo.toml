@@ -1,0 +1,16 @@
+[workspace]
+members = [
+    "clutter",
+    "clutter-sys",
+    "cogl-sys",
+    "gdesktop_enums",
+    "gdesktop_enums-sys",
+    "gir",
+    "json-sys",
+    "meta",
+    "meta-sys",
+    "xlib-sys",
+]
+exclude = [
+    "gir",
+]
