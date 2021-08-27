@@ -133,6 +133,108 @@ impl ToValue for ActorAlign {
     }
 }
 
+/// Specifies the axis on which [`AlignConstraint`][crate::AlignConstraint] should maintain
+/// the alignment.
+#[cfg(any(feature = "v1_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = "ClutterAlignAxis")]
+pub enum AlignAxis {
+    #[doc(alias = "CLUTTER_ALIGN_X_AXIS")]
+    XAxis,
+    #[doc(alias = "CLUTTER_ALIGN_Y_AXIS")]
+    YAxis,
+    #[doc(alias = "CLUTTER_ALIGN_BOTH")]
+    Both,
+#[doc(hidden)]
+    __Unknown(i32),
+}
+
+#[cfg(any(feature = "v1_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+impl fmt::Display for AlignAxis {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "AlignAxis::{}", match *self {
+            Self::XAxis => "XAxis",
+            Self::YAxis => "YAxis",
+            Self::Both => "Both",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[cfg(any(feature = "v1_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+#[doc(hidden)]
+impl IntoGlib for AlignAxis {
+    type GlibType = ffi::ClutterAlignAxis;
+
+    fn into_glib(self) -> ffi::ClutterAlignAxis {
+        match self {
+            Self::XAxis => ffi::CLUTTER_ALIGN_X_AXIS,
+            Self::YAxis => ffi::CLUTTER_ALIGN_Y_AXIS,
+            Self::Both => ffi::CLUTTER_ALIGN_BOTH,
+            Self::__Unknown(value) => value,
+}
+    }
+}
+
+#[cfg(any(feature = "v1_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+#[doc(hidden)]
+impl FromGlib<ffi::ClutterAlignAxis> for AlignAxis {
+    unsafe fn from_glib(value: ffi::ClutterAlignAxis) -> Self {
+        match value {
+            ffi::CLUTTER_ALIGN_X_AXIS => Self::XAxis,
+            ffi::CLUTTER_ALIGN_Y_AXIS => Self::YAxis,
+            ffi::CLUTTER_ALIGN_BOTH => Self::Both,
+            value => Self::__Unknown(value),
+}
+    }
+}
+
+#[cfg(any(feature = "v1_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+impl StaticType for AlignAxis {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::clutter_align_axis_get_type()) }
+    }
+}
+
+#[cfg(any(feature = "v1_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+impl glib::value::ValueType for AlignAxis {
+    type Type = Self;
+}
+
+#[cfg(any(feature = "v1_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+unsafe impl<'a> FromValue<'a> for AlignAxis {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+#[cfg(any(feature = "v1_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+impl ToValue for AlignAxis {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
 /// The animation modes used by [`Animatable`][crate::Animatable]. This
 /// enumeration can be expanded in later versions of Clutter.
 ///
@@ -421,6 +523,147 @@ unsafe impl<'a> FromValue<'a> for AnimationMode {
 #[cfg(any(feature = "v1_0", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
 impl ToValue for AnimationMode {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
+/// Controls the alignment of the [`Content`][crate::Content] inside a [`Actor`][crate::Actor].
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = "ClutterContentGravity")]
+pub enum ContentGravity {
+    #[doc(alias = "CLUTTER_CONTENT_GRAVITY_TOP_LEFT")]
+    TopLeft,
+    #[doc(alias = "CLUTTER_CONTENT_GRAVITY_TOP")]
+    Top,
+    #[doc(alias = "CLUTTER_CONTENT_GRAVITY_TOP_RIGHT")]
+    TopRight,
+    #[doc(alias = "CLUTTER_CONTENT_GRAVITY_LEFT")]
+    Left,
+    #[doc(alias = "CLUTTER_CONTENT_GRAVITY_CENTER")]
+    Center,
+    #[doc(alias = "CLUTTER_CONTENT_GRAVITY_RIGHT")]
+    Right,
+    #[doc(alias = "CLUTTER_CONTENT_GRAVITY_BOTTOM_LEFT")]
+    BottomLeft,
+    #[doc(alias = "CLUTTER_CONTENT_GRAVITY_BOTTOM")]
+    Bottom,
+    #[doc(alias = "CLUTTER_CONTENT_GRAVITY_BOTTOM_RIGHT")]
+    BottomRight,
+    #[doc(alias = "CLUTTER_CONTENT_GRAVITY_RESIZE_FILL")]
+    ResizeFill,
+    #[doc(alias = "CLUTTER_CONTENT_GRAVITY_RESIZE_ASPECT")]
+    ResizeAspect,
+#[doc(hidden)]
+    __Unknown(i32),
+}
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+impl fmt::Display for ContentGravity {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "ContentGravity::{}", match *self {
+            Self::TopLeft => "TopLeft",
+            Self::Top => "Top",
+            Self::TopRight => "TopRight",
+            Self::Left => "Left",
+            Self::Center => "Center",
+            Self::Right => "Right",
+            Self::BottomLeft => "BottomLeft",
+            Self::Bottom => "Bottom",
+            Self::BottomRight => "BottomRight",
+            Self::ResizeFill => "ResizeFill",
+            Self::ResizeAspect => "ResizeAspect",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+#[doc(hidden)]
+impl IntoGlib for ContentGravity {
+    type GlibType = ffi::ClutterContentGravity;
+
+    fn into_glib(self) -> ffi::ClutterContentGravity {
+        match self {
+            Self::TopLeft => ffi::CLUTTER_CONTENT_GRAVITY_TOP_LEFT,
+            Self::Top => ffi::CLUTTER_CONTENT_GRAVITY_TOP,
+            Self::TopRight => ffi::CLUTTER_CONTENT_GRAVITY_TOP_RIGHT,
+            Self::Left => ffi::CLUTTER_CONTENT_GRAVITY_LEFT,
+            Self::Center => ffi::CLUTTER_CONTENT_GRAVITY_CENTER,
+            Self::Right => ffi::CLUTTER_CONTENT_GRAVITY_RIGHT,
+            Self::BottomLeft => ffi::CLUTTER_CONTENT_GRAVITY_BOTTOM_LEFT,
+            Self::Bottom => ffi::CLUTTER_CONTENT_GRAVITY_BOTTOM,
+            Self::BottomRight => ffi::CLUTTER_CONTENT_GRAVITY_BOTTOM_RIGHT,
+            Self::ResizeFill => ffi::CLUTTER_CONTENT_GRAVITY_RESIZE_FILL,
+            Self::ResizeAspect => ffi::CLUTTER_CONTENT_GRAVITY_RESIZE_ASPECT,
+            Self::__Unknown(value) => value,
+}
+    }
+}
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+#[doc(hidden)]
+impl FromGlib<ffi::ClutterContentGravity> for ContentGravity {
+    unsafe fn from_glib(value: ffi::ClutterContentGravity) -> Self {
+        match value {
+            ffi::CLUTTER_CONTENT_GRAVITY_TOP_LEFT => Self::TopLeft,
+            ffi::CLUTTER_CONTENT_GRAVITY_TOP => Self::Top,
+            ffi::CLUTTER_CONTENT_GRAVITY_TOP_RIGHT => Self::TopRight,
+            ffi::CLUTTER_CONTENT_GRAVITY_LEFT => Self::Left,
+            ffi::CLUTTER_CONTENT_GRAVITY_CENTER => Self::Center,
+            ffi::CLUTTER_CONTENT_GRAVITY_RIGHT => Self::Right,
+            ffi::CLUTTER_CONTENT_GRAVITY_BOTTOM_LEFT => Self::BottomLeft,
+            ffi::CLUTTER_CONTENT_GRAVITY_BOTTOM => Self::Bottom,
+            ffi::CLUTTER_CONTENT_GRAVITY_BOTTOM_RIGHT => Self::BottomRight,
+            ffi::CLUTTER_CONTENT_GRAVITY_RESIZE_FILL => Self::ResizeFill,
+            ffi::CLUTTER_CONTENT_GRAVITY_RESIZE_ASPECT => Self::ResizeAspect,
+            value => Self::__Unknown(value),
+}
+    }
+}
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+impl StaticType for ContentGravity {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::clutter_content_gravity_get_type()) }
+    }
+}
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+impl glib::value::ValueType for ContentGravity {
+    type Type = Self;
+}
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+unsafe impl<'a> FromValue<'a> for ContentGravity {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+impl ToValue for ContentGravity {
     fn to_value(&self) -> glib::Value {
         let mut value = glib::Value::for_value_type::<Self>();
         unsafe {
@@ -839,6 +1082,108 @@ unsafe impl<'a> FromValue<'a> for RequestMode {
 #[cfg(any(feature = "v0_8", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_8")))]
 impl ToValue for RequestMode {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
+/// The scaling filters to be used with the `property::Actor::minification-filter`
+/// and `property::Actor::magnification-filter` properties.
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = "ClutterScalingFilter")]
+pub enum ScalingFilter {
+    #[doc(alias = "CLUTTER_SCALING_FILTER_LINEAR")]
+    Linear,
+    #[doc(alias = "CLUTTER_SCALING_FILTER_NEAREST")]
+    Nearest,
+    #[doc(alias = "CLUTTER_SCALING_FILTER_TRILINEAR")]
+    Trilinear,
+#[doc(hidden)]
+    __Unknown(i32),
+}
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+impl fmt::Display for ScalingFilter {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "ScalingFilter::{}", match *self {
+            Self::Linear => "Linear",
+            Self::Nearest => "Nearest",
+            Self::Trilinear => "Trilinear",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+#[doc(hidden)]
+impl IntoGlib for ScalingFilter {
+    type GlibType = ffi::ClutterScalingFilter;
+
+    fn into_glib(self) -> ffi::ClutterScalingFilter {
+        match self {
+            Self::Linear => ffi::CLUTTER_SCALING_FILTER_LINEAR,
+            Self::Nearest => ffi::CLUTTER_SCALING_FILTER_NEAREST,
+            Self::Trilinear => ffi::CLUTTER_SCALING_FILTER_TRILINEAR,
+            Self::__Unknown(value) => value,
+}
+    }
+}
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+#[doc(hidden)]
+impl FromGlib<ffi::ClutterScalingFilter> for ScalingFilter {
+    unsafe fn from_glib(value: ffi::ClutterScalingFilter) -> Self {
+        match value {
+            ffi::CLUTTER_SCALING_FILTER_LINEAR => Self::Linear,
+            ffi::CLUTTER_SCALING_FILTER_NEAREST => Self::Nearest,
+            ffi::CLUTTER_SCALING_FILTER_TRILINEAR => Self::Trilinear,
+            value => Self::__Unknown(value),
+}
+    }
+}
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+impl StaticType for ScalingFilter {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::clutter_scaling_filter_get_type()) }
+    }
+}
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+impl glib::value::ValueType for ScalingFilter {
+    type Type = Self;
+}
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+unsafe impl<'a> FromValue<'a> for ScalingFilter {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+impl ToValue for ScalingFilter {
     fn to_value(&self) -> glib::Value {
         let mut value = glib::Value::for_value_type::<Self>();
         unsafe {

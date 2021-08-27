@@ -25,7 +25,7 @@ pub const NONE_CONSTRAINT: Option<&Constraint> = None;
 ///
 /// # Implementors
 ///
-/// [`Constraint`][struct@crate::Constraint]
+/// [`AlignConstraint`][struct@crate::AlignConstraint], [`Constraint`][struct@crate::Constraint]
 pub trait ConstraintExt: 'static {
     /// Asks the `self` to update the size request of a [`Actor`][crate::Actor].
     /// ## `actor`

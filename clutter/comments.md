@@ -675,13 +675,6 @@ it is possible to modify the content box by using the
 ## `box_`
 the return location for the bounding
  box for the [`Content`][crate::Content]
-<!-- trait ActorExt::fn content_gravity -->
-Retrieves the content gravity as set using
-`clutter_actor_set_content_gravity()`.
-
-# Returns
-
-the content gravity
 <!-- trait ActorExt::fn content_repeat -->
 Retrieves the repeat policy for a [`Actor`][crate::Actor] set by
 `clutter_actor_set_content_repeat()`.
@@ -689,19 +682,6 @@ Retrieves the repeat policy for a [`Actor`][crate::Actor] set by
 # Returns
 
 the content repeat policy
-<!-- trait ActorExt::fn content_scaling_filters -->
-Retrieves the values set using `clutter_actor_set_content_scaling_filters()`.
-
-# Returns
-
-
-## `min_filter`
-return location for the minification
- filter, or [`None`]
-
-## `mag_filter`
-return location for the magnification
- filter, or [`None`]
 <!-- trait ActorExt::fn default_paint_volume -->
 Retrieves the default paint volume for `self`.
 
@@ -953,32 +933,12 @@ If `transform` is [`None`], the child transform will be unset.
 The `property::Actor::child-transform` property is animatable.
 ## `transform`
 a `graphene_matrix_t`, or [`None`]
-<!-- trait ActorExt::fn set_content_gravity -->
-Sets the gravity of the [`Content`][crate::Content] used by `self`.
-
-See the description of the `property::Actor::content-gravity` property for
-more information.
-
-The `property::Actor::content-gravity` property is animatable.
-## `gravity`
-the `ClutterContentGravity`
 <!-- trait ActorExt::fn set_content_repeat -->
 Sets the policy for repeating the `property::Actor::content` of a
 [`Actor`][crate::Actor]. The behaviour is deferred to the [`Content`][crate::Content]
 implementation.
 ## `repeat`
 the repeat policy
-<!-- trait ActorExt::fn set_content_scaling_filters -->
-Sets the minification and magnification filter to be applied when
-scaling the `property::Actor::content` of a [`Actor`][crate::Actor].
-
-The `property::Actor::minification-filter` will be used when reducing
-the size of the content; the `property::Actor::magnification-filter`
-will be used when increasing the size of the content.
-## `min_filter`
-the minification filter for the content
-## `mag_filter`
-the magnification filter for the content
 <!-- trait ActorExt::fn set_layout_manager -->
 Sets the `ClutterLayoutManager` delegate object that will be used to
 lay out the children of `self`.
@@ -1271,6 +1231,65 @@ This is an Abstract Base Class, you cannot instantiate it.
 [`ActorMetaExt`][trait@crate::prelude::ActorMetaExt]
 <!-- trait ActorMetaExt::fn enabled -->
 Whether or not the [`ActorMeta`][crate::ActorMeta] is enabled
+<!-- enum AlignAxis::variant XAxis -->
+Maintain the alignment on the X axis
+<!-- enum AlignAxis::variant YAxis -->
+Maintain the alignment on the Y axis
+<!-- enum AlignAxis::variant Both -->
+Maintain the alignment on both the X and Y axis
+<!-- struct AlignConstraint -->
+[`AlignConstraint`][crate::AlignConstraint] is an opaque structure
+whose members cannot be directly accesses
+
+# Implements
+
+[`ConstraintExt`][trait@crate::prelude::ConstraintExt], [`ActorMetaExt`][trait@crate::prelude::ActorMetaExt]
+<!-- impl AlignConstraint::fn pivot_point -->
+Gets the pivot point used by the constraint set with
+`clutter_align_constraint_set_pivot_point()`. If no custom pivot
+point is set, -1 is set.
+
+# Returns
+
+
+## `pivot_point`
+return location for a `GraphenePoint`
+<!-- impl AlignConstraint::fn set_pivot_point -->
+Sets the pivot point used by the constraint, the pivot point is the
+point in the constraint actor around which the aligning is applied,
+with (0, 0) being the top left corner of the actor and (1, 1) the
+bottom right corner of the actor.
+
+If -1 is used, the pivot point is unset and the constrained actor
+will be aligned to always stay inside the source actor.
+## `pivot_point`
+A `GraphenePoint`
+<!-- impl AlignConstraint::fn get_property_pivot_point -->
+The pivot point used by the constraint. The pivot point is the
+point in the constraint actor around which the aligning is applied,
+with (0, 0) being the top left corner of the actor and (1, 1) the
+bottom right corner of the actor.
+
+For example, setting the pivot point to (0.5, 0.5) and using a factor
+of 1 for both axes will align the actors horizontal and vertical
+center point with the bottom right corner of the source actor.
+
+By default, the pivot point is set to (-1, -1), which means it's not
+used and the constrained actor will be aligned to always stay inside
+the source actor.
+<!-- impl AlignConstraint::fn set_property_pivot_point -->
+The pivot point used by the constraint. The pivot point is the
+point in the constraint actor around which the aligning is applied,
+with (0, 0) being the top left corner of the actor and (1, 1) the
+bottom right corner of the actor.
+
+For example, setting the pivot point to (0.5, 0.5) and using a factor
+of 1 for both axes will align the actors horizontal and vertical
+center point with the bottom right corner of the source actor.
+
+By default, the pivot point is set to (-1, -1), which means it's not
+used and the constrained actor will be aligned to always stay inside
+the source actor.
 <!-- struct Animatable -->
 
 
@@ -1648,6 +1667,29 @@ the `GParamSpec` of the property set
 # Implements
 
 [`ContentExt`][trait@crate::prelude::ContentExt]
+<!-- enum ContentGravity::variant TopLeft -->
+Align the content to the top left corner
+<!-- enum ContentGravity::variant Top -->
+Align the content to the top edge
+<!-- enum ContentGravity::variant TopRight -->
+Align the content to the top right corner
+<!-- enum ContentGravity::variant Left -->
+Align the content to the left edge
+<!-- enum ContentGravity::variant Center -->
+Align the content to the center
+<!-- enum ContentGravity::variant Right -->
+Align the content to the right edge
+<!-- enum ContentGravity::variant BottomLeft -->
+Align the content to the bottom left corner
+<!-- enum ContentGravity::variant Bottom -->
+Align the content to the bottom edge
+<!-- enum ContentGravity::variant BottomRight -->
+Align the content to the bottom right corner
+<!-- enum ContentGravity::variant ResizeFill -->
+Resize the content to fill the allocation
+<!-- enum ContentGravity::variant ResizeAspect -->
+Resize the content to remain within the
+ allocation, while maintaining the aspect ratio
 <!-- struct Effect -->
 The [`Effect`][crate::Effect] structure contains only private data and should
 be accessed using the provided API
@@ -1846,6 +1888,14 @@ Width for height requests
 <!-- enum RequestMode::variant ContentSize -->
 Use the preferred size of the
  [`Content`][crate::Content], if it has any (available since 1.22)
+<!-- enum ScalingFilter::variant Linear -->
+Linear interpolation filter
+<!-- enum ScalingFilter::variant Nearest -->
+Nearest neighbor interpolation filter
+<!-- enum ScalingFilter::variant Trilinear -->
+Trilinear minification filter, with
+ mipmap generation; this filter linearly interpolates on every axis,
+ as well as between mipmap levels.
 <!-- struct Scriptable -->
 [`Scriptable`][crate::Scriptable] is an opaque structure whose members cannot be directly
 accessed

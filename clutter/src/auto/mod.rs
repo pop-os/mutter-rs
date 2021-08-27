@@ -16,6 +16,13 @@ mod actor_meta;
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
 pub use self::actor_meta::{ActorMeta, NONE_ACTOR_META};
 
+#[cfg(any(feature = "v1_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+mod align_constraint;
+#[cfg(any(feature = "v1_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+pub use self::align_constraint::{AlignConstraint};
+
 mod animatable;
 pub use self::animatable::{Animatable, NONE_ANIMATABLE};
 
@@ -101,9 +108,15 @@ mod enums;
 #[cfg(any(feature = "v1_10", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
 pub use self::enums::ActorAlign;
+#[cfg(any(feature = "v1_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
+pub use self::enums::AlignAxis;
 #[cfg(any(feature = "v1_0", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
 pub use self::enums::AnimationMode;
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+pub use self::enums::ContentGravity;
 #[cfg(any(feature = "v0_4", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_4")))]
 pub use self::enums::EventType;
@@ -113,6 +126,9 @@ pub use self::enums::Orientation;
 #[cfg(any(feature = "v0_8", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_8")))]
 pub use self::enums::RequestMode;
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+pub use self::enums::ScalingFilter;
 #[cfg(any(feature = "v1_6", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_6")))]
 pub use self::enums::StaticColor;

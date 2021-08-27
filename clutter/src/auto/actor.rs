@@ -26,6 +26,9 @@ use crate::Container;
 #[cfg(any(feature = "v1_10", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
 use crate::Content;
+#[cfg(any(feature = "v1_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+use crate::ContentGravity;
 #[cfg(any(feature = "v1_4", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]
 use crate::Effect;
@@ -38,6 +41,7 @@ use crate::Orientation;
 #[cfg(any(feature = "v0_8", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_8")))]
 use crate::RequestMode;
+use crate::ScalingFilter;
 use crate::Scriptable;
 #[cfg(any(feature = "v0_8", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_8")))]
@@ -643,11 +647,17 @@ pub trait ActorExt: 'static {
     //#[doc(alias = "get_content_box")]
     //fn content_box(&self, box_: /*Ignored*/ActorBox);
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //#[doc(alias = "clutter_actor_get_content_gravity")]
-    //#[doc(alias = "get_content_gravity")]
-    //fn content_gravity(&self) -> /*Ignored*/ContentGravity;
+    /// Retrieves the content gravity as set using
+    /// [`set_content_gravity()`][Self::set_content_gravity()].
+    ///
+    /// # Returns
+    ///
+    /// the content gravity
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    #[doc(alias = "clutter_actor_get_content_gravity")]
+    #[doc(alias = "get_content_gravity")]
+    fn content_gravity(&self) -> ContentGravity;
 
     //#[cfg(any(feature = "v1_12", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_12")))]
@@ -655,11 +665,23 @@ pub trait ActorExt: 'static {
     //#[doc(alias = "get_content_repeat")]
     //fn content_repeat(&self) -> /*Ignored*/ContentRepeat;
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //#[doc(alias = "clutter_actor_get_content_scaling_filters")]
-    //#[doc(alias = "get_content_scaling_filters")]
-    //fn content_scaling_filters(&self) -> (/*Ignored*/ScalingFilter, /*Ignored*/ScalingFilter);
+    /// Retrieves the values set using [`set_content_scaling_filters()`][Self::set_content_scaling_filters()].
+    ///
+    /// # Returns
+    ///
+    ///
+    /// ## `min_filter`
+    /// return location for the minification
+    ///  filter, or [`None`]
+    ///
+    /// ## `mag_filter`
+    /// return location for the magnification
+    ///  filter, or [`None`]
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    #[doc(alias = "clutter_actor_get_content_scaling_filters")]
+    #[doc(alias = "get_content_scaling_filters")]
+    fn content_scaling_filters(&self) -> (ScalingFilter, ScalingFilter);
 
     //#[cfg(any(feature = "v1_10", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
@@ -2230,20 +2252,38 @@ pub trait ActorExt: 'static {
     #[doc(alias = "clutter_actor_set_content")]
     fn set_content<P: IsA<Content>>(&self, content: Option<&P>);
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //#[doc(alias = "clutter_actor_set_content_gravity")]
-    //fn set_content_gravity(&self, gravity: /*Ignored*/ContentGravity);
+    /// Sets the gravity of the [`Content`][crate::Content] used by `self`.
+    ///
+    /// See the description of the `property::Actor::content-gravity` property for
+    /// more information.
+    ///
+    /// The `property::Actor::content-gravity` property is animatable.
+    /// ## `gravity`
+    /// the [`ContentGravity`][crate::ContentGravity]
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    #[doc(alias = "clutter_actor_set_content_gravity")]
+    fn set_content_gravity(&self, gravity: ContentGravity);
 
     //#[cfg(any(feature = "v1_12", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_12")))]
     //#[doc(alias = "clutter_actor_set_content_repeat")]
     //fn set_content_repeat(&self, repeat: /*Ignored*/ContentRepeat);
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //#[doc(alias = "clutter_actor_set_content_scaling_filters")]
-    //fn set_content_scaling_filters(&self, min_filter: /*Ignored*/ScalingFilter, mag_filter: /*Ignored*/ScalingFilter);
+    /// Sets the minification and magnification filter to be applied when
+    /// scaling the `property::Actor::content` of a [`Actor`][crate::Actor].
+    ///
+    /// The `property::Actor::minification-filter` will be used when reducing
+    /// the size of the content; the `property::Actor::magnification-filter`
+    /// will be used when increasing the size of the content.
+    /// ## `min_filter`
+    /// the minification filter for the content
+    /// ## `mag_filter`
+    /// the magnification filter for the content
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    #[doc(alias = "clutter_actor_set_content_scaling_filters")]
+    fn set_content_scaling_filters(&self, min_filter: ScalingFilter, mag_filter: ScalingFilter);
 
     /// Sets the delay that should be applied before tweening animatable
     /// properties.
@@ -2857,11 +2897,11 @@ pub trait ActorExt: 'static {
     /// The `property::Actor::height` property is animatable.
     fn set_property_height(&self, height: f32);
 
-    //#[doc(alias = "magnification-filter")]
-    //fn magnification_filter(&self) -> /*Ignored*/ScalingFilter;
+    #[doc(alias = "magnification-filter")]
+    fn magnification_filter(&self) -> ScalingFilter;
 
-    //#[doc(alias = "magnification-filter")]
-    //fn set_magnification_filter(&self, magnification_filter: /*Ignored*/ScalingFilter);
+    #[doc(alias = "magnification-filter")]
+    fn set_magnification_filter(&self, magnification_filter: ScalingFilter);
 
     /// Whether the actor is mapped (will be painted when the stage
     /// to which it belongs is mapped)
@@ -2939,11 +2979,11 @@ pub trait ActorExt: 'static {
     #[doc(alias = "min-width-set")]
     fn set_min_width_set(&self, min_width_set: bool);
 
-    //#[doc(alias = "minification-filter")]
-    //fn minification_filter(&self) -> /*Ignored*/ScalingFilter;
+    #[doc(alias = "minification-filter")]
+    fn minification_filter(&self) -> ScalingFilter;
 
-    //#[doc(alias = "minification-filter")]
-    //fn set_minification_filter(&self, minification_filter: /*Ignored*/ScalingFilter);
+    #[doc(alias = "minification-filter")]
+    fn set_minification_filter(&self, minification_filter: ScalingFilter);
 
     /// A forced natural height request for the actor, in pixels
     ///
@@ -4203,11 +4243,13 @@ impl<O: IsA<Actor>> ActorExt for O {
     //    unsafe { TODO: call ffi:clutter_actor_get_content_box() }
     //}
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //fn content_gravity(&self) -> /*Ignored*/ContentGravity {
-    //    unsafe { TODO: call ffi:clutter_actor_get_content_gravity() }
-    //}
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    fn content_gravity(&self) -> ContentGravity {
+        unsafe {
+            from_glib(ffi::clutter_actor_get_content_gravity(self.as_ref().to_glib_none().0))
+        }
+    }
 
     //#[cfg(any(feature = "v1_12", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_12")))]
@@ -4215,11 +4257,18 @@ impl<O: IsA<Actor>> ActorExt for O {
     //    unsafe { TODO: call ffi:clutter_actor_get_content_repeat() }
     //}
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //fn content_scaling_filters(&self) -> (/*Ignored*/ScalingFilter, /*Ignored*/ScalingFilter) {
-    //    unsafe { TODO: call ffi:clutter_actor_get_content_scaling_filters() }
-    //}
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    fn content_scaling_filters(&self) -> (ScalingFilter, ScalingFilter) {
+        unsafe {
+            let mut min_filter = mem::MaybeUninit::uninit();
+            let mut mag_filter = mem::MaybeUninit::uninit();
+            ffi::clutter_actor_get_content_scaling_filters(self.as_ref().to_glib_none().0, min_filter.as_mut_ptr(), mag_filter.as_mut_ptr());
+            let min_filter = min_filter.assume_init();
+            let mag_filter = mag_filter.assume_init();
+            (from_glib(min_filter), from_glib(mag_filter))
+        }
+    }
 
     //#[cfg(any(feature = "v1_10", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
@@ -5174,11 +5223,13 @@ impl<O: IsA<Actor>> ActorExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //fn set_content_gravity(&self, gravity: /*Ignored*/ContentGravity) {
-    //    unsafe { TODO: call ffi:clutter_actor_set_content_gravity() }
-    //}
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    fn set_content_gravity(&self, gravity: ContentGravity) {
+        unsafe {
+            ffi::clutter_actor_set_content_gravity(self.as_ref().to_glib_none().0, gravity.into_glib());
+        }
+    }
 
     //#[cfg(any(feature = "v1_12", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_12")))]
@@ -5186,11 +5237,13 @@ impl<O: IsA<Actor>> ActorExt for O {
     //    unsafe { TODO: call ffi:clutter_actor_set_content_repeat() }
     //}
 
-    //#[cfg(any(feature = "v1_10", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
-    //fn set_content_scaling_filters(&self, min_filter: /*Ignored*/ScalingFilter, mag_filter: /*Ignored*/ScalingFilter) {
-    //    unsafe { TODO: call ffi:clutter_actor_set_content_scaling_filters() }
-    //}
+    #[cfg(any(feature = "v1_10", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
+    fn set_content_scaling_filters(&self, min_filter: ScalingFilter, mag_filter: ScalingFilter) {
+        unsafe {
+            ffi::clutter_actor_set_content_scaling_filters(self.as_ref().to_glib_none().0, min_filter.into_glib(), mag_filter.into_glib());
+        }
+    }
 
     #[cfg(any(feature = "v1_10", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
@@ -5651,19 +5704,19 @@ impl<O: IsA<Actor>> ActorExt for O {
         }
     }
 
-    //fn magnification_filter(&self) -> /*Ignored*/ScalingFilter {
-    //    unsafe {
-    //        let mut value = glib::Value::from_type(</*Unknown type*/ as StaticType>::static_type());
-    //        glib::gobject_ffi::g_object_get_property(self.to_glib_none().0 as *mut glib::gobject_ffi::GObject, b"magnification-filter\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-    //        value.get().expect("Return Value for property `magnification-filter` getter")
-    //    }
-    //}
+    fn magnification_filter(&self) -> ScalingFilter {
+        unsafe {
+            let mut value = glib::Value::from_type(<ScalingFilter as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(self.to_glib_none().0 as *mut glib::gobject_ffi::GObject, b"magnification-filter\0".as_ptr() as *const _, value.to_glib_none_mut().0);
+            value.get().expect("Return Value for property `magnification-filter` getter")
+        }
+    }
 
-    //fn set_magnification_filter(&self, magnification_filter: /*Ignored*/ScalingFilter) {
-    //    unsafe {
-    //        glib::gobject_ffi::g_object_set_property(self.to_glib_none().0 as *mut glib::gobject_ffi::GObject, b"magnification-filter\0".as_ptr() as *const _, magnification_filter.to_value().to_glib_none().0);
-    //    }
-    //}
+    fn set_magnification_filter(&self, magnification_filter: ScalingFilter) {
+        unsafe {
+            glib::gobject_ffi::g_object_set_property(self.to_glib_none().0 as *mut glib::gobject_ffi::GObject, b"magnification-filter\0".as_ptr() as *const _, magnification_filter.to_value().to_glib_none().0);
+        }
+    }
 
     #[cfg(any(feature = "v1_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
@@ -5747,19 +5800,19 @@ impl<O: IsA<Actor>> ActorExt for O {
         }
     }
 
-    //fn minification_filter(&self) -> /*Ignored*/ScalingFilter {
-    //    unsafe {
-    //        let mut value = glib::Value::from_type(</*Unknown type*/ as StaticType>::static_type());
-    //        glib::gobject_ffi::g_object_get_property(self.to_glib_none().0 as *mut glib::gobject_ffi::GObject, b"minification-filter\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-    //        value.get().expect("Return Value for property `minification-filter` getter")
-    //    }
-    //}
+    fn minification_filter(&self) -> ScalingFilter {
+        unsafe {
+            let mut value = glib::Value::from_type(<ScalingFilter as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(self.to_glib_none().0 as *mut glib::gobject_ffi::GObject, b"minification-filter\0".as_ptr() as *const _, value.to_glib_none_mut().0);
+            value.get().expect("Return Value for property `minification-filter` getter")
+        }
+    }
 
-    //fn set_minification_filter(&self, minification_filter: /*Ignored*/ScalingFilter) {
-    //    unsafe {
-    //        glib::gobject_ffi::g_object_set_property(self.to_glib_none().0 as *mut glib::gobject_ffi::GObject, b"minification-filter\0".as_ptr() as *const _, minification_filter.to_value().to_glib_none().0);
-    //    }
-    //}
+    fn set_minification_filter(&self, minification_filter: ScalingFilter) {
+        unsafe {
+            glib::gobject_ffi::g_object_set_property(self.to_glib_none().0 as *mut glib::gobject_ffi::GObject, b"minification-filter\0".as_ptr() as *const _, minification_filter.to_value().to_glib_none().0);
+        }
+    }
 
     #[cfg(any(feature = "v0_8", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v0_8")))]
