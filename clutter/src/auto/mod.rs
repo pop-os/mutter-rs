@@ -40,6 +40,13 @@ mod canvas;
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
 pub use self::canvas::{Canvas, NONE_CANVAS};
 
+#[cfg(any(feature = "v1_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+mod clone;
+#[cfg(any(feature = "v1_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+pub use self::clone::{Clone, NONE_CLONE};
+
 #[cfg(any(feature = "v1_12", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_12")))]
 mod constraint;
@@ -164,6 +171,9 @@ pub mod traits {
     #[cfg(any(feature = "v1_10", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_10")))]
     pub use super::canvas::CanvasExt;
+    #[cfg(any(feature = "v1_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
+    pub use super::clone::CloneExt;
     #[cfg(any(feature = "v1_12", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_12")))]
     pub use super::constraint::ConstraintExt;

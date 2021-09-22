@@ -16,6 +16,7 @@ generate = [
 	"Clutter.AnimationMode",
 	"Clutter.Backend",
 	"Clutter.Canvas",
+	"Clutter.Clone",
 	"Clutter.Constraint",
 	"Clutter.Container",
 	"Clutter.Content",

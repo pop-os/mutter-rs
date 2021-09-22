@@ -23,7 +23,7 @@ pub const NONE_ANIMATABLE: Option<&Animatable> = None;
 ///
 /// # Implementors
 ///
-/// [`Actor`][struct@crate::Actor], [`Animatable`][struct@crate::Animatable], [`Stage`][struct@crate::Stage], [`Text`][struct@crate::Text]
+/// [`Actor`][struct@crate::Actor], [`Animatable`][struct@crate::Animatable], [`Clone`][struct@crate::Clone], [`Stage`][struct@crate::Stage], [`Text`][struct@crate::Text]
 pub trait AnimatableExt: 'static {
     //#[cfg(any(feature = "v1_4", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v1_4")))]

@@ -1488,6 +1488,13 @@ API.
 # Implements
 
 [`CanvasExt`][trait@crate::prelude::CanvasExt], [`ContentExt`][trait@crate::prelude::ContentExt]
+<!-- struct Clone -->
+The [`Clone`][crate::Clone] structure contains only private data
+and should be accessed using the provided API
+
+# Implements
+
+[`CloneExt`][trait@crate::prelude::CloneExt], [`ActorExt`][trait@crate::prelude::ActorExt], [`AnimatableExt`][trait@crate::prelude::AnimatableExt], [`ContainerExt`][trait@crate::prelude::ContainerExt], [`ScriptableExt`][trait@crate::prelude::ScriptableExt]
 <!-- struct Color -->
 Color representation.
 <!-- impl Color::fn copy -->

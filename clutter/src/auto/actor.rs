@@ -103,7 +103,7 @@ pub const NONE_ACTOR: Option<&Actor> = None;
 ///
 /// # Implementors
 ///
-/// [`Actor`][struct@crate::Actor], [`Stage`][struct@crate::Stage], [`Text`][struct@crate::Text]
+/// [`Actor`][struct@crate::Actor], [`Clone`][struct@crate::Clone], [`Stage`][struct@crate::Stage], [`Text`][struct@crate::Text]
 pub trait ActorExt: 'static {
     /// Adds `action` to the list of actions applied to `self`
     ///
@@ -1808,7 +1808,7 @@ pub trait ActorExt: 'static {
     //#[doc(alias = "clutter_actor_is_effectively_on_stage_view")]
     //fn is_effectively_on_stage_view(&self, view: /*Ignored*/&StageView) -> bool;
 
-    /// Checks whether `self` is being currently painted by a `ClutterClone`
+    /// Checks whether `self` is being currently painted by a [`Clone`][crate::Clone]
     ///
     /// This function is useful only inside implementations of the
     /// `ClutterActorClass.paint()` virtual function.
@@ -1818,7 +1818,7 @@ pub trait ActorExt: 'static {
     /// # Returns
     ///
     /// [`true`] if the [`Actor`][crate::Actor] is currently being painted
-    ///  by a `ClutterClone`, and [`false`] otherwise
+    ///  by a [`Clone`][crate::Clone], and [`false`] otherwise
     #[cfg(any(feature = "v1_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_0")))]
     #[doc(alias = "clutter_actor_is_in_clone_paint")]
@@ -3507,7 +3507,7 @@ pub trait ActorExt: 'static {
     /// the relayout queue up through the actor graph.
     ///
     /// The main purpose of this signal is to allow relayout to be propagated
-    /// properly in the procense of `ClutterClone` actors. Applications will
+    /// properly in the procense of [`Clone`][crate::Clone] actors. Applications will
     /// not normally need to connect to this signal.
     #[cfg(any(feature = "v1_2", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v1_2")))]

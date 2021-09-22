@@ -44,7 +44,7 @@ pub const NONE_CONTAINER: Option<&Container> = None;
 ///
 /// # Implementors
 ///
-/// [`Actor`][struct@crate::Actor], [`Container`][struct@crate::Container], [`Stage`][struct@crate::Stage], [`Text`][struct@crate::Text]
+/// [`Actor`][struct@crate::Actor], [`Clone`][struct@crate::Clone], [`Container`][struct@crate::Container], [`Stage`][struct@crate::Stage], [`Text`][struct@crate::Text]
 pub trait ContainerExt: 'static {
     //#[cfg_attr(feature = "v1_10", deprecated = "Since 1.10")]
     //#[doc(alias = "clutter_container_add")]

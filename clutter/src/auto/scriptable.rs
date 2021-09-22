@@ -22,7 +22,7 @@ pub const NONE_SCRIPTABLE: Option<&Scriptable> = None;
 ///
 /// # Implementors
 ///
-/// [`Actor`][struct@crate::Actor], [`Scriptable`][struct@crate::Scriptable], [`Stage`][struct@crate::Stage], [`Text`][struct@crate::Text]
+/// [`Actor`][struct@crate::Actor], [`Clone`][struct@crate::Clone], [`Scriptable`][struct@crate::Scriptable], [`Stage`][struct@crate::Stage], [`Text`][struct@crate::Text]
 pub trait ScriptableExt: 'static {
     /// Retrieves the id of `self` set using [`set_id()`][Self::set_id()].
     ///
