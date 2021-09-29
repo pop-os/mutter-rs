@@ -7,3 +7,5 @@ mod auto;
 mod display;
 
 mod rectangle;
+
+pub mod subclass;
