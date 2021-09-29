@@ -19,37 +19,37 @@ glib::wrapper! {
 impl KeyBinding {
     #[doc(alias = "meta_key_binding_get_mask")]
     #[doc(alias = "get_mask")]
-    pub fn mask(&mut self) -> u32 {
+    pub fn mask(&self) -> u32 {
         unsafe {
-            ffi::meta_key_binding_get_mask(self.to_glib_none_mut().0)
+            ffi::meta_key_binding_get_mask(mut_override(self.to_glib_none().0))
         }
     }
 
     //#[doc(alias = "meta_key_binding_get_modifiers")]
     //#[doc(alias = "get_modifiers")]
-    //pub fn modifiers(&mut self) -> /*Ignored*/VirtualModifier {
+    //pub fn modifiers(&self) -> /*Ignored*/VirtualModifier {
     //    unsafe { TODO: call ffi:meta_key_binding_get_modifiers() }
     //}
 
     #[doc(alias = "meta_key_binding_get_name")]
     #[doc(alias = "get_name")]
-    pub fn name(&mut self) -> Option<glib::GString> {
+    pub fn name(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(ffi::meta_key_binding_get_name(self.to_glib_none_mut().0))
+            from_glib_none(ffi::meta_key_binding_get_name(mut_override(self.to_glib_none().0)))
         }
     }
 
     #[doc(alias = "meta_key_binding_is_builtin")]
-    pub fn is_builtin(&mut self) -> bool {
+    pub fn is_builtin(&self) -> bool {
         unsafe {
-            from_glib(ffi::meta_key_binding_is_builtin(self.to_glib_none_mut().0))
+            from_glib(ffi::meta_key_binding_is_builtin(mut_override(self.to_glib_none().0)))
         }
     }
 
     #[doc(alias = "meta_key_binding_is_reversed")]
-    pub fn is_reversed(&mut self) -> bool {
+    pub fn is_reversed(&self) -> bool {
         unsafe {
-            from_glib(ffi::meta_key_binding_is_reversed(self.to_glib_none_mut().0))
+            from_glib(ffi::meta_key_binding_is_reversed(mut_override(self.to_glib_none().0)))
         }
     }
 }

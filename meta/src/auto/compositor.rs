@@ -39,9 +39,9 @@ impl Compositor {
     }
 
     #[doc(alias = "meta_compositor_filter_keybinding")]
-    pub fn filter_keybinding(&self, binding: &mut KeyBinding) -> bool {
+    pub fn filter_keybinding(&self, binding: &KeyBinding) -> bool {
         unsafe {
-            from_glib(ffi::meta_compositor_filter_keybinding(self.to_glib_none().0, binding.to_glib_none_mut().0))
+            from_glib(ffi::meta_compositor_filter_keybinding(self.to_glib_none().0, mut_override(binding.to_glib_none().0)))
         }
     }
 

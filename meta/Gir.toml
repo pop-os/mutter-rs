@@ -17,7 +17,6 @@ generate = [
 	"Meta.ExitCode",
 	"Meta.FrameType",
 	"Meta.GrabOp",
-	"Meta.KeyBinding",
 	"Meta.KeyBindingFlags",
 	"Meta.MaximizeFlags",
 	"Meta.ModalOptions",
@@ -85,6 +84,11 @@ status = "generate"
 	[[object.function]]
 	name = "sort_windows_by_stacking"
 	ignore = true
+
+[[object]]
+name = "Meta.KeyBinding"
+status = "generate"
+ref_mode = "ref-immut"
 
 [[object]]
 name = "Meta.Window"
