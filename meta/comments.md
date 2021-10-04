@@ -4,12 +4,6 @@ Ensure log messages for the given topic `topic`
 will be printed.
 ## `topic`
 Topic for which logging will be started
-<!-- fn backend -->
-Accessor for the singleton MetaBackend.
-
-# Returns
-
-The only `MetaBackend` there is.
 <!-- fn option_context -->
 Returns a `GOptionContext` initialized with mutter-related options.
 Parse the command-line args with this before calling [`init()`][crate::init()].
@@ -70,6 +64,28 @@ window XID of parent
 columns
 ## `entries`
 entries
+<!-- struct Backend -->
+
+
+This is an Abstract Base Class, you cannot instantiate it.
+
+# Implements
+
+[`trait@glib::ObjectExt`]
+<!-- impl Backend::fn dnd -->
+Gets the global `MetaDnd` that's managed by this backend.
+
+# Returns
+
+the `MetaDnd`
+<!-- impl Backend::fn remote_access_controller -->
+
+# Returns
+
+The `MetaRemoteAccessController`
+<!-- impl Backend::fn connect_gpu_added -->
+## `gpu`
+the `MetaGpu`
 <!-- struct Background -->
 This class handles tracking and painting the root window background.
 By integrating with [`WindowGroup`][crate::WindowGroup] we can avoid painting parts of

@@ -3,10 +3,12 @@
 // from mutter-gir-files
 // DO NOT EDIT
 
+use crate::Backend;
 use glib::object::ObjectType as ObjectType_;
 use glib::signal::connect_raw;
 use glib::signal::SignalHandlerId;
 use glib::translate::*;
+use glib::StaticType;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
@@ -71,13 +73,13 @@ impl MonitorManager {
     //    unsafe { TODO: call ffi:meta_monitor_manager_switch_config() }
     //}
 
-    //pub fn backend(&self) -> /*Ignored*/Option<Backend> {
-    //    unsafe {
-    //        let mut value = glib::Value::from_type(</*Unknown type*/ as StaticType>::static_type());
-    //        glib::gobject_ffi::g_object_get_property(self.as_ptr() as *mut glib::gobject_ffi::GObject, b"backend\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-    //        value.get().expect("Return Value for property `backend` getter")
-    //    }
-    //}
+    pub fn backend(&self) -> Option<Backend> {
+        unsafe {
+            let mut value = glib::Value::from_type(<Backend as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(self.as_ptr() as *mut glib::gobject_ffi::GObject, b"backend\0".as_ptr() as *const _, value.to_glib_none_mut().0);
+            value.get().expect("Return Value for property `backend` getter")
+        }
+    }
 
     /// Accessor for the singleton MetaMonitorManager.
     ///

@@ -5,6 +5,7 @@ target_path = "."
 work_mode = "normal"
 
 generate = [
+	"Meta.Backend",
 	"Meta.Background",
 	"Meta.BackgroundActor",
 	"Meta.BackgroundContent",

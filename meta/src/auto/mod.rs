@@ -3,6 +3,9 @@
 // from mutter-gir-files
 // DO NOT EDIT
 
+mod backend;
+pub use self::backend::{Backend};
+
 mod background;
 pub use self::background::{Background};
 

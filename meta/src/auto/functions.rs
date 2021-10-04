@@ -3,6 +3,7 @@
 // from mutter-gir-files
 // DO NOT EDIT
 
+use crate::Backend;
 use crate::Display;
 use crate::ExitCode;
 use crate::KeyBinding;
@@ -100,11 +101,18 @@ pub fn g_utf8_strndup(src: &str, n: usize) -> Option<glib::GString> {
     }
 }
 
-//#[doc(alias = "meta_get_backend")]
-//#[doc(alias = "get_backend")]
-//pub fn backend() -> /*Ignored*/Option<Backend> {
-//    unsafe { TODO: call ffi:meta_get_backend() }
-//}
+/// Accessor for the singleton MetaBackend.
+///
+/// # Returns
+///
+/// The only [`Backend`][crate::Backend] there is.
+#[doc(alias = "meta_get_backend")]
+#[doc(alias = "get_backend")]
+pub fn backend() -> Option<Backend> {
+    unsafe {
+        from_glib_none(ffi::meta_get_backend())
+    }
+}
 
 //#[doc(alias = "meta_get_debug_paint_flags")]
 //#[doc(alias = "get_debug_paint_flags")]
